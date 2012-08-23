@@ -47,6 +47,7 @@
 		259E089515E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089115E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png */; };
 		259E089615E30E7D00CE1BBA /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089215E30E7D00CE1BBA /* 37x-Checkmark@2x.png */; };
 		259E089715E30E7D00CE1BBA /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089315E30E7D00CE1BBA /* 37x-Checkmark.png */; };
+		25B16BF015E5C07400CF61ED /* WXBusParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B16BEF15E5C07400CF61ED /* WXBusParser.m */; };
 		25E803A415E2050400B57711 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A315E2050400B57711 /* MBProgressHUD.m */; };
 		25E803B615E2082A00B57711 /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A715E2082A00B57711 /* NSObject+AssociatedObjects.m */; };
 		25E803B715E2082A00B57711 /* NSObject+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A915E2082A00B57711 /* NSObject+Blocks.m */; };
@@ -124,6 +125,8 @@
 		259E089115E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32x-Exclamationmark@2x.png"; sourceTree = "<group>"; };
 		259E089215E30E7D00CE1BBA /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
 		259E089315E30E7D00CE1BBA /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
+		25B16BEE15E5C07400CF61ED /* WXBusParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXBusParser.h; sourceTree = "<group>"; };
+		25B16BEF15E5C07400CF61ED /* WXBusParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXBusParser.m; sourceTree = "<group>"; };
 		25E803A215E2050400B57711 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		25E803A315E2050400B57711 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		25E803A515E2082A00B57711 /* cl_BlockHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cl_BlockHead.h; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 				2568BE1615E1D4150015219D /* AppDelegate.h */,
 				2568BE1715E1D4150015219D /* AppDelegate.m */,
 				255E3A3B15E359ED007C1D9E /* Common.h */,
+				25B16BEE15E5C07400CF61ED /* WXBusParser.h */,
+				25B16BEF15E5C07400CF61ED /* WXBusParser.m */,
 				2568BE1915E1D4150015219D /* ViewController.h */,
 				2568BE1A15E1D4150015219D /* ViewController.m */,
 				2568BE1C15E1D4150015219D /* ViewController.xib */,
@@ -436,6 +441,7 @@
 				25834A3215E2673300F26087 /* HandyFoundation.m in Sources */,
 				25834A3615E2684400F26087 /* BusStatusViewController.m in Sources */,
 				255E3A3915E358AA007C1D9E /* SettingsViewController.m in Sources */,
+				25B16BF015E5C07400CF61ED /* WXBusParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

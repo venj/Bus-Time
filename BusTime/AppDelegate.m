@@ -9,8 +9,17 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "MBProgressHUD.h"
+
+@interface AppDelegate () <MBProgressHUDDelegate>
+
+@end
 
 @implementation AppDelegate
+
++ (AppDelegate *)shared {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -48,6 +57,65 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - MBProgressHUD Helper and Delegate
+
+- (void)showHUDLoadingInView:(UIView *)view withMessage:(NSString *)message {
+    if (self.hud) {
+        [self.hud hide:YES];
+        [self.hud removeFromSuperview];
+        self.hud = nil;
+    }
+    self.hud = [[MBProgressHUD alloc] initWithView:view];
+	[view addSubview:self.hud];
+	
+    self.hud.delegate = self;
+    self.hud.labelText = message;
+	[self.hud show:YES];
+}
+
+- (void)showHUDInView:(UIView *)view withMessage:(NSString *)message isWarning:(BOOL)warningOrDone {
+    if (self.hud) {
+        [self.hud hide:YES];
+        [self.hud removeFromSuperview];
+        self.hud = nil;
+    }
+    self.hud = [[MBProgressHUD alloc] initWithView:view];
+    self.hud.mode = MBProgressHUDModeCustomView;
+    if (warningOrDone) {
+        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32x-Exclamationmark"]];
+    }
+    else {
+        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
+    }
+	[view addSubview:self.hud];
+	
+    self.hud.delegate = self;
+    self.hud.labelText = message;
+	[self.hud show:YES];
+    [self.hud hide:YES afterDelay:2];
+}
+
+- (void)hideHUD {
+    [self.hud hide:YES];
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    if (hud) {
+        [hud removeFromSuperview];
+        hud = nil;
+    }
+}
+
+- (void)hideHUDWithMessage:(NSString *)message {
+    if (self.hud) {
+        self.hud.labelText = message;
+        self.hud.mode = MBProgressHUDModeCustomView;
+        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32x-Exclamationmark"]];
+        [self.hud hide:YES afterDelay:2];
+    }
 }
 
 @end

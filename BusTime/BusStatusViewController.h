@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface BusStatusViewController : UITableViewController
+@property (nonatomic, strong) NSString *currentBusName;
 @property (nonatomic, strong) NSString *currentStationName;
-@property (nonatomic, strong) NSArray *nextBuses;
+@property (nonatomic, strong) id nextBuses;
 @end

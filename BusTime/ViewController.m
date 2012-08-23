@@ -9,23 +9,21 @@
 #import "ViewController.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
-#import "MBProgressHUD.h"
 #import "cl_BlockHead.h"
 #import "TFHpple.h"
 #import "HandyFoundation.h"
 #import "BusStatusViewController.h"
 #import "Common.h"
 #import "SettingsViewController.h"
+#import "WXBusParser.h"
+#import "AppDelegate.h"
 
-#define TARGET_IS_BETA 0
-
-@interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UIActionSheetDelegate, MBProgressHUDDelegate>
+@interface ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (strong, nonatomic) NSMutableArray *busRoutes;
-@property (strong, nonatomic) NSMutableArray *directionRoutes;
-@property (strong, nonatomic) NSMutableArray *stations;
+@property (strong, nonatomic) NSArray *busRoutes;
+@property (strong, nonatomic) NSArray *directionRoutes;
+@property (strong, nonatomic) NSArray *stations;
 @property (strong, nonatomic) NSMutableDictionary *formDict;
-@property (strong, nonatomic) MBProgressHUD *hud;
 @property (assign, nonatomic) BusSelectStep currentStep;
 @property (weak, nonatomic) IBOutlet UITextField *busField;
 @property (weak, nonatomic) IBOutlet UITextField *directionField;
@@ -49,28 +47,34 @@
     [self loadServerAddress];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(showSettings:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"你真的需要重新载入公交列表吗？" completionBlock:^(NSUInteger buttonIndex) {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh handler:^(id sender) {
+        [[[UIAlertView alloc] initWithTitle:@"提示" message:@"通常你不需要重新载入公交列表，除非公交公司有线路调整。\n\n你真的需要重新载入公交列表吗？" completionBlock:^(NSUInteger buttonIndex) {
             if (buttonIndex != 0) {
+                self.currentStep = BusSelectStepSelectBus;
                 [self loadBusRoutesNeedRefresh:YES];
             }
         } cancelButtonTitle:@"取消" otherButtonTitles:@"确定"] show];
     }];
     
     if (!self.busRoutes) {
-        self.busRoutes = [[NSMutableArray alloc] init];
+        self.busRoutes = [[NSArray alloc] init];
     }
     if (!self.directionRoutes) {
-        self.directionRoutes = [[NSMutableArray alloc] init];
+        self.directionRoutes = [[NSArray alloc] init];
+    }
+    if (!self.stations) {
+        self.stations = [[NSArray alloc] init];
     }
     if (!self.formDict) {
         self.formDict = [[NSMutableDictionary alloc] init];
     }
-    if (!self.stations) {
-        self.stations = [[NSMutableArray alloc] init];
-    }
     self.currentStep = BusSelectStepSelectBus;
+#if TARGET_IS_DEBUG
     [self loadBusRoutesNeedRefresh:NO];
+#else
+    [self loadBusRoutesNeedRefresh:NO];
+#endif
+
 #if TARGET_IS_BETA
     BOOL needShowPrompt;
     NSInteger counter = [[[NSUserDefaults standardUserDefaults] objectForKey:@"LaunchCounter"] integerValue];
@@ -122,7 +126,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 #pragma mark - UI related actions
@@ -142,10 +146,12 @@
             }
             else {
                 self.currentStep = BusSelectStepSelectBus;
+                self.busField.text = @"";
                 self.stationField.text = @"";
                 self.directionField.text = @"";
-                [self.stations removeAllObjects];
-                [self.directionRoutes removeAllObjects];
+                self.stations = nil;
+                self.directionRoutes = nil;
+                self.directionSelectButton.hidden = YES;
                 [self.pickerView reloadComponent:0];
                 [self.pickerView selectRow:0 inComponent:0 animated:YES];
             }
@@ -156,7 +162,7 @@
             UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择行车方向" completionBlock:^(NSUInteger buttonIndex, UIActionSheet *actionSheet) {
                 [self.formDict setObject:[[self.directionRoutes objectAtIndex:(buttonIndex)] objectForKey:kBusID] forKey:@"ddlSegment"];
                 self.directionField.text = [[self.directionRoutes objectAtIndex:(buttonIndex)] objectForKey:kBusName];
-                [self loadStations];
+                [self loadStationsForIndex:buttonIndex];
             } cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
             
             for (NSDictionary *dict in self.directionRoutes) {
@@ -201,7 +207,6 @@
         }
         [self.formDict setObject:[[self.busRoutes objectAtIndex:row] objectForKey:kBusID] forKey:@"ddlRoute"];
         self.busField.text = [[self.busRoutes objectAtIndex:row] objectForKey:kBusName];
-        //NSLog(@"%@", [[self.busRoutes objectAtIndex:row] objectForKey:@"BusID"]);
         [self loadDirection];
     }
     else if (self.currentStep == BusSelectStepSelectStation) {
@@ -224,43 +229,41 @@
     NSArray *busRoutes = [self.defaults objectForKey:kBusStorage];
     NSDictionary *formDict = [self.defaults objectForKey:kBusFormPartitialStorage];
     if (busRoutes != nil && !needRefresh) {
-        [self.busRoutes removeAllObjects];
-        [self.busRoutes addObjectsFromArray:busRoutes];
+        self.currentStep = BusSelectStepSelectBus;
+        self.busRoutes = busRoutes;
         [self.formDict removeAllObjects];
         [self.formDict addEntriesFromDictionary:formDict];
         self.busSelectButton.enabled = YES;
+        [self.pickerView selectRow:0 inComponent:0 animated:YES];
         return;
     }
-    [self showHUDLoadingWithMessage:@"公交线路加载中..."];
+    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交线路加载中..."];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[[NSURL alloc] initWithString:self.serverAddress]];
     __block ASIHTTPRequest *request_b = request;
     __block ViewController *vc = self;
     [request setCompletionBlock:^{
         NSData *responseData = [request_b responseData];
-        TFHpple *doc = [[TFHpple alloc] initWithHTMLData:responseData];
-        NSArray *elements = [doc searchWithXPathQuery:@"//select"];
-        [self.busRoutes removeAllObjects];
-        for (TFHppleElement *element in [[elements objectAtIndex:0] children]) {
-            [self.busRoutes addObject:@{kBusName: [[element firstChild] content], kBusID: [element objectForKey:@"value"]}];
-        }
+        WXBusParser *parser = [[WXBusParser alloc] initWithData:responseData];
+        [parser parse];
+        
+        self.busRoutes = parser.busRoutes;
+        self.stations = parser.stations;
+        self.directionRoutes = parser.directionRoutes;
+        self.formDict = parser.formDict;
         [vc->_pickerView reloadComponent:0];
         
-        NSArray *formElements = [doc searchWithXPathQuery:@"//form/input"];
-        for (TFHppleElement *element in formElements) {
-            [self.formDict setObject:[element objectForKey:@"value"] forKey:[element objectForKey:@"name"]];
-        }
-        
+        // 保存公交路线和ViewState表单。
         [self.defaults setObject:self.busRoutes forKey:kBusStorage];
         [self.defaults setObject:self.formDict forKey:kBusFormPartitialStorage];
         [self.defaults synchronize];
-        [self.hud hide:YES];
+        
+        [[AppDelegate shared] hideHUD];
         self.busSelectButton.enabled = YES;
     }];
     
     [request setFailedBlock:^{
-        [self hideHUDWithMessage:@"请求超时，请重试！"];
-        [self.busRoutes removeAllObjects];
-        [self.busRoutes addObject:@{kBusName: @"请重试"}];
+        [[AppDelegate shared] hideHUDWithMessage:@"请求超时，请重试！"];
+        self.busRoutes = @[@{kBusName: @"请重试"}];
         self.busSelectButton.enabled = YES;
         [self.pickerView reloadAllComponents];
     }];
@@ -268,9 +271,23 @@
     [request startAsynchronous];
 }
 
-//选择方向
+- (void)loadPickerForStationsAtIndex:(NSInteger)index {
+    NSDictionary *directionRoute = [self.directionRoutes objectAtIndex:index];
+    self.directionField.text = [directionRoute objectForKey:kBusName];
+    
+    [self.pickerView reloadComponent:0];
+    [self.pickerView selectRow:0 inComponent:0 animated:YES];
+    
+    [self.formDict setObject:[directionRoute objectForKey:kBusID] forKey:@"ddlSegment"];
+    
+    self.stationField.text = [[self.stations objectAtIndex:0] objectForKey:kStationName];
+    [self.formDict setObject:@(0) forKey:@"rpt$ctl00$imgBtn.x"];
+    [self.formDict setObject:@(0) forKey:@"rpt$ctl00$imgBtn.y"];
+}
+
+//选择方向同时加载站名
 - (void)loadDirection {
-    [self showHUDLoadingWithMessage:@"公交站名加载中..."];
+    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交站名加载中..."];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[[NSURL alloc] initWithString:self.serverAddress]];
     for (id key in [self.formDict allKeys]) {
         [request setPostValue:[self.formDict objectForKey:key] forKey:key];
@@ -280,69 +297,58 @@
     __block ViewController *vc = self;
     
     [request setCompletionBlock:^{
-        [self.hud hide:YES];
+        [[AppDelegate shared] hideHUD];
         NSData *responseData = [request_b responseData];
-        //NSLog(@"%@", [request_b responseString]);
-        TFHpple *doc = [[TFHpple alloc] initWithHTMLData:responseData];
-        NSArray *elements = [doc searchWithXPathQuery:@"//select"];
-        NSArray *subElements = [[elements objectAtIndex:1] children];
-        //NSLog(@"%@", [elements objectAtIndex:1]);
-        if ([subElements count] > 1) { //有方向选择的
+        WXBusParser *parser = [[WXBusParser alloc] initWithData:responseData];
+        [parser parse];
+        
+        self.busRoutes = parser.busRoutes;
+        self.stations = parser.stations;
+        self.directionRoutes = parser.directionRoutes;
+        self.formDict = parser.formDict;
+        
+        if ([self.directionRoutes count] > 1) {
             self.directionSelectButton.hidden = NO;
             self.currentStep = BusSelectStepSelectDirection;
             UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择行车方向" completionBlock:^(NSUInteger buttonIndex, UIActionSheet *actionSheet) {
                 [self.formDict setObject:[[self.directionRoutes objectAtIndex:(buttonIndex)] objectForKey:kBusID] forKey:@"ddlSegment"];
-                self.directionField.text = [[self.directionRoutes objectAtIndex:(buttonIndex)] objectForKey:kBusName];
-                [self loadStations];
-                /*if (buttonIndex == 0) {
+                if (buttonIndex == 0) {
+                    self.stations = parser.stations;
                     self.currentStep = BusSelectStepSelectStation;
-                    [self.formDict setObject:[[subElements objectAtIndex:0] objectForKey:@"value"] forKey:@"ddlSegment"];
-                    self.directionField.text = [[[subElements objectAtIndex:0] firstChild] content];
-                    [self loadStationsWithHTMLData:responseData];
+                    [self loadPickerForStationsAtIndex:buttonIndex];
                 }
                 else {
-                    [self loadStations];
-                }*/
+                    [self loadStationsForIndex:buttonIndex];
+                }
             } cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-            
-            [self.directionRoutes removeAllObjects];
-            
-            for (TFHppleElement *element in subElements) {
-                [self.directionRoutes addObject:@{kBusName: [[element firstChild] content], kBusID: [element objectForKey:@"value"]}];
-                [sheet addButtonWithTitle:[[element firstChild] content]];
+            for (NSDictionary *directionRoute in self.directionRoutes) {
+                [sheet addButtonWithTitle:[directionRoute objectForKey:kBusName]];
             }
             [sheet showInView:vc.view];
         }
-        else if ([subElements count] == 0) {
-            NSArray *tables = [doc searchWithXPathQuery:@"//table[@class='table_inside']"];
-            TFHppleElement *table = [tables objectAtIndex:1];
-            if ([[[[table children] objectAtIndex:0] children] count] == 0) {
-                [[[UIAlertView alloc] initWithTitle:@"提示" message:@"该路线暂无状态信息。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
-            }
-            else {
-                [self loadBusRoutesNeedRefresh:YES];
-            }
+        else if ([parser.directionRoutes count] == 0) {
+            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"该路线暂无状态信息。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
         }
-        else { //没有方向选择的
+        else {
             self.directionSelectButton.hidden = YES;
             self.currentStep = BusSelectStepSelectStation;
-            [self.formDict setObject:[[subElements objectAtIndex:0] objectForKey:@"value"] forKey:@"ddlSegment"];
-            //NSLog(@"%@", [[subElements objectAtIndex:0] objectForKey:@"value"]);
-            self.directionField.text = [[[subElements objectAtIndex:0] firstChild] content];
-            [self loadStationsWithHTMLData:responseData];
+            
+            self.stations = parser.stations;
+            [self loadPickerForStationsAtIndex:0];
         }
     }];
     
     [request setFailedBlock:^{
         self.currentStep = BusSelectStepSelectBus;
-        [self hideHUDWithMessage:@"请求超时，请重试！"];
+        [[AppDelegate shared] hideHUDWithMessage:@"请求超时，请重试！"];
     }];
     
     [request startAsynchronous];
 }
 
-- (void)loadStations {
-    [self showHUDLoadingWithMessage:@"公交站点加载中..."];
+// 在有方向选择时加载站名
+- (void)loadStationsForIndex:(NSInteger)index {
+    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交站点加载中..."];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[[NSURL alloc] initWithString:self.serverAddress]];
     for (id key in [self.formDict allKeys]) {
         [request setPostValue:[self.formDict objectForKey:key] forKey:key];
@@ -351,179 +357,80 @@
     __block ASIFormDataRequest *request_b = request;
     
     [request setCompletionBlock:^{
-        [self.hud hide:YES];
+        [[AppDelegate shared] hideHUD];
         self.currentStep = BusSelectStepSelectStation;
         NSData *responseData = [request_b responseData];
+        WXBusParser *parser = [[WXBusParser alloc] initWithData:responseData];
+        [parser parse];
         
-        [self loadStationsWithHTMLData:responseData];
+        self.busRoutes = parser.busRoutes;
+        self.stations = parser.stations;
+        self.directionRoutes = parser.directionRoutes;
+        self.formDict = parser.formDict;
+        
+        [self loadPickerForStationsAtIndex:index];
+    }];
+    
+    [request setFailedBlock:^{
+        self.currentStep = BusSelectStepSelectBus;
+        [[AppDelegate shared] hideHUDWithMessage:@"请求超时，请重试！"];
     }];
     
     [request startAsynchronous];
 }
 
-- (void)loadStationsWithHTMLData:(NSData *)htmlData {
-    TFHpple *doc = [[TFHpple alloc] initWithHTMLData:htmlData];
-    NSArray *elements = [doc searchWithXPathQuery:@"//table[@class='table_inside']/tr/td/table"];
-
-    [self.stations removeAllObjects];
-    for (NSInteger i = 2; i < [elements count]; i++) {
-        NSMutableDictionary *station = [[NSMutableDictionary alloc] init];
-        NSArray *children = [[[[[elements objectAtIndex:i] children] objectAtIndex:0] firstChild] children]; // <input> etc.
-        for (TFHppleElement *e in children) {
-            if ([[e tagName] isEqualToString:@"input"] && [[e objectForKey:@"type"] isEqualToString:@"hidden"] && [e objectForKey:@"value"]) {
-                [station setObject:[e objectForKey:@"value"] forKey:[e objectForKey:@"name"]];
-            }
-        }
-        
-        for (TFHppleElement *e in [[[[elements objectAtIndex:i] children] objectAtIndex:1] children]) {
-            if ([[e tagName] isEqualToString:@"td"]) {
-                for (TFHppleElement *c in [e children]) {
-                    if ([[c tagName] isEqualToString:@"span"]) {
-                        [station setObject:[[c firstChild] content] forKey:kStationName];
-                        //NSLog(@"%@", [[c firstChild] content]);
-                    }
-                }
-            }
-        }
-        
-        [self.stations addObject:station];
-    }
-    
-    [self.pickerView reloadComponent:0];
-    [self.pickerView selectRow:0 inComponent:0 animated:YES];
-    self.stationField.text = [[self.stations objectAtIndex:0] objectForKey:kStationName];
-    
-    [self.formDict removeAllObjects];
-    NSArray *formElements = [doc searchWithXPathQuery:@"//input"];
-    for (TFHppleElement *element in formElements) {
-        if ([element objectForKey:@"value"] == nil) {
-            continue;
-        }
-        else {
-            [self.formDict setObject:[element objectForKey:@"value"] forKey:[element objectForKey:@"name"]];
-        }
-    }
-    
-    NSMutableDictionary *formDict = [[self.defaults objectForKey:kBusFormPartitialStorage] mutableCopy];
-    [formDict setObject:[self.formDict objectForKey:@"__VIEWSTATE"] forKey:@"__VIEWSTATE"];
-    [self.defaults setObject:formDict forKey:kBusFormPartitialStorage];
-    [self.defaults synchronize];
-    
-    [self.formDict setObject:@(0) forKey:@"rpt$ctl00$imgBtn.x"];
-    [self.formDict setObject:@(0) forKey:@"rpt$ctl00$imgBtn.y"];
-    //NSLog(@"%@", self.formDict);
-}
-
+// 查看公交车状态
 - (IBAction)showBusStatus:(id)sender {
     if ([[self.stationField.text strip] isEqualToString:@""]) {
         [[[UIAlertView alloc] initWithTitle:@"错误" message:@"请先选择乘车方向和候车站点。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show];
         return;
     }
     
-    [self showHUDLoadingWithMessage:@"公交位置加载中..."];
+    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交位置加载中..."];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[[NSURL alloc] initWithString:self.serverAddress]];
     for (id key in [self.formDict allKeys]) {
         [request setPostValue:[self.formDict objectForKey:key] forKey:key];
     }
+#if TARGET_IS_DEBUG
     //NSLog(@"%@", self.formDict);
-    //return;
-    __block ASIFormDataRequest *request_b = request;
-    //__block ViewController *vc = self;
+#endif
+    // 保存查询公车状态的表单
+    [self.defaults setObject:self.formDict forKey:kBusStatusFormStorage];
     
+    __block ASIFormDataRequest *request_b = request;
     [request setCompletionBlock:^{
-        [self.hud hide:YES];
+        [[AppDelegate shared] hideHUD];
         NSData *responseData = [request_b responseData];
-        //NSLog(@"%@", [request_b responseString]);
-        TFHpple *doc = [[TFHpple alloc] initWithHTMLData:responseData];
-        NSArray *elements = [doc searchWithXPathQuery:@"//table[@class='table_inside']/tr/td/span/font"];
-        NSString *message = [[[elements objectAtIndex:0] firstChild] content];
-        if ([message length] > 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        WXBusParser *parser = [[WXBusParser alloc] initWithData:responseData];
+        [parser parse];
+        
+        self.busRoutes = parser.busRoutes;
+        self.stations = parser.stations;
+        self.directionRoutes = parser.directionRoutes;
+        self.formDict = parser.formDict;
+        
+        if ([parser.nextBuses isKindOfClass:NSClassFromString(@"NSString")]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:parser.nextBuses delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
-            return;
+        }
+        else if (parser.nextBuses == nil || [parser.nextBuses count] == 0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"未知错误" message:@"发生未知错误，请联系开发人员处理这个问题。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
         }
         else {
-            elements = [doc searchWithXPathQuery:@"//table[@class='table_inside']//div/table/tr"];
-            NSMutableArray *nextBuses = [[NSMutableArray alloc] initWithCapacity:1];
-            for (NSInteger i = 1; i < [elements count]; i++) {
-                TFHppleElement *element = [elements objectAtIndex:i];
-                NSArray *children = [element children];
-                NSMutableArray *bus = [[NSMutableArray alloc] initWithCapacity:3];
-                for (TFHppleElement *child in children) {
-                    NSString *text = [[[child firstChild] content] strip];
-                    if ([text length] > 0) {
-                        [bus addObject:text];
-                    }
-                }
-                [nextBuses addObject:bus];
-            }
-            
             BusStatusViewController *busStatusVC = [[BusStatusViewController alloc] initWithStyle:UITableViewStyleGrouped];
             busStatusVC.currentStationName = [[self.stations objectAtIndex:[self.pickerView selectedRowInComponent:0]] objectForKey:kStationName];
-            busStatusVC.nextBuses = nextBuses;
+            busStatusVC.nextBuses = parser.nextBuses;
+            busStatusVC.currentBusName = self.busField.text;
             [self.navigationController pushViewController:busStatusVC animated:YES];
         }
     }];
     
     [request setFailedBlock:^{
-        [self hideHUDWithMessage:@"请求超时，请重试！"];
+        [[AppDelegate shared] hideHUDWithMessage:@"请求超时，请重试！"];
     }];
     
     [request startAsynchronous];
-}
-
-#pragma mark - MBProgressHUD Helper and Delegate
-
-- (void)showHUDLoadingWithMessage:(NSString *)message {
-    if (self.hud) {
-        [self.hud hide:YES];
-        [self.hud removeFromSuperview];
-        self.hud = nil;
-    }
-    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
-	[self.view addSubview:self.hud];
-	
-    self.hud.delegate = self;
-    self.hud.labelText = message;
-	[self.hud show:YES];
-}
-
-- (void)showHUDWithMessage:(NSString *)message isWarning:(BOOL)warningOrDone {
-    if (self.hud) {
-        [self.hud hide:YES];
-        [self.hud removeFromSuperview];
-        self.hud = nil;
-    }
-    self.hud = [[MBProgressHUD alloc] initWithView:self.view];
-    self.hud.mode = MBProgressHUDModeCustomView;
-    if (warningOrDone) {
-        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32x-Exclamationmark"]];
-    }
-    else {
-        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark"]];
-    }
-	[self.view addSubview:self.hud];
-	
-    self.hud.delegate = self;
-    self.hud.labelText = message;
-	[self.hud show:YES];
-    [self.hud hide:YES afterDelay:2];
-}
-
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-    if (hud) {
-        [hud removeFromSuperview];
-        hud = nil;
-    }
-}
-
-- (void)hideHUDWithMessage:(NSString *)message {
-    if (self.hud) {
-        self.hud.labelText = message;
-        self.hud.mode = MBProgressHUDModeCustomView;
-        self.hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"32x-Exclamationmark"]];
-        [self.hud hide:YES afterDelay:2];
-    }
 }
 
 @end

@@ -14,3 +14,4 @@ static NSString *kStationName = @"StationName";
 static NSString *kBusStorage = @"BusStorage";
 static NSString *kBusFormPartitialStorage = @"BusFormPartitialStorage";
 static NSString *kServerAddressStorage = @"ServerAddressStorage";
+static NSString *kBusStatusFormStorage = @"BusStatusFormStorage";

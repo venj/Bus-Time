@@ -135,7 +135,9 @@ NSArray *PerformXPathQuery(xmlDocPtr doc, NSString *query)
   xmlNodeSetPtr nodes = xpathObj->nodesetval;
   if (!nodes)
     {
+#if TARGET_IS_DEBUG
       NSLog(@"Nodes was nil.");
+#endif
       xmlXPathFreeObject(xpathObj);
       xmlXPathFreeContext(xpathCtx);
       return nil;
@@ -163,7 +165,7 @@ NSArray *PerformHTMLXPathQuery(NSData *document, NSString *query)
   xmlDocPtr doc;
 
   /* Load XML document */
-  doc = htmlReadMemory([document bytes], (int)[document length], "", NULL, HTML_PARSE_NOWARNING | HTML_PARSE_NOERROR);
+  doc = htmlReadMemory([document bytes], (int)[document length], "", NULL, HTML_PARSE_NOWARNING | HTML_PARSE_NOERROR | HTML_PARSE_NOBLANKS);
 
   if (doc == NULL)
     {
