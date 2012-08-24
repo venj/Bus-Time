@@ -251,6 +251,7 @@
         self.directionRoutes = parser.directionRoutes;
         self.formDict = parser.formDict;
         [vc->_pickerView reloadComponent:0];
+        [vc->_pickerView selectRow:0 inComponent:0 animated:YES];
         
         // 保存公交路线和ViewState表单。
         [self.defaults setObject:self.busRoutes forKey:kBusStorage];

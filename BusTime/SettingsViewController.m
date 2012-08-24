@@ -143,7 +143,7 @@
             [alertView show];
         }
     }
-    else {
+    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [[[UIAlertView alloc] initWithTitle:@"清空缓存和设置" message:@"即将清空程序缓存和程序设置，是否继续？" completionBlock:^(NSUInteger buttonIndex) {
                 if (buttonIndex != 0) {

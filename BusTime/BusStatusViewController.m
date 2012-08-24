@@ -100,7 +100,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"当前公交站";
+        return @"候车公交站";
     }
     return @"离本站最近的公交车";
 }
@@ -130,7 +130,7 @@
 - (void)showBusStatus:(id)sender {
     NSDictionary *formDict = [[NSUserDefaults standardUserDefaults] objectForKey:kBusStatusFormStorage];
     NSString *serverAddress = [[NSUserDefaults standardUserDefaults] objectForKey:kServerAddressStorage];
-    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交位置加载中..."];
+    [[AppDelegate shared] showHUDLoadingInView:self.view withMessage:@"公交位置更新中..."];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[[NSURL alloc] initWithString:serverAddress]];
     for (id key in [formDict allKeys]) {
         [request setPostValue:[formDict objectForKey:key] forKey:key];
