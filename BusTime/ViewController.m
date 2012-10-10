@@ -70,9 +70,9 @@
     }
     self.currentStep = BusSelectStepSelectBus;
 #if TARGET_IS_DEBUG
-    [self loadBusRoutesNeedRefresh:NO];
+    [self loadBusRoutesNeedRefresh:YES];
 #else
-    [self loadBusRoutesNeedRefresh:NO];
+    [self loadBusRoutesNeedRefresh:YES];
 #endif
 
 #if TARGET_IS_BETA
@@ -410,20 +410,35 @@
         self.directionRoutes = parser.directionRoutes;
         self.formDict = parser.formDict;
         
-        if ([parser.nextBuses isKindOfClass:NSClassFromString(@"NSString")]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:parser.nextBuses delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
-        }
-        else if (parser.nextBuses == nil || [parser.nextBuses count] == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"未知错误" message:@"发生未知错误，请联系开发人员处理这个问题。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+        if (parser.needCapcha == YES) {
+            [self showBusStatus:nil];
+            /*
+            __block UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入验证码" message:@"\n\n" completionBlock:^(NSUInteger buttonIndex) {
+                [self showBusStatus:nil];
+            } cancelButtonTitle:@"重新载入" otherButtonTitles:@"提交"];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:parser.capcha];
+            CGFloat imageWidth = 30.;
+            CGFloat imageHeight = 20.;
+            imageView.frame = CGRectMake(floor((284 - imageWidth)/2), 47, imageWidth, imageHeight);
+            [alert addSubview:imageView];
+            [alert show];*/
         }
         else {
-            BusStatusViewController *busStatusVC = [[BusStatusViewController alloc] initWithStyle:UITableViewStyleGrouped];
-            busStatusVC.currentStationName = [[self.stations objectAtIndex:[self.pickerView selectedRowInComponent:0]] objectForKey:kStationName];
-            busStatusVC.nextBuses = parser.nextBuses;
-            busStatusVC.currentBusName = self.busField.text;
-            [self.navigationController pushViewController:busStatusVC animated:YES];
+            if ([parser.nextBuses isKindOfClass:NSClassFromString(@"NSString")]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:parser.nextBuses delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+            else if (parser.nextBuses == nil || [parser.nextBuses count] == 0) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"未知错误" message:@"发生未知错误，请联系开发人员处理这个问题。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+            else {
+                BusStatusViewController *busStatusVC = [[BusStatusViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                busStatusVC.currentStationName = [[self.stations objectAtIndex:[self.pickerView selectedRowInComponent:0]] objectForKey:kStationName];
+                busStatusVC.nextBuses = parser.nextBuses;
+                busStatusVC.currentBusName = self.busField.text;
+                [self.navigationController pushViewController:busStatusVC animated:YES];
+            }
         }
     }];
     

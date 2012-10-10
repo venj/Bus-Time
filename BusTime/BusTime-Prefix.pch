@@ -14,4 +14,4 @@
 #endif
 
 #define TARGET_IS_BETA 0
-#define TARGET_IS_DEBUG 0
+#define TARGET_IS_DEBUG 1

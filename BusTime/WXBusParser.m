@@ -9,7 +9,6 @@
 #import "WXBusParser.h"
 #import "TFHpple.h"
 #import "Common.h"
-#import "ASIFormDataRequest.h"
 #import "ASIHTTPRequest.h"
 #import "HandyFoundation.h"
 
@@ -24,12 +23,13 @@
         _defaults = [NSUserDefaults standardUserDefaults];
         _htmlDoc = [[TFHpple alloc] initWithHTMLData:htmlData];
 #if TARGET_IS_DEBUG
-        //NSLog(@"%@", [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding]);
+        NSLog(@"%@", [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding]);
 #endif
         _busRoutes = [[NSArray alloc] init];
         _directionRoutes = [[NSArray alloc] init];
         _stations = [[NSArray alloc] init];
         _formDict = [[NSMutableDictionary alloc] init];
+        _needCapcha = NO;
     }
     return self;
 }
@@ -131,17 +131,45 @@
         }
     }
     self.formDict = formDict;
-    //[self updateViewState:[self.formDict objectForKey:@"__VIEWSTATE"]];
+    [self updateViewState:[self.formDict objectForKey:@"__VIEWSTATE"]];
+
+    // 验证码
+    NSArray *inputs = [self.htmlDoc searchWithXPathQuery:@"//input[@name='hidJudgeFlg']"];
+    if ([inputs count] == 1) {
+        id value = [[inputs objectAtIndex:0] objectForKey:@"value"];
+        if ([value integerValue] == 1) { //只在需要验证码输入的时候设置为是。
+            self.needCapcha = YES;
+        }
+    }
+    else {
+        self.needCapcha = NO;
+    }
+    /*
+    NSArray *capchaImages = [self.htmlDoc searchWithXPathQuery:@"//img[@id='randomming']"];
+    if ([capchaImages count] == 1 && self.needCapcha == YES) {
+    NSString *imageName = [[capchaImages objectAtIndex:0] objectForKey:@"src"];
+    NSString *serverAddress = [self.defaults objectForKey:kServerAddressStorage];
+    NSString *capchaPath = [[serverAddress stringByDeletingLastPathComponent] stringByAppendingPathComponent:imageName];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", capchaPath]]];
+    [request startSynchronous];
+    self.capcha = [UIImage imageWithData:[request responseData]];
+    }*/
+    
+    NSArray *capchaChars = [self.htmlDoc searchWithXPathQuery:@"//input[@name='txtRandom_Std']"];
+    if ([capchaChars count] == 1 && self.needCapcha == YES) {
+        NSString *capcha = [[capchaChars objectAtIndex:0] objectForKey:@"value"];
+        [self.formDict setObject:capcha forKey:@"txtRandom"];
+    }
 }
-/*
+
 - (void)updateViewState:(NSString *)viewState {
     if (viewState != nil && [self.directionRoutes count] == 0) {
         NSMutableDictionary *formDict = [[self.defaults objectForKey:kBusFormPartitialStorage] mutableCopy];
         [formDict setObject:viewState forKey:@"__VIEWSTATE"];
-        NSLog(@"%@", viewState);
+        //NSLog(@"%@", viewState);
         [self.defaults setObject:formDict forKey:kBusFormPartitialStorage];
         [self.defaults synchronize];
     }
 }
-*/
+
 @end

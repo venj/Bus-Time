@@ -14,6 +14,9 @@
 @property (strong, nonatomic) NSArray *stations;
 @property (strong, nonatomic) id nextBuses;
 @property (strong, nonatomic) NSMutableDictionary *formDict;
+@property (assign, nonatomic) BOOL needCapcha;
+//@property (strong, nonatomic) UIImage *capcha;
+//@property (strong, nonatomic) NSString *capcha;
 - (id)initWithData:(NSData *)htmlData;
 - (void)parse;
 @end
