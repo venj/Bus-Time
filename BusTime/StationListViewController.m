@@ -125,7 +125,9 @@
         }
         else {
             NSArray *infoArray = (NSArray *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
+            
             QueryResultViewController *queryController = [[QueryResultViewController alloc] initWithNibName:@"QueryResultViewController" bundle:nil];
+            queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
             queryController.resultArray = infoArray;
             [self.navigationController pushViewController:queryController animated:YES];
         }
