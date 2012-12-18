@@ -45,13 +45,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return [self.resultArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,12 +59,22 @@
     static NSString *CellIdentifier = @"QueryResultCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    
     // Configure the cell...
-    
+    NSDictionary *resultDict = [self.resultArray objectAtIndex:indexPath.section];
+    cell.textLabel.text = [resultDict valueForKeyPath:@"stationname.text"];
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"距离本站还有%@站", [resultDict valueForKeyPath:@"stationnum.text"]];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    [cell.detailTextLabel setAdjustsFontSizeToFitWidth:YES];
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSDictionary *resultDict = [self.resultArray objectAtIndex:section];
+    return [NSString stringWithFormat:@"公交车于%@到达：", [resultDict valueForKeyPath:@"actdatetime.text"]];
 }
 
 /*

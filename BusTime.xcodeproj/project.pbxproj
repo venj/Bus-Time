@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		253C1E2E15E3713D009BD208 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 253C1E2C15E3713D009BD208 /* Default.png */; };
 		253C1E2F15E3713D009BD208 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 253C1E2D15E3713D009BD208 /* Default@2x.png */; };
+		253F4D1C1680ADD80007E1E4 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 253F4D1B1680ADD80007E1E4 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		255E3A3915E358AA007C1D9E /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255E3A3815E358AA007C1D9E /* SettingsViewController.m */; };
 		255E3A4D15E36A7E007C1D9E /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 255E3A4515E36A7E007C1D9E /* Icon-Small-50.png */; };
 		255E3A4E15E36A7E007C1D9E /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 255E3A4615E36A7E007C1D9E /* Icon-Small.png */; };
@@ -72,6 +73,8 @@
 /* Begin PBXFileReference section */
 		253C1E2C15E3713D009BD208 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		253C1E2D15E3713D009BD208 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		253F4D1A1680ADD80007E1E4 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		253F4D1B1680ADD80007E1E4 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		255E3A3715E358AA007C1D9E /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		255E3A3815E358AA007C1D9E /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		255E3A4515E36A7E007C1D9E /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
@@ -192,6 +195,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		253F4D1D1680BA7F0007E1E4 /* XMLReader */ = {
+			isa = PBXGroup;
+			children = (
+				253F4D1A1680ADD80007E1E4 /* XMLReader.h */,
+				253F4D1B1680ADD80007E1E4 /* XMLReader.m */,
+			);
+			name = XMLReader;
+			sourceTree = "<group>";
+		};
 		255E3A5415E36A8C007C1D9E /* Icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +260,7 @@
 				25E803BE15E2083200B57711 /* cl_block */,
 				25E803A115E204AE00B57711 /* MBProgressHUD */,
 				256B16F4168048AF00446B50 /* FMDatabase */,
+				253F4D1D1680BA7F0007E1E4 /* XMLReader */,
 				25CC19B315E4930A00F3ABA6 /* Handy Foundation */,
 				2568BE1615E1D4150015219D /* AppDelegate.h */,
 				2568BE1715E1D4150015219D /* AppDelegate.m */,
@@ -491,6 +504,7 @@
 				256B171D1680557500446B50 /* BusStation.m in Sources */,
 				256B172216805FA500446B50 /* StationListViewController.m in Sources */,
 				256B1728168064E900446B50 /* QueryResultViewController.m in Sources */,
+				253F4D1C1680ADD80007E1E4 /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

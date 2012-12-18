@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface QueryResultViewController : UITableViewController
-
+@property (nonatomic, strong) NSArray *resultArray;
 @end

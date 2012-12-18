@@ -93,8 +93,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSArray *busRoutes;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+        busRoutes = self.filterBuses;
+    else
+        busRoutes = self.allBuses;
     StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
-    stationListViewController.busRoute = [self.allBuses objectAtIndex:indexPath.row];
+    stationListViewController.busRoute = [busRoutes objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:stationListViewController animated:YES];
 }
 
