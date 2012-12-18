@@ -45,6 +45,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
+    if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
+        return 1;
+    }
     return [self.resultArray count];
 }
 
@@ -62,7 +65,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     // Configure the cell...
-    NSDictionary *resultDict = [self.resultArray objectAtIndex:indexPath.section];
+    NSDictionary *resultDict;
+    if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
+        resultDict = self.resultArray;
+    }
+    else {
+        resultDict = [self.resultArray objectAtIndex:indexPath.section];
+    }
     cell.textLabel.text = [resultDict valueForKeyPath:@"stationname.text"];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
@@ -73,7 +82,13 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSDictionary *resultDict = [self.resultArray objectAtIndex:section];
+    NSDictionary *resultDict;
+    if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
+        resultDict = self.resultArray;
+    }
+    else {
+        resultDict = [self.resultArray objectAtIndex:section];
+    }
     return [NSString stringWithFormat:@"公交车于%@到达：", [resultDict valueForKeyPath:@"actdatetime.text"]];
 }
 
