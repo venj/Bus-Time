@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class ViewController, MBProgressHUD;
+@class BusListViewController, MBProgressHUD;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) BusListViewController *busListController;
 @property (strong, nonatomic) MBProgressHUD *hud;
 
 + (AppDelegate *)shared;

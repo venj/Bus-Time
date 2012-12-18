@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "ViewController.h"
+#import "BusListViewController.h"
 #import "MBProgressHUD.h"
 
 @interface AppDelegate () <MBProgressHUDDelegate>
@@ -21,12 +21,21 @@
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
++ (void)initialize {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *dbPath = [NSHomeDirectory() stringByAppendingPathComponent:@"wuxitraffic.db"];
+    BOOL dbExists = [manager fileExistsAtPath:dbPath];
+    if (!dbExists) {
+        [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
+    UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.busListController];
     self.window.rootViewController = navControl;
     [self.window makeKeyAndVisible];
     return YES;
