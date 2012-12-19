@@ -21,15 +21,17 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGRect contentViewFrame = self.contentView.frame;
-    CGRect textLabelFrame = self.textLabel.frame;
-    CGRect detailedTextLabelFrame = self.detailTextLabel.frame;
-    CGRect newTextLabelFrame = CGRectMake(textLabelFrame.origin.x, textLabelFrame.origin.y - textLabelFrame.size.height / 2, textLabelFrame.size.width, textLabelFrame.size.height);
-    self.textLabel.frame = newTextLabelFrame;
-    CGRect newDetailedTextLabelFrame = CGRectMake(textLabelFrame.origin.x, textLabelFrame.origin.y + textLabelFrame.size.height / 2, detailedTextLabelFrame.size.width, detailedTextLabelFrame.size.height);
-    self.detailTextLabel.frame = newDetailedTextLabelFrame;
-    CGRect newContentViewFrame = CGRectMake(contentViewFrame.origin.x, contentViewFrame.origin.y, contentViewFrame.size.width, contentViewFrame.size.height + detailedTextLabelFrame.size.height);
-    self.contentView.frame = newContentViewFrame;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        CGRect contentViewFrame = self.contentView.frame;
+        CGRect textLabelFrame = self.textLabel.frame;
+        CGRect detailedTextLabelFrame = self.detailTextLabel.frame;
+        CGRect newTextLabelFrame = CGRectMake(textLabelFrame.origin.x, textLabelFrame.origin.y - textLabelFrame.size.height / 2, textLabelFrame.size.width, textLabelFrame.size.height);
+        self.textLabel.frame = newTextLabelFrame;
+        CGRect newDetailedTextLabelFrame = CGRectMake(textLabelFrame.origin.x, textLabelFrame.origin.y + textLabelFrame.size.height / 2, detailedTextLabelFrame.size.width, detailedTextLabelFrame.size.height);
+        self.detailTextLabel.frame = newDetailedTextLabelFrame;
+        CGRect newContentViewFrame = CGRectMake(contentViewFrame.origin.x, contentViewFrame.origin.y, contentViewFrame.size.width, contentViewFrame.size.height + detailedTextLabelFrame.size.height);
+        self.contentView.frame = newContentViewFrame;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
