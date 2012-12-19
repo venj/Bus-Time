@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "cl_BlockHead.h"
+#import "AppDelegate.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface SettingsViewController ()
 
@@ -28,8 +30,8 @@
 {
     [super viewDidLoad];
     self.title = @"设置";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone handler:^(id sender) {
-        [self dismissModalViewControllerAnimated:YES];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+        [[AppDelegate shared] showLeftMenu];
     }];
 }
 

@@ -10,7 +10,9 @@
 #import "BusDataSource.h"
 #import "BusStation.h"
 #import "StationListViewController.h"
-#import "SettingsViewController.h"
+#import "HandyFoundation.h"
+#import "AppDelegate.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface BusListViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 @property (nonatomic, strong) NSArray *filterBuses;
@@ -34,12 +36,10 @@
     self.allBuses = source.busList;
     
     self.title = @"公交线路";
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain handler:^(id sender) {
-//        SettingsViewController *settingsControl = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-//        UINavigationController *settingsNavControl = [[UINavigationController alloc] initWithRootViewController:settingsControl];
-//        settingsNavControl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-//        [self.navigationController presentModalViewController:settingsNavControl animated:YES];
-//    }];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+        [[AppDelegate shared] showLeftMenu];
+    }];
+    [[AppDelegate shared] preloadMenus];
 }
 
 - (void)didReceiveMemoryWarning
@@ -106,7 +106,7 @@
         busRoutes = self.filterBuses;
     else
         busRoutes = self.allBuses;
-    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
+    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithStyle:UITableViewStylePlain];
     stationListViewController.busRoute = [busRoutes objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:stationListViewController animated:YES];
 }

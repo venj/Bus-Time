@@ -25,7 +25,6 @@
 		251785A1168191510007589B /* BusDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517853E168191510007589B /* BusDataSource.m */; };
 		251785A3168191510007589B /* BusInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178540168191510007589B /* BusInfoCell.m */; };
 		251785A5168191510007589B /* BusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178542168191510007589B /* BusListViewController.m */; };
-		251785A6168191510007589B /* BusListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25178543168191510007589B /* BusListViewController.xib */; };
 		251785A8168191510007589B /* BusRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178545168191510007589B /* BusRoute.m */; };
 		251785AA168191510007589B /* BusStation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178547168191510007589B /* BusStation.m */; };
 		251785AD168191510007589B /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517854B168191510007589B /* NSObject+AssociatedObjects.m */; };
@@ -60,10 +59,8 @@
 		251785D7168191510007589B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2517857A168191510007589B /* Icon@2x.png */; };
 		251785D9168191510007589B /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517857D168191510007589B /* ODRefreshControl.m */; };
 		251785DB168191510007589B /* QueryResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517857F168191510007589B /* QueryResultViewController.m */; };
-		251785DC168191510007589B /* QueryResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25178580168191510007589B /* QueryResultViewController.xib */; };
 		251785DE168191510007589B /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178582168191510007589B /* SettingsViewController.m */; };
 		251785E0168191510007589B /* StationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178584168191510007589B /* StationListViewController.m */; };
-		251785E1168191510007589B /* StationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25178585168191510007589B /* StationListViewController.xib */; };
 		251785E2168191510007589B /* wuxitraffic.db in Resources */ = {isa = PBXBuildFile; fileRef = 25178586168191510007589B /* wuxitraffic.db */; };
 		251785E4168191510007589B /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178589168191510007589B /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		251785EA1681926D0007589B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785E91681926D0007589B /* QuartzCore.framework */; };
@@ -72,6 +69,10 @@
 		251785F0168192820007589B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785EF168192820007589B /* CFNetwork.framework */; };
 		251785F21681928C0007589B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785F11681928C0007589B /* libz.dylib */; };
 		251785F4168192900007589B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785F3168192900007589B /* libsqlite3.dylib */; };
+		2520EAE11681AF7C0034BA32 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */; };
+		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
+		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
+		2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,7 +114,6 @@
 		25178540168191510007589B /* BusInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoCell.m; sourceTree = "<group>"; };
 		25178541168191510007589B /* BusListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = BusListViewController.h; sourceTree = "<group>"; };
 		25178542168191510007589B /* BusListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusListViewController.m; sourceTree = "<group>"; };
-		25178543168191510007589B /* BusListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusListViewController.xib; sourceTree = "<group>"; };
 		25178544168191510007589B /* BusRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = BusRoute.h; sourceTree = "<group>"; };
 		25178545168191510007589B /* BusRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusRoute.m; sourceTree = "<group>"; };
 		25178546168191510007589B /* BusStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = BusStation.h; sourceTree = "<group>"; };
@@ -167,12 +167,10 @@
 		2517857D168191510007589B /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODRefreshControl.m; sourceTree = "<group>"; };
 		2517857E168191510007589B /* QueryResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = QueryResultViewController.h; sourceTree = "<group>"; };
 		2517857F168191510007589B /* QueryResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryResultViewController.m; sourceTree = "<group>"; };
-		25178580168191510007589B /* QueryResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryResultViewController.xib; sourceTree = "<group>"; };
 		25178581168191510007589B /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		25178582168191510007589B /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		25178583168191510007589B /* StationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = StationListViewController.h; sourceTree = "<group>"; };
 		25178584168191510007589B /* StationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationListViewController.m; sourceTree = "<group>"; };
-		25178585168191510007589B /* StationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationListViewController.xib; sourceTree = "<group>"; };
 		25178586168191510007589B /* wuxitraffic.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = wuxitraffic.db; sourceTree = "<group>"; };
 		25178588168191510007589B /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = XMLReader.h; sourceTree = "<group>"; };
 		25178589168191510007589B /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
@@ -182,6 +180,12 @@
 		251785EF168192820007589B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		251785F11681928C0007589B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		251785F3168192900007589B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2520EADF1681AF7C0034BA32 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
+		2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
+		2520EAE61681B0180034BA32 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
+		2520EAE71681B0180034BA32 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
+		2520EAE91681B4C60034BA32 /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
+		2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +374,8 @@
 				25178578168191510007589B /* Icon-Small@2x.png */,
 				25178579168191510007589B /* Icon.png */,
 				2517857A168191510007589B /* Icon@2x.png */,
+				2520EAE91681B4C60034BA32 /* menu_icon.png */,
+				2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				2520EADE1681AF7C0034BA32 /* PPRevealSideviewController */,
 				25178526168191510007589B /* ASIHTTPRequest */,
 				25178548168191510007589B /* cl_block */,
 				2517855D168191510007589B /* FMDatabase */,
@@ -432,17 +439,25 @@
 			children = (
 				25178541168191510007589B /* BusListViewController.h */,
 				25178542168191510007589B /* BusListViewController.m */,
-				25178543168191510007589B /* BusListViewController.xib */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
-				25178580168191510007589B /* QueryResultViewController.xib */,
 				25178581168191510007589B /* SettingsViewController.h */,
 				25178582168191510007589B /* SettingsViewController.m */,
 				25178583168191510007589B /* StationListViewController.h */,
 				25178584168191510007589B /* StationListViewController.m */,
-				25178585168191510007589B /* StationListViewController.xib */,
+				2520EAE61681B0180034BA32 /* LeftMenuViewController.h */,
+				2520EAE71681B0180034BA32 /* LeftMenuViewController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2520EADE1681AF7C0034BA32 /* PPRevealSideviewController */ = {
+			isa = PBXGroup;
+			children = (
+				2520EADF1681AF7C0034BA32 /* PPRevealSideViewController.h */,
+				2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */,
+			);
+			path = PPRevealSideviewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,7 +512,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2517851416818FE90007589B /* InfoPlist.strings in Resources */,
-				251785A6168191510007589B /* BusListViewController.xib in Resources */,
 				251785BC168191510007589B /* InfoPlist.strings in Resources */,
 				251785C9168191510007589B /* Default-568h@2x.png in Resources */,
 				251785CA168191510007589B /* Default-Landscape@2x~ipad.png in Resources */,
@@ -514,9 +528,9 @@
 				251785D5168191510007589B /* Icon-Small@2x.png in Resources */,
 				251785D6168191510007589B /* Icon.png in Resources */,
 				251785D7168191510007589B /* Icon@2x.png in Resources */,
-				251785DC168191510007589B /* QueryResultViewController.xib in Resources */,
-				251785E1168191510007589B /* StationListViewController.xib in Resources */,
 				251785E2168191510007589B /* wuxitraffic.db in Resources */,
+				2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */,
+				2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,9 +556,9 @@
 				251785A3168191510007589B /* BusInfoCell.m in Sources */,
 				251785A5168191510007589B /* BusListViewController.m in Sources */,
 				251785A8168191510007589B /* BusRoute.m in Sources */,
+				251785AF168191510007589B /* NSObject+Blocks.m in Sources */,
 				251785AA168191510007589B /* BusStation.m in Sources */,
 				251785AD168191510007589B /* NSObject+AssociatedObjects.m in Sources */,
-				251785AF168191510007589B /* NSObject+Blocks.m in Sources */,
 				251785B1168191510007589B /* NSTimer+Blocks.m in Sources */,
 				251785B3168191510007589B /* UIActionSheet+Blocks.m in Sources */,
 				251785B5168191510007589B /* UIAlertView+Blocks.m in Sources */,
@@ -562,6 +576,8 @@
 				251785DE168191510007589B /* SettingsViewController.m in Sources */,
 				251785E0168191510007589B /* StationListViewController.m in Sources */,
 				251785E4168191510007589B /* XMLReader.m in Sources */,
+				2520EAE11681AF7C0034BA32 /* PPRevealSideViewController.m in Sources */,
+				2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

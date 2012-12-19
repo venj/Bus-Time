@@ -9,9 +9,14 @@
 #import "AppDelegate.h"
 #import "BusListViewController.h"
 #import "QueryResultViewController.h"
+#import "PPRevealSideViewController.h"
+#import "LeftMenuViewController.h"
+#import "SettingsViewController.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+@interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
+@property (nonatomic, strong) NSMutableArray *menuViewControllers;
+@property (nonatomic, strong) PPRevealSideViewController *revealController;
 @end
 
 @implementation AppDelegate
@@ -34,23 +39,69 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
-    UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.busListController];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.window.rootViewController = navControl;
+        [self loadRevealVC];
     }
     else {
+        self.busListController = [[BusListViewController alloc] initWithStyle:UITableViewStylePlain];
+        self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
         self.splitViewController = [[UISplitViewController alloc] init];
-        self.queryResultController = [[QueryResultViewController alloc] initWithNibName:@"QueryResultViewController" bundle:nil];
+        self.queryResultController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
         self.queryResultController.title = @"暂未查询";
         UINavigationController *queryNavControl = [[UINavigationController alloc] initWithRootViewController:self.queryResultController];
-        self.splitViewController.viewControllers = @[navControl, queryNavControl];
+        self.splitViewController.viewControllers = @[self.busListNavController, queryNavControl];
         self.splitViewController.delegate = self;
         self.window.rootViewController = self.splitViewController;
     }
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (void)loadRevealVC {
+    // LeftMenu
+    self.leftMenuViewController = [[LeftMenuViewController alloc] initWithStyle:UITableViewStylePlain];
+    // BusList
+    self.busListController = [[BusListViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
+    // Settings
+    self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
+    
+    if (!self.menuViewControllers) {
+        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.busListNavController, self.settingsNavController, nil];
+    }
+    
+    self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.busListNavController];
+    [self.revealController setDirectionsToShowBounce:PPRevealSideDirectionLeft];
+    self.revealController.panInteractionsWhenClosed = PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView;
+    self.revealController.delegate = self;
+    self.window.rootViewController = self.revealController;
+}
+
+- (void)preloadMenus {
+    [self.revealController preloadViewController:self.leftMenuViewController forSide:PPRevealSideDirectionLeft];
+}
+
+- (void)showLeftMenu {
+    [self.revealController pushViewController:self.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:YES];
+    [self.leftMenuViewController.tableView reloadData];
+}
+
+- (void)hideMenu {
+    [self.revealController popViewControllerAnimated:YES];
+}
+
+- (void)popViewControllerAtIndex:(NSUInteger)index {
+    [(UINavigationController *)self.revealController.rootViewController popToRootViewControllerAnimated:NO];
+    UIViewController *targetVC = [self.menuViewControllers objectAtIndex:index];
+    if (self.revealController.rootViewController == targetVC) {
+        [self.revealController popViewControllerAnimated:YES];
+    }
+    else {
+        [self.revealController popViewControllerWithNewCenterController:targetVC animated:YES];
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -106,7 +157,7 @@
     NSError *error = nil;
     BOOL success = [URL setResourceValue:[NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error:&error];
     if(!success){
-#if TARGET_IS_TEST_DATA
+#if DEBUG
         NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
 #endif
     }

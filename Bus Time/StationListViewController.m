@@ -85,7 +85,7 @@
     BusStation *station = [self.stations objectAtIndex:indexPath.row];
     QueryResultViewController *queryController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        queryController = [[QueryResultViewController alloc] initWithNibName:@"QueryResultViewController" bundle:nil];
+        queryController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
         queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
         queryController.station = station;
         [self.navigationController pushViewController:queryController animated:YES];
