@@ -54,7 +54,8 @@ static BusDataSource* __shared = nil;
 }
 
 - (NSArray *)stationsForBusRoute:(BusRoute *)busRoute {
-    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"]];
+    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return nil;
     }
