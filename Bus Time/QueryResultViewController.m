@@ -12,6 +12,7 @@
 #import "BusStation.h"
 #import "ODRefreshControl.h"
 #import "NSTimer+Blocks.h"
+#import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 
 @interface QueryResultViewController ()
