@@ -10,9 +10,10 @@
 
 #import "BusListViewController.h"
 #import "MBProgressHUD.h"
+#import "QueryResultViewController.h"
 
-@interface AppDelegate () <MBProgressHUDDelegate>
-
+@interface AppDelegate () <MBProgressHUDDelegate, UISplitViewControllerDelegate>
+@property (nonatomic, strong) UISplitViewController *splitViewController;
 @end
 
 @implementation AppDelegate
@@ -36,7 +37,18 @@
     // Override point for customization after application launch.
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.busListController];
-    self.window.rootViewController = navControl;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.window.rootViewController = navControl;
+    }
+    else {
+        self.splitViewController = [[UISplitViewController alloc] init];
+        self.queryResultController = [[QueryResultViewController alloc] initWithNibName:@"QueryResultViewController" bundle:nil];
+        self.queryResultController.title = @"暂未查询";
+        UINavigationController *queryNavControl = [[UINavigationController alloc] initWithRootViewController:self.queryResultController];
+        self.splitViewController.viewControllers = @[navControl, queryNavControl];
+        self.splitViewController.delegate = self;
+        self.window.rootViewController = self.splitViewController;
+    }
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -127,4 +139,8 @@
     }
 }
 
+#pragma mark - UISplitViewController
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+    return NO;
+}
 @end

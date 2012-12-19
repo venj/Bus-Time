@@ -11,6 +11,7 @@
 
 @interface BusStation : NSObject
 @property (nonatomic, strong) NSNumber *stationNumber;
+@property (nonatomic, strong) NSNumber *stationSequence;
 @property (nonatomic, strong) NSString *stationType;
 @property (nonatomic, strong) NSString *stationName;
 @property (nonatomic, strong) NSString *stationID;

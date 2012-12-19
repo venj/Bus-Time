@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class BusListViewController, MBProgressHUD;
+@class BusListViewController, MBProgressHUD, QueryResultViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) BusListViewController *busListController;
+@property (nonatomic, strong) QueryResultViewController *queryResultController;
 @property (strong, nonatomic) MBProgressHUD *hud;
 
 + (AppDelegate *)shared;

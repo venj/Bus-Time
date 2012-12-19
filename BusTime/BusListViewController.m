@@ -34,18 +34,26 @@
     self.allBuses = source.busList;
     
     self.title = @"公交线路";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain handler:^(id sender) {
-        SettingsViewController *settingsControl = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        UINavigationController *settingsNavControl = [[UINavigationController alloc] initWithRootViewController:settingsControl];
-        settingsNavControl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.navigationController presentModalViewController:settingsNavControl animated:YES];
-    }];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain handler:^(id sender) {
+//        SettingsViewController *settingsControl = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//        UINavigationController *settingsNavControl = [[UINavigationController alloc] initWithRootViewController:settingsControl];
+//        settingsNavControl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+//        [self.navigationController presentModalViewController:settingsNavControl animated:YES];
+//    }];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
 }
 
 #pragma mark - Table view data source

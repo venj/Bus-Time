@@ -59,9 +59,8 @@ static BusDataSource* __shared = nil;
     }
     NSMutableArray *stations = [[NSMutableArray alloc] initWithCapacity:10];
     FMResultSet *s = [db executeQuery:
-                      [NSString stringWithFormat:@"SELECT s.*,i.station_name,i.jd_str,i.wd_str FROM bus_station s  left join bus_stationinfo i on s.station_id=i.station_id where segment_id='%@' and line_id='%@'", busRoute.segmentID, busRoute.lineID]
+                      [NSString stringWithFormat:@"SELECT s.*,i.station_name,i.jd_str,i.wd_str FROM bus_station s left join bus_stationinfo i on s.station_id=i.station_id where segment_id='%@' and line_id='%@'", busRoute.segmentID, busRoute.lineID]
                       ];
-
     while ([s next]) {
         NSDictionary *stationDict;
         stationDict = @{
@@ -80,6 +79,10 @@ static BusDataSource* __shared = nil;
     [stations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [[(BusStation *)obj1 stationNumber] compare:[(BusStation *)obj2 stationNumber] ];
     }];
+    for (NSInteger i = 0; i < [stations count]; i++) {
+        BusStation *station = [stations objectAtIndex:i];
+        station.stationSequence = @(i+1);
+    }
     
     return stations;
 }
