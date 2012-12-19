@@ -93,14 +93,14 @@
 		255E3A4B15E36A7E007C1D9E /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
 		255E3A5915E36AFC007C1D9E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		255E3A5A15E36AFC007C1D9E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		2568BE0315E1D4150015219D /* BusTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2568BE0315E1D4150015219D /* Bus Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2568BE0715E1D4150015219D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2568BE0915E1D4150015219D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2568BE0B15E1D4150015219D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2568BE0F15E1D4150015219D /* BusTime-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BusTime-Info.plist"; sourceTree = "<group>"; };
+		2568BE0F15E1D4150015219D /* Bus Time-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bus Time-Info.plist"; sourceTree = "<group>"; };
 		2568BE1115E1D4150015219D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2568BE1315E1D4150015219D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2568BE1515E1D4150015219D /* BusTime-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BusTime-Prefix.pch"; sourceTree = "<group>"; };
+		2568BE1515E1D4150015219D /* Bus Time-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bus Time-Prefix.pch"; sourceTree = "<group>"; };
 		2568BE1615E1D4150015219D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2568BE1715E1D4150015219D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2568BE2415E1DA870015219D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 		2568BE0415E1D4150015219D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2568BE0315E1D4150015219D /* BusTime.app */,
+				2568BE0315E1D4150015219D /* Bus Time.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,10 +338,10 @@
 			children = (
 				256B16F21680476500446B50 /* wuxitraffic.db */,
 				255E3A5415E36A8C007C1D9E /* Icon */,
-				2568BE0F15E1D4150015219D /* BusTime-Info.plist */,
+				2568BE0F15E1D4150015219D /* Bus Time-Info.plist */,
 				2568BE1015E1D4150015219D /* InfoPlist.strings */,
 				2568BE1315E1D4150015219D /* main.m */,
-				2568BE1515E1D4150015219D /* BusTime-Prefix.pch */,
+				2568BE1515E1D4150015219D /* Bus Time-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -438,9 +438,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2568BE0215E1D4150015219D /* BusTime */ = {
+		2568BE0215E1D4150015219D /* Bus Time */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2568BE2115E1D4150015219D /* Build configuration list for PBXNativeTarget "BusTime" */;
+			buildConfigurationList = 2568BE2115E1D4150015219D /* Build configuration list for PBXNativeTarget "Bus Time" */;
 			buildPhases = (
 				2568BDFF15E1D4150015219D /* Sources */,
 				2568BE0015E1D4150015219D /* Frameworks */,
@@ -450,9 +450,9 @@
 			);
 			dependencies = (
 			);
-			name = BusTime;
+			name = "Bus Time";
 			productName = BusTime;
-			productReference = 2568BE0315E1D4150015219D /* BusTime.app */;
+			productReference = 2568BE0315E1D4150015219D /* Bus Time.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -464,7 +464,7 @@
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "朱 文杰";
 			};
-			buildConfigurationList = 2568BDFD15E1D4150015219D /* Build configuration list for PBXProject "BusTime" */;
+			buildConfigurationList = 2568BDFD15E1D4150015219D /* Build configuration list for PBXProject "Bus Time" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -476,7 +476,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2568BE0215E1D4150015219D /* BusTime */,
+				2568BE0215E1D4150015219D /* Bus Time */,
 			);
 		};
 /* End PBXProject section */
@@ -627,10 +627,10 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "BusTime/BusTime-Prefix.pch";
+				GCC_PREFIX_HEADER = "BusTime/Bus Time-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
-				INFOPLIST_FILE = "BusTime/BusTime-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				INFOPLIST_FILE = "BusTime/Bus Time-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -643,10 +643,10 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "BusTime/BusTime-Prefix.pch";
+				GCC_PREFIX_HEADER = "BusTime/Bus Time-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2/**";
-				INFOPLIST_FILE = "BusTime/BusTime-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				INFOPLIST_FILE = "BusTime/Bus Time-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -657,7 +657,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2568BDFD15E1D4150015219D /* Build configuration list for PBXProject "BusTime" */ = {
+		2568BDFD15E1D4150015219D /* Build configuration list for PBXProject "Bus Time" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2568BE1F15E1D4150015219D /* Debug */,
@@ -666,7 +666,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2568BE2115E1D4150015219D /* Build configuration list for PBXNativeTarget "BusTime" */ = {
+		2568BE2115E1D4150015219D /* Build configuration list for PBXNativeTarget "Bus Time" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2568BE2215E1D4150015219D /* Debug */,

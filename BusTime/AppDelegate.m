@@ -27,6 +27,7 @@
     BOOL dbExists = [manager fileExistsAtPath:dbPath];
     if (!dbExists) {
         [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
+        [self addSkipBackupAttributeToItemAtPath:dbPath];
     }
 }
 
@@ -83,4 +84,34 @@
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
     return NO;
 }
+
+#pragma mark - File Attribute
++ (BOOL)haveSkipBackupAttributeForItemAtPath:(NSString *)filePath {
+    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
+    NSError *error = nil;
+    id result;
+    BOOL success = [URL getResourceValue: &result forKey: NSURLIsExcludedFromBackupKey error:&error];
+    if(!success){
+#if DEBUG
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+#endif
+    }
+    return [result boolValue];
+}
+
++ (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *)filePath {
+    if ([self haveSkipBackupAttributeForItemAtPath:filePath]) {
+        return YES;
+    }
+    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue:[NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error:&error];
+    if(!success){
+#if TARGET_IS_TEST_DATA
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+#endif
+    }
+    return success;
+}
+
 @end
