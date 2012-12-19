@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>BusTime.xcscheme</key>
+		<key>Bus Time.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2568BE0215E1D4150015219D</key>
+		<key>2517850416818FE90007589B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

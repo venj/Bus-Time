@@ -1,13 +1,12 @@
 //
 //  AppDelegate.m
-//  BusTime
+//  Bus Time
 //
-//  Created by 朱 文杰 on 12-8-20.
-//  Copyright (c) 2012年 朱 文杰. All rights reserved.
+//  Created by venj on 12-12-19.
+//  Copyright (c) 2012年 venj. All rights reserved.
 //
 
 #import "AppDelegate.h"
-
 #import "BusListViewController.h"
 #import "QueryResultViewController.h"
 
@@ -23,12 +22,12 @@
 
 + (void)initialize {
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *dbPath = [NSHomeDirectory() stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
     BOOL dbExists = [manager fileExistsAtPath:dbPath];
     if (!dbExists) {
         [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
-        [self addSkipBackupAttributeToItemAtPath:dbPath];
     }
+    [self addSkipBackupAttributeToItemAtPath:dbPath];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -61,7 +60,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 

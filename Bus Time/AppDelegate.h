@@ -1,9 +1,9 @@
 //
 //  AppDelegate.h
-//  BusTime
+//  Bus Time
 //
-//  Created by 朱 文杰 on 12-8-20.
-//  Copyright (c) 2012年 朱 文杰. All rights reserved.
+//  Created by venj on 12-12-19.
+//  Copyright (c) 2012年 venj. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
