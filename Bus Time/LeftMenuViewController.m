@@ -55,10 +55,6 @@
     return [[[AppDelegate shared] menuViewControllers] count];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 32;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"LeftMenuCell";
@@ -74,7 +70,6 @@
         menuTitle = @"设置";
     }
     cell.textLabel.text = menuTitle;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     return cell;
 }
 

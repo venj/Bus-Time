@@ -36,8 +36,8 @@
     [super viewDidLoad];
     Class RefControl = NSClassFromString(@"UIRefreshControl");
     if ([RefControl class]) {
-        self.refControl = [[RefControl alloc] init];
-        self.refreshControl = self.refControl;
+        self.refreshControl = [[RefControl alloc] init];
+        self.refControl = self.refreshControl;
     }
     else {
         self.refControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
@@ -133,7 +133,6 @@
 - (void)loadResult {
     if (self.request) {
         [self.request clearDelegatesAndCancel];
-        [self.refControl endRefreshing];
     }
     [self.refControl beginRefreshing];
     self.request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://218.90.160.85:10086/BusTravelGuideWebService/bustravelguide.asmx"]];

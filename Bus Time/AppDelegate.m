@@ -43,7 +43,7 @@
         [self loadRevealVC];
     }
     else {
-        self.busListController = [[BusListViewController alloc] initWithStyle:UITableViewStylePlain];
+        self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
         self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
         self.splitViewController = [[UISplitViewController alloc] init];
         self.queryResultController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -61,7 +61,7 @@
     // LeftMenu
     self.leftMenuViewController = [[LeftMenuViewController alloc] initWithStyle:UITableViewStylePlain];
     // BusList
-    self.busListController = [[BusListViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
     // Settings
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];

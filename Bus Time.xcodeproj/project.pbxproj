@@ -73,6 +73,7 @@
 		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
 		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
 		2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */; };
+		25E94E001681CFFA0065DFBA /* BusListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,6 +187,7 @@
 		2520EAE71681B0180034BA32 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		2520EAE91681B4C60034BA32 /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
 		2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_icon@2x.png"; sourceTree = "<group>"; };
+		25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +441,7 @@
 			children = (
 				25178541168191510007589B /* BusListViewController.h */,
 				25178542168191510007589B /* BusListViewController.m */,
+				25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
 				25178581168191510007589B /* SettingsViewController.h */,
@@ -531,6 +534,7 @@
 				251785E2168191510007589B /* wuxitraffic.db in Resources */,
 				2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */,
 				2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */,
+				25E94E001681CFFA0065DFBA /* BusListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,11 +662,13 @@
 		2517852416818FEA0007589B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
 				INFOPLIST_FILE = "Bus Time/Bus Time-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -670,11 +676,15 @@
 		2517852516818FEA0007589B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
 				INFOPLIST_FILE = "Bus Time/Bus Time-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
