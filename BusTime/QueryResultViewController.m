@@ -12,6 +12,7 @@
 #import "BusStation.h"
 #import "ODRefreshControl.h"
 #import "NSTimer+Blocks.h"
+#import "BusInfoCell.h"
 
 @interface QueryResultViewController ()
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -80,9 +81,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"QueryResultCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    BusInfoCell *cell = (BusInfoCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell = [[BusInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     // Configure the cell...
     NSDictionary *resultDict;

@@ -12,6 +12,7 @@
 		2508B42B168164FF007B5D76 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2508B426168164FF007B5D76 /* Default-Landscape~ipad.png */; };
 		2508B42C168164FF007B5D76 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2508B427168164FF007B5D76 /* Default-Portrait@2x~ipad.png */; };
 		2508B42D168164FF007B5D76 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2508B428168164FF007B5D76 /* Default-Portrait~ipad.png */; };
+		2508B4391681683B007B5D76 /* BusInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2508B4371681683B007B5D76 /* BusInfoCell.m */; };
 		253C1E2E15E3713D009BD208 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 253C1E2C15E3713D009BD208 /* Default.png */; };
 		253C1E2F15E3713D009BD208 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 253C1E2D15E3713D009BD208 /* Default@2x.png */; };
 		253F4D1C1680ADD80007E1E4 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 253F4D1B1680ADD80007E1E4 /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -62,11 +63,6 @@
 		256B23A11625009800DDA9BD /* BusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256B239F1625009800DDA9BD /* BusListViewController.m */; };
 		256B23A21625009800DDA9BD /* BusListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256B23A01625009800DDA9BD /* BusListViewController.xib */; };
 		25834A3215E2673300F26087 /* HandyFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 25834A3115E2673300F26087 /* HandyFoundation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		259E089415E30E7D00CE1BBA /* 32x-Exclamationmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089015E30E7D00CE1BBA /* 32x-Exclamationmark.png */; };
-		259E089515E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089115E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png */; };
-		259E089615E30E7D00CE1BBA /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089215E30E7D00CE1BBA /* 37x-Checkmark@2x.png */; };
-		259E089715E30E7D00CE1BBA /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 259E089315E30E7D00CE1BBA /* 37x-Checkmark.png */; };
-		25E803A415E2050400B57711 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A315E2050400B57711 /* MBProgressHUD.m */; };
 		25E803B615E2082A00B57711 /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A715E2082A00B57711 /* NSObject+AssociatedObjects.m */; };
 		25E803B715E2082A00B57711 /* NSObject+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803A915E2082A00B57711 /* NSObject+Blocks.m */; };
 		25E803B815E2082A00B57711 /* NSTimer+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E803AB15E2082A00B57711 /* NSTimer+Blocks.m */; };
@@ -83,6 +79,8 @@
 		2508B426168164FF007B5D76 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		2508B427168164FF007B5D76 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		2508B428168164FF007B5D76 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		2508B4361681683B007B5D76 /* BusInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = BusInfoCell.h; sourceTree = "<group>"; };
+		2508B4371681683B007B5D76 /* BusInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusInfoCell.m; sourceTree = "<group>"; };
 		253C1E2C15E3713D009BD208 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		253C1E2D15E3713D009BD208 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		253F4D1A1680ADD80007E1E4 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
@@ -165,12 +163,6 @@
 		256B23A01625009800DDA9BD /* BusListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusListViewController.xib; sourceTree = "<group>"; };
 		25834A3015E2673300F26087 /* HandyFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandyFoundation.h; sourceTree = "<group>"; };
 		25834A3115E2673300F26087 /* HandyFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandyFoundation.m; sourceTree = "<group>"; };
-		259E089015E30E7D00CE1BBA /* 32x-Exclamationmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32x-Exclamationmark.png"; sourceTree = "<group>"; };
-		259E089115E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "32x-Exclamationmark@2x.png"; sourceTree = "<group>"; };
-		259E089215E30E7D00CE1BBA /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
-		259E089315E30E7D00CE1BBA /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
-		25E803A215E2050400B57711 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		25E803A315E2050400B57711 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		25E803A515E2082A00B57711 /* cl_BlockHead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cl_BlockHead.h; sourceTree = "<group>"; };
 		25E803A615E2082A00B57711 /* NSObject+AssociatedObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedObjects.h"; sourceTree = "<group>"; };
 		25E803A715E2082A00B57711 /* NSObject+AssociatedObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObjects.m"; sourceTree = "<group>"; };
@@ -210,6 +202,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2508B432168167E4007B5D76 /* Data & Models */ = {
+			isa = PBXGroup;
+			children = (
+				256B170E16804D9500446B50 /* BusDataSource.h */,
+				256B170F16804D9500446B50 /* BusDataSource.m */,
+				256B17161680537100446B50 /* BusRoute.h */,
+				256B17171680537100446B50 /* BusRoute.m */,
+				256B171A1680557400446B50 /* BusStation.h */,
+				256B171B1680557400446B50 /* BusStation.m */,
+			);
+			name = "Data & Models";
+			sourceTree = "<group>";
+		};
+		2508B434168167F5007B5D76 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				2568BE4015E1DA8D0015219D /* ASIHTTPRequest */,
+				25E803BE15E2083200B57711 /* cl_block */,
+				256B16F4168048AF00446B50 /* FMDatabase */,
+				253F4D1D1680BA7F0007E1E4 /* XMLReader */,
+				256B17371681503700446B50 /* ODRefreshControl */,
+				25CC19B315E4930A00F3ABA6 /* Handy Foundation */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		2508B43516816814007B5D76 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				256B239E1625009800DDA9BD /* BusListViewController.h */,
+				256B239F1625009800DDA9BD /* BusListViewController.m */,
+				256B23A01625009800DDA9BD /* BusListViewController.xib */,
+				256B171E16805FA500446B50 /* StationListViewController.h */,
+				256B171F16805FA500446B50 /* StationListViewController.m */,
+				256B172016805FA500446B50 /* StationListViewController.xib */,
+				256B1724168064E800446B50 /* QueryResultViewController.h */,
+				256B1725168064E800446B50 /* QueryResultViewController.m */,
+				256B1726168064E800446B50 /* QueryResultViewController.xib */,
+				255E3A3715E358AA007C1D9E /* SettingsViewController.h */,
+				255E3A3815E358AA007C1D9E /* SettingsViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		253F4D1D1680BA7F0007E1E4 /* XMLReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +253,15 @@
 				253F4D1B1680ADD80007E1E4 /* XMLReader.m */,
 			);
 			name = XMLReader;
+			sourceTree = "<group>";
+		};
+		2541E74C16816DA9000B083D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2508B4361681683B007B5D76 /* BusInfoCell.h */,
+				2508B4371681683B007B5D76 /* BusInfoCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		255E3A5415E36A8C007C1D9E /* Icon */ = {
@@ -277,32 +322,12 @@
 		2568BE0D15E1D4150015219D /* BusTime */ = {
 			isa = PBXGroup;
 			children = (
-				2568BE4015E1DA8D0015219D /* ASIHTTPRequest */,
-				25E803BE15E2083200B57711 /* cl_block */,
-				25E803A115E204AE00B57711 /* MBProgressHUD */,
-				256B16F4168048AF00446B50 /* FMDatabase */,
-				253F4D1D1680BA7F0007E1E4 /* XMLReader */,
-				256B17371681503700446B50 /* ODRefreshControl */,
-				25CC19B315E4930A00F3ABA6 /* Handy Foundation */,
+				2508B434168167F5007B5D76 /* Third Party */,
+				2541E74C16816DA9000B083D /* Views */,
+				2508B43516816814007B5D76 /* View Controllers */,
+				2508B432168167E4007B5D76 /* Data & Models */,
 				2568BE1615E1D4150015219D /* AppDelegate.h */,
 				2568BE1715E1D4150015219D /* AppDelegate.m */,
-				256B239E1625009800DDA9BD /* BusListViewController.h */,
-				256B239F1625009800DDA9BD /* BusListViewController.m */,
-				256B23A01625009800DDA9BD /* BusListViewController.xib */,
-				256B171E16805FA500446B50 /* StationListViewController.h */,
-				256B171F16805FA500446B50 /* StationListViewController.m */,
-				256B172016805FA500446B50 /* StationListViewController.xib */,
-				256B1724168064E800446B50 /* QueryResultViewController.h */,
-				256B1725168064E800446B50 /* QueryResultViewController.m */,
-				256B1726168064E800446B50 /* QueryResultViewController.xib */,
-				255E3A3715E358AA007C1D9E /* SettingsViewController.h */,
-				255E3A3815E358AA007C1D9E /* SettingsViewController.m */,
-				256B170E16804D9500446B50 /* BusDataSource.h */,
-				256B170F16804D9500446B50 /* BusDataSource.m */,
-				256B17161680537100446B50 /* BusRoute.h */,
-				256B17171680537100446B50 /* BusRoute.m */,
-				256B171A1680557400446B50 /* BusStation.h */,
-				256B171B1680557400446B50 /* BusStation.m */,
 				2568BE0E15E1D4150015219D /* Supporting Files */,
 			);
 			path = BusTime;
@@ -386,19 +411,6 @@
 			name = "Handy Foundation";
 			sourceTree = "<group>";
 		};
-		25E803A115E204AE00B57711 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				259E089015E30E7D00CE1BBA /* 32x-Exclamationmark.png */,
-				259E089115E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png */,
-				259E089215E30E7D00CE1BBA /* 37x-Checkmark@2x.png */,
-				259E089315E30E7D00CE1BBA /* 37x-Checkmark.png */,
-				25E803A215E2050400B57711 /* MBProgressHUD.h */,
-				25E803A315E2050400B57711 /* MBProgressHUD.m */,
-			);
-			name = MBProgressHUD;
-			sourceTree = "<group>";
-		};
 		25E803BE15E2083200B57711 /* cl_block */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,10 +487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2568BE1215E1D4150015219D /* InfoPlist.strings in Resources */,
-				259E089415E30E7D00CE1BBA /* 32x-Exclamationmark.png in Resources */,
-				259E089515E30E7D00CE1BBA /* 32x-Exclamationmark@2x.png in Resources */,
-				259E089615E30E7D00CE1BBA /* 37x-Checkmark@2x.png in Resources */,
-				259E089715E30E7D00CE1BBA /* 37x-Checkmark.png in Resources */,
 				255E3A4D15E36A7E007C1D9E /* Icon-Small-50.png in Resources */,
 				255E3A4E15E36A7E007C1D9E /* Icon-Small.png in Resources */,
 				255E3A4F15E36A7E007C1D9E /* Icon-Small@2x.png in Resources */,
@@ -519,7 +527,6 @@
 				2568BE3E15E1DA870015219D /* ASIInputStream.m in Sources */,
 				2568BE3F15E1DA870015219D /* ASINetworkQueue.m in Sources */,
 				2568BE4315E1DAE50015219D /* Reachability.m in Sources */,
-				25E803A415E2050400B57711 /* MBProgressHUD.m in Sources */,
 				25E803B615E2082A00B57711 /* NSObject+AssociatedObjects.m in Sources */,
 				25E803B715E2082A00B57711 /* NSObject+Blocks.m in Sources */,
 				25E803B815E2082A00B57711 /* NSTimer+Blocks.m in Sources */,
@@ -543,6 +550,7 @@
 				256B1728168064E900446B50 /* QueryResultViewController.m in Sources */,
 				253F4D1C1680ADD80007E1E4 /* XMLReader.m in Sources */,
 				256B17351681503300446B50 /* ODRefreshControl.m in Sources */,
+				2508B4391681683B007B5D76 /* BusInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

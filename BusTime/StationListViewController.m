@@ -75,6 +75,7 @@
     BusStation *station = [self.stations objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }
@@ -86,10 +87,12 @@
     QueryResultViewController *queryController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         queryController = [[QueryResultViewController alloc] initWithNibName:@"QueryResultViewController" bundle:nil];
+        queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
+        queryController.station = station;
         [self.navigationController pushViewController:queryController animated:YES];
     }
     else {
-        queryController = [(AppDelegate *)[UIApplication sharedApplication].delegate queryResultController];
+        queryController = [[AppDelegate shared] queryResultController];
         queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
         queryController.station = station;
         [queryController loadResult];
