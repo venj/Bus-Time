@@ -11,6 +11,7 @@
 #import "XMLReader.h"
 #import "BusStation.h"
 #import "ODRefreshControl.h"
+#import "ODRefreshControl+Addon.h"
 #import "NSTimer+Blocks.h"
 #import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
@@ -44,6 +45,8 @@
     }
     [self.refControl addTarget:self action:@selector(loadResult) forControlEvents:UIControlEventValueChanged];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self.tableView setContentOffset:CGPointMake(0, -44) animated:NO];
+        [self.refControl beginRefreshing];
         [self loadResult];
     }
 }
@@ -60,6 +63,15 @@
         return (interfaceOrientation == UIInterfaceOrientationPortrait);
     }
     return YES;
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 #pragma mark - Table view data source
@@ -123,10 +135,9 @@
 }
 
 - (void)loadResult {
-    if (self.request) {
-        [self.request clearDelegatesAndCancel];
+    if ([self.request inProgress]) {
+        return;
     }
-    [self.refControl beginRefreshing];
     self.request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://218.90.160.85:10086/BusTravelGuideWebService/bustravelguide.asmx"]];
     __block ASIHTTPRequest *request_b = self.request;
     NSString *postBodyString = [NSString stringWithFormat:
@@ -177,8 +188,8 @@
         else {
             NSArray *infoArray = (NSArray *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
             self.resultArray = infoArray;
-            [self.refControl endRefreshing];
             [self.tableView reloadData];
+            [self.refControl endRefreshing];
         }
     }];
     //网络请求失败
@@ -190,6 +201,14 @@
         [alert show];
     }];
     [self.request startAsynchronous];
+}
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if(event.type == UIEventSubtypeMotionShake) {
+        [self.tableView setContentOffset:CGPointMake(0, -44) animated:YES];
+        [self.refControl beginRefreshing];
+        [self loadResult];
+    }
 }
 
 @end

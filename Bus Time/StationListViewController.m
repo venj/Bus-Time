@@ -74,7 +74,6 @@
     BusStation *station = [self.stations objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
-    cell.textLabel.adjustsFontSizeToFitWidth = YES;
     
     return cell;
 }

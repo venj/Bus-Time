@@ -69,6 +69,7 @@
 		251785F0168192820007589B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785EF168192820007589B /* CFNetwork.framework */; };
 		251785F21681928C0007589B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785F11681928C0007589B /* libz.dylib */; };
 		251785F4168192900007589B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785F3168192900007589B /* libsqlite3.dylib */; };
+		2517C45816829B610094ACE3 /* ODRefreshControl+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517C45616829B610094ACE3 /* ODRefreshControl+Addon.m */; };
 		2520EAE11681AF7C0034BA32 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */; };
 		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
 		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
@@ -186,6 +187,8 @@
 		251785EF168192820007589B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		251785F11681928C0007589B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		251785F3168192900007589B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		2517C45516829B610094ACE3 /* ODRefreshControl+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "ODRefreshControl+Addon.h"; sourceTree = "<group>"; };
+		2517C45616829B610094ACE3 /* ODRefreshControl+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ODRefreshControl+Addon.m"; sourceTree = "<group>"; };
 		2520EADF1681AF7C0034BA32 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
 		2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
 		2520EAE61681B0180034BA32 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				251785E5168191830007589B /* Third Party */,
+				2517C45B16829BAE0094ACE3 /* Library Enhancements */,
 				251785E6168191920007589B /* Data & Models */,
 				251785E7168191B40007589B /* Views */,
 				251785E8168191BE0007589B /* View Controllers */,
@@ -420,9 +424,7 @@
 			children = (
 				2520EADE1681AF7C0034BA32 /* PPRevealSideviewController */,
 				25178526168191510007589B /* ASIHTTPRequest */,
-				25178548168191510007589B /* cl_block */,
 				2517855D168191510007589B /* FMDatabase */,
-				25178568168191510007589B /* Handy Foundation */,
 				2517857B168191510007589B /* ODRefreshControl */,
 				25178587168191510007589B /* XMLReader */,
 			);
@@ -459,16 +461,35 @@
 				25178541168191510007589B /* BusListViewController.h */,
 				25178542168191510007589B /* BusListViewController.m */,
 				25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */,
+				25178583168191510007589B /* StationListViewController.h */,
+				25178584168191510007589B /* StationListViewController.m */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
 				25178581168191510007589B /* SettingsViewController.h */,
 				25178582168191510007589B /* SettingsViewController.m */,
-				25178583168191510007589B /* StationListViewController.h */,
-				25178584168191510007589B /* StationListViewController.m */,
 				2520EAE61681B0180034BA32 /* LeftMenuViewController.h */,
 				2520EAE71681B0180034BA32 /* LeftMenuViewController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		2517C45A16829B950094ACE3 /* ODRefreshControl (Addon) */ = {
+			isa = PBXGroup;
+			children = (
+				2517C45516829B610094ACE3 /* ODRefreshControl+Addon.h */,
+				2517C45616829B610094ACE3 /* ODRefreshControl+Addon.m */,
+			);
+			name = "ODRefreshControl (Addon)";
+			sourceTree = "<group>";
+		};
+		2517C45B16829BAE0094ACE3 /* Library Enhancements */ = {
+			isa = PBXGroup;
+			children = (
+				25178548168191510007589B /* cl_block */,
+				25178568168191510007589B /* Handy Foundation */,
+				2517C45A16829B950094ACE3 /* ODRefreshControl (Addon) */,
+			);
+			name = "Library Enhancements";
 			sourceTree = "<group>";
 		};
 		2520EADE1681AF7C0034BA32 /* PPRevealSideviewController */ = {
@@ -604,6 +625,7 @@
 				2520EAE11681AF7C0034BA32 /* PPRevealSideViewController.m in Sources */,
 				2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */,
 				259A21C8168203B000B337E4 /* LeftMenuCell.m in Sources */,
+				2517C45816829B610094ACE3 /* ODRefreshControl+Addon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
