@@ -70,6 +70,17 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    UIView *view = [[UIView alloc] initWithFrame:cell.frame];
+    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_bg"]];
+    cell.backgroundView = view;
+    
+    UIView *hlView = [[UIView alloc] initWithFrame:cell.frame];
+    hlView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_hl_bg"]];
+    cell.selectedBackgroundView = hlView;
+}
+
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
