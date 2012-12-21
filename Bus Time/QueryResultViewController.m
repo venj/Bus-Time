@@ -175,7 +175,9 @@
         if (infoString != nil) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:infoString completionBlock:^(NSUInteger buttonIndex) {
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                    [self.navigationController popViewControllerAnimated:YES];
+                    if ([infoString rangeOfString:@"结束营运"].location != NSNotFound) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
                 }
                 else {
                     self.resultArray = nil;
@@ -195,9 +197,7 @@
     //网络请求失败
     [self.request setFailedBlock:^{
         [self.refControl endRefreshing];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络请求出错，请重试。" completionBlock:^(NSUInteger buttonIndex) {
-            [self.navigationController popViewControllerAnimated:YES];
-        } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络请求出错，请重试。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }];
     [self.request startAsynchronous];
