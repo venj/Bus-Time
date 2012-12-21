@@ -7,8 +7,11 @@
 //
 
 #import "LeftMenuViewController.h"
+#import "PPRevealSideViewController.h"
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
+
+static NSString *menuTitles[] = {@"收藏夹", @"公交线路", @"设置"};
 
 @interface LeftMenuViewController ()
 
@@ -29,7 +32,7 @@
 {
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor grayColor];
+    self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,14 +62,8 @@
     if (!cell) {
         cell = [[LeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    NSString *menuTitle;
-    if (indexPath.row == 0) {
-        menuTitle = @"线路查询";
-    }
-    if (indexPath.row == 1) {
-        menuTitle = @"设置";
-    }
-    cell.textLabel.text = menuTitle;
+    
+    cell.textLabel.text = menuTitles[indexPath.row];
     return cell;
 }
 
@@ -79,6 +76,11 @@
     UIView *hlView = [[UIView alloc] initWithFrame:cell.frame];
     hlView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_hl_bg"]];
     cell.selectedBackgroundView = hlView;
+    
+    if (indexPath.row == [[AppDelegate shared].menuViewControllers indexOfObject:[AppDelegate shared].revealController.rootViewController])
+        cell.selected = YES;
+    else
+        cell.selected = NO;
 }
 
 #pragma mark - Table view delegate

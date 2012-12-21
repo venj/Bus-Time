@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class BusListViewController, QueryResultViewController, LeftMenuViewController, SettingsViewController;
+@class BusListViewController, QueryResultViewController, LeftMenuViewController, SettingsViewController,
+    FavoritesViewController, PPRevealSideViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) PPRevealSideViewController *revealController;
 @property (strong, nonatomic) LeftMenuViewController *leftMenuViewController;
+@property (nonatomic, strong) FavoritesViewController *favoritesViewController;
+@property (strong, nonatomic) UINavigationController *favoritesNavController;
 @property (strong, nonatomic) BusListViewController *busListController;
 @property (strong, nonatomic) UINavigationController *busListNavController;
 @property (strong, nonatomic) SettingsViewController *settingsViewController;

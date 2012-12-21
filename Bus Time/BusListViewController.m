@@ -39,7 +39,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [[AppDelegate shared] showLeftMenu];
     }];
-    [[AppDelegate shared] preloadMenus];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,6 +108,7 @@
     StationListViewController *stationListViewController = [[StationListViewController alloc] initWithStyle:UITableViewStylePlain];
     stationListViewController.busRoute = [busRoutes objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:stationListViewController animated:YES];
+    [self.searchDisplayController setActive:NO animated:YES];
 }
 
 

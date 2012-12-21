@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FavoritesViewController.h"
 #import "BusListViewController.h"
 #import "QueryResultViewController.h"
 #import "PPRevealSideViewController.h"
@@ -16,23 +17,12 @@
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
 @property (nonatomic, strong) NSMutableArray *menuViewControllers;
-@property (nonatomic, strong) PPRevealSideViewController *revealController;
 @end
 
 @implementation AppDelegate
 
 + (AppDelegate *)shared {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
-+ (void)initialize {
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    BOOL dbExists = [manager fileExistsAtPath:dbPath];
-    if (!dbExists) {
-        [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
-    }
-    [self addSkipBackupAttributeToItemAtPath:dbPath];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -63,15 +53,18 @@
     // BusList
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
+    // FavList
+    self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.favoritesNavController = [[UINavigationController alloc] initWithRootViewController:self.favoritesViewController];
     // Settings
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
     
     if (!self.menuViewControllers) {
-        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.busListNavController, self.settingsNavController, nil];
+        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.favoritesNavController, self.busListNavController, self.settingsNavController, nil];
     }
     
-    self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.busListNavController];
+    self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.favoritesNavController];
     [self.revealController setDirectionsToShowBounce:PPRevealSideDirectionLeft];
     self.revealController.panInteractionsWhenClosed = PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView;
     self.revealController.delegate = self;
@@ -92,7 +85,6 @@
 }
 
 - (void)popViewControllerAtIndex:(NSUInteger)index {
-    [(UINavigationController *)self.revealController.rootViewController popToRootViewControllerAnimated:NO];
     UIViewController *targetVC = [self.menuViewControllers objectAtIndex:index];
     if (self.revealController.rootViewController == targetVC) {
         [self.revealController popViewControllerAnimated:YES];
@@ -101,7 +93,6 @@
         [self.revealController popViewControllerWithNewCenterController:targetVC animated:YES];
     }
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -135,33 +126,9 @@
     return NO;
 }
 
-#pragma mark - File Attribute
-+ (BOOL)haveSkipBackupAttributeForItemAtPath:(NSString *)filePath {
-    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
-    NSError *error = nil;
-    id result;
-    BOOL success = [URL getResourceValue: &result forKey: NSURLIsExcludedFromBackupKey error:&error];
-    if(!success){
-#if DEBUG
-        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
-#endif
-    }
-    return [result boolValue];
-}
-
-+ (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *)filePath {
-    if ([self haveSkipBackupAttributeForItemAtPath:filePath]) {
-        return YES;
-    }
-    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
-    NSError *error = nil;
-    BOOL success = [URL setResourceValue:[NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error:&error];
-    if(!success){
-#if DEBUG
-        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
-#endif
-    }
-    return success;
+#pragma mark - PPRevealSideViewControllerDelegate
+- (void)pprevealSideViewController:(PPRevealSideViewController *)controller didPopToController:(UIViewController *)centerController {
+    [self.leftMenuViewController.tableView reloadData];
 }
 
 @end

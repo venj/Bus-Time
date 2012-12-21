@@ -12,7 +12,17 @@
 #import "BusRoute.h"
 
 @implementation BusDataSource
-static BusDataSource* __shared = nil;
+static BusDataSource *__shared = nil;
+
++ (void)initialize {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    BOOL dbExists = [manager fileExistsAtPath:dbPath];
+    if (!dbExists) {
+        [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
+    }
+    [self addSkipBackupAttributeToItemAtPath:dbPath];
+}
 
 + (id)shared{
     if(__shared == nil){
@@ -89,5 +99,33 @@ static BusDataSource* __shared = nil;
     return stations;
 }
 
+#pragma mark - File Attribute
++ (BOOL)haveSkipBackupAttributeForItemAtPath:(NSString *)filePath {
+    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
+    NSError *error = nil;
+    id result;
+    BOOL success = [URL getResourceValue: &result forKey: NSURLIsExcludedFromBackupKey error:&error];
+    if(!success){
+#if DEBUG
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+#endif
+    }
+    return [result boolValue];
+}
+
++ (BOOL)addSkipBackupAttributeToItemAtPath:(NSString *)filePath {
+    if ([self haveSkipBackupAttributeForItemAtPath:filePath]) {
+        return YES;
+    }
+    NSURL *URL = [[NSURL alloc] initFileURLWithPath:filePath];
+    NSError *error = nil;
+    BOOL success = [URL setResourceValue:[NSNumber numberWithBool: YES] forKey: NSURLIsExcludedFromBackupKey error:&error];
+    if(!success){
+#if DEBUG
+        NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+#endif
+    }
+    return success;
+}
 
 @end
