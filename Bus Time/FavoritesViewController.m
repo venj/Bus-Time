@@ -154,7 +154,10 @@
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
         infoLabel.text = @"您还没有收藏任何站点";
-        infoLabel.font = [UIFont systemFontOfSize:15];
+        infoLabel.font = [UIFont boldSystemFontOfSize:16];
+        infoLabel.textColor = [UIColor colorWithRed:(0x4c / 255.) green:(0x56 / 255.) blue:(0x6c / 255.) alpha:1];
+        infoLabel.shadowColor = [UIColor whiteColor];
+        infoLabel.shadowOffset = CGSizeMake(0.0, 1.0);
         [aView addSubview:infoLabel];
         
         UIImage *originalImage = [UIImage imageNamed:@"find_bus_button"];
