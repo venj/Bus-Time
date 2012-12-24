@@ -8,6 +8,7 @@
 
 #import "BusRoute.h"
 #import "BusDataSource.h"
+#import "CharToPinyin.h"
 
 @implementation BusRoute
 
@@ -16,6 +17,7 @@
         _lineID = [busDict objectForKey:@"line_id"];
         _segmentID = [busDict objectForKey:@"segment_id"];
         _segmentName = [busDict objectForKey:@"segment_name"];
+        _segmentNamePY = [[CharToPinyin shared] abbreviation:_segmentName];
     }
     
     return self;

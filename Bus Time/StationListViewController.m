@@ -16,6 +16,7 @@
 
 @interface StationListViewController ()
 @property (nonatomic, strong) NSArray *stations;
+@property (nonatomic, strong) NSArray *filterStations;
 @end
 
 @implementation StationListViewController
@@ -61,7 +62,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.stations count];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.filterStations count];
+    }
+    else {
+        return [self.stations count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -71,7 +77,13 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    BusStation *station = [self.stations objectAtIndex:indexPath.row];
+    BusStation *station;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        station = [self.filterStations objectAtIndex:indexPath.row];
+    }
+    else {
+        station = [self.stations objectAtIndex:indexPath.row];
+    }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
     
@@ -81,7 +93,13 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BusStation *station = [self.stations objectAtIndex:indexPath.row];
+    BusStation *station;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        station = [self.filterStations objectAtIndex:indexPath.row];
+    }
+    else {
+        station = [self.stations objectAtIndex:indexPath.row];
+    }
     QueryResultViewController *queryController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         queryController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -95,6 +113,24 @@
         queryController.station = station;
         [queryController loadResult];
     }
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSIndexSet *resultSet = [self.stations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *stationName = [(BusStation *)obj stationName];
+        NSString *stationNamePY = [(BusStation *)obj stationNamePY];
+        NSRange result = [stationName rangeOfString:[searchText strip]];
+        if (result.location == NSNotFound) {
+            result = [stationNamePY rangeOfString:[searchText strip]];
+            return (result.location == NSNotFound) ? NO : YES;
+        }
+        else {
+            return YES;
+        }
+    }];
+    
+    self.filterStations = [self.stations objectsAtIndexes:resultSet];
+    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 @end

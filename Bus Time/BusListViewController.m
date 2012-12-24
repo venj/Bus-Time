@@ -105,18 +105,23 @@
         busRoutes = self.filterBuses;
     else
         busRoutes = self.allBuses;
-    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithStyle:UITableViewStylePlain];
+    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
     stationListViewController.busRoute = [busRoutes objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:stationListViewController animated:YES];
-    [self.searchDisplayController setActive:NO animated:YES];
 }
-
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     NSIndexSet *resultSet = [self.allBuses indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         NSString *busName = [(BusRoute *)obj segmentName];
+        NSString *busNamePY = [(BusRoute *)obj segmentNamePY];
         NSRange result = [busName rangeOfString:[searchText strip]];
-        return (result.location == NSNotFound) ? NO : YES;
+        if (result.location == NSNotFound) {
+            result = [busNamePY rangeOfString:[searchText strip]];
+            return (result.location == NSNotFound) ? NO : YES;
+        }
+        else {
+            return YES;
+        }
     }];
     
     self.filterBuses = [self.allBuses objectsAtIndexes:resultSet];

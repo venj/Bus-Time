@@ -79,6 +79,7 @@
 		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
 		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
 		2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */; };
+		258C446C168800B800965BEE /* CharToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 258C446A168800B800965BEE /* CharToPinyin.m */; };
 		259A21C31682007700B337E4 /* menu_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C11682007700B337E4 /* menu_cell_bg.png */; };
 		259A21C41682007700B337E4 /* menu_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C21682007700B337E4 /* menu_cell_bg@2x.png */; };
 		259A21C8168203B000B337E4 /* LeftMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259A21C7168203B000B337E4 /* LeftMenuCell.m */; };
@@ -89,6 +90,7 @@
 		25CE0B09168452B700396503 /* find_bus_hl_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B07168452B700396503 /* find_bus_hl_button.png */; };
 		25CE0B0A168452B700396503 /* find_bus_hl_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B08168452B700396503 /* find_bus_hl_button@2x.png */; };
 		25E94E001681CFFA0065DFBA /* BusListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */; };
+		25FA02FB16883DD400BF8942 /* StationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FA02FA16883DD400BF8942 /* StationListViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,6 +214,8 @@
 		2520EAE71681B0180034BA32 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		2520EAE91681B4C60034BA32 /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
 		2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_icon@2x.png"; sourceTree = "<group>"; };
+		258C4469168800B800965BEE /* CharToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = CharToPinyin.h; sourceTree = "<group>"; };
+		258C446A168800B800965BEE /* CharToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharToPinyin.m; sourceTree = "<group>"; };
 		259A21C11682007700B337E4 /* menu_cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_cell_bg.png; sourceTree = "<group>"; };
 		259A21C21682007700B337E4 /* menu_cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_cell_bg@2x.png"; sourceTree = "<group>"; };
 		259A21C6168203B000B337E4 /* LeftMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuCell.h; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 		25CE0B07168452B700396503 /* find_bus_hl_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find_bus_hl_button.png; sourceTree = "<group>"; };
 		25CE0B08168452B700396503 /* find_bus_hl_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "find_bus_hl_button@2x.png"; sourceTree = "<group>"; };
 		25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusListViewController.xib; sourceTree = "<group>"; };
+		25FA02FA16883DD400BF8942 /* StationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationListViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +476,8 @@
 				25178C2216842FD300B2C97D /* UserDataSource.m */,
 				25178C251684310700B2C97D /* Favorite.h */,
 				25178C261684310700B2C97D /* Favorite.m */,
+				258C4469168800B800965BEE /* CharToPinyin.h */,
+				258C446A168800B800965BEE /* CharToPinyin.m */,
 			);
 			name = "Data & Models";
 			sourceTree = "<group>";
@@ -494,6 +501,7 @@
 				25E94DFF1681CFFA0065DFBA /* BusListViewController.xib */,
 				25178583168191510007589B /* StationListViewController.h */,
 				25178584168191510007589B /* StationListViewController.m */,
+				25FA02FA16883DD400BF8942 /* StationListViewController.xib */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
 				25178C1C16842F7F00B2C97D /* FavoritesViewController.h */,
@@ -616,6 +624,7 @@
 				25CE0B05168451C600396503 /* find_bus_button@2x.png in Resources */,
 				25CE0B09168452B700396503 /* find_bus_hl_button.png in Resources */,
 				25CE0B0A168452B700396503 /* find_bus_hl_button@2x.png in Resources */,
+				25FA02FB16883DD400BF8942 /* StationListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +677,7 @@
 				25178C1F16842F8000B2C97D /* FavoritesViewController.m in Sources */,
 				25178C2416842FD300B2C97D /* UserDataSource.m in Sources */,
 				25178C281684310800B2C97D /* Favorite.m in Sources */,
+				258C446C168800B800965BEE /* CharToPinyin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

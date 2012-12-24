@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSNumber *stationSequence;
 @property (nonatomic, strong) NSString *stationType;
 @property (nonatomic, strong) NSString *stationName;
+@property (nonatomic, strong) NSString *stationNamePY;
 @property (nonatomic, strong) NSString *stationID;
 @property (nonatomic, strong) NSString *stationSMSID;
 @property (nonatomic, strong) NSString *latitude;

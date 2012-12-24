@@ -10,6 +10,7 @@
 
 @interface BusRoute : NSObject
 @property (nonatomic, strong) NSString *segmentName;
+@property (nonatomic, strong) NSString *segmentNamePY;
 @property (nonatomic, strong) NSString *segmentID;
 @property (nonatomic, strong) NSNumber *lineID;
 @property (nonatomic, strong) NSArray *stations;
