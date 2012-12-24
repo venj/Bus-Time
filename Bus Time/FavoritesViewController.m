@@ -8,6 +8,7 @@
 
 #import "FavoritesViewController.h"
 #import "AppDelegate.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface FavoritesViewController () {
     UIView *_emptyView;
@@ -143,13 +144,13 @@
         CGFloat navBarHeight = 44.0;
         CGFloat width = self.tableView.frame.size.width, height = 164.;
         CGFloat x = (tvFrame.size.width - width) / 2.0;
-        CGFloat y = (tvFrame.size.height - height) / 2.0 - 60;
+        CGFloat y = (tvFrame.size.height - height - navBarHeight) / 2.0;
         
         UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star"]];
         starImageView.frame = CGRectMake(110., 0, 100, 100);
         [aView addSubview:starImageView];
-        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(60., 101., 200., 20.)];
+        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(60., 100., 200., 20.)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
         infoLabel.text = @"您还没有收藏任何站点";
@@ -179,11 +180,14 @@
         addFavoriteButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         addFavoriteButton.titleLabel.shadowColor = [UIColor grayColor];
         addFavoriteButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
-        addFavoriteButton.frame = CGRectMake(60, 129, 200, 36);
+        addFavoriteButton.frame = CGRectMake(60, 128, 200, 36);
         [addFavoriteButton addTarget:self action:@selector(showBusList:) forControlEvents:UIControlEventTouchUpInside];
         [aView addSubview:addFavoriteButton];
         
+        aView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+        
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.tableView.frame.size.width, self.tableView.frame.size.height - navBarHeight)];
+        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [containerView addSubview:aView];
         return containerView;
     }
