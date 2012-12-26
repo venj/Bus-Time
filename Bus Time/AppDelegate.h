@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class BusListViewController, QueryResultViewController, LeftMenuViewController, SettingsViewController,
-    FavoritesViewController, PPRevealSideViewController;
+    FavoritesViewController, PPRevealSideViewController, NearbyStationsViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
@@ -19,6 +19,8 @@
 @property (strong, nonatomic) UINavigationController *favoritesNavController;
 @property (strong, nonatomic) BusListViewController *busListController;
 @property (strong, nonatomic) UINavigationController *busListNavController;
+@property (strong, nonatomic) NearbyStationsViewController *nearbyStationsViewController;
+@property (strong, nonatomic) UINavigationController *nearbyStationsNavController;
 @property (strong, nonatomic) SettingsViewController *settingsViewController;
 @property (strong, nonatomic) UINavigationController *settingsNavController;
 @property (nonatomic, strong) QueryResultViewController *queryResultController;

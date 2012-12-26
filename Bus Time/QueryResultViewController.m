@@ -15,6 +15,7 @@
 #import "NSTimer+Blocks.h"
 #import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
+#import "StationMapViewController.h"
 
 @interface QueryResultViewController ()
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -49,6 +50,15 @@
         [self.refControl beginRefreshing];
         [self loadResult];
     }
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+        stationVC.stations = @[self.station];
+        stationVC.title = self.title;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -125,7 +135,7 @@
     else {
         resultDict = [self.resultArray objectAtIndex:section];
     }
-    return [NSString stringWithFormat:@"公交车于%@到达：", [resultDict valueForKeyPath:@"actdatetime.text"]];
+    return [NSString stringWithFormat:@"公交%@次班车于%@到达：", [resultDict valueForKeyPath:@"busselfid.text"], [resultDict valueForKeyPath:@"actdatetime.text"]];
 }
 
 #pragma mark - Table view delegate

@@ -19,11 +19,19 @@
         _stationNamePY = [[CharToPinyin shared] abbreviation:_stationName];
         _stationID = [stationDict objectForKey:@"station_id"];
         _stationSMSID = [stationDict objectForKey:@"station_smsid"];
-        _latitude = [stationDict objectForKey:@"wd_str"];
-        _longitude = [stationDict objectForKey:@"jd_str"];
+        _location = [[CLLocation alloc] initWithLatitude:[[stationDict objectForKey:@"latitude"] doubleValue] longitude:[[stationDict objectForKey:@"longitude"] doubleValue]];
         _busRoute = [stationDict objectForKey:@"bus_route"];
     }
     
     return self;
 }
+
+- (CLLocationCoordinate2D)realCoordinate {
+    return [self.location coordinate];
+}
+- (CLLocationCoordinate2D)coordinate {
+    // Add calibration for Wuxi.
+    return CLLocationCoordinate2DMake(self.location.coordinate.latitude - 0.001906, self.location.coordinate.longitude + 0.004633);
+}
+
 @end

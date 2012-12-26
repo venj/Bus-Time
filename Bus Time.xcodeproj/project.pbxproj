@@ -79,6 +79,14 @@
 		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
 		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
 		2520EAEC1681B4C60034BA32 /* menu_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */; };
+		2563F186168ADF7B00C1E7A3 /* map_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563F184168ADF7B00C1E7A3 /* map_icon.png */; };
+		2563F187168ADF7B00C1E7A3 /* map_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563F185168ADF7B00C1E7A3 /* map_icon@2x.png */; };
+		256D4092168A928D00241770 /* NearbyStationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256D408F168A928D00241770 /* NearbyStationsViewController.m */; };
+		256D4093168A928D00241770 /* NearbyStationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256D4090168A928D00241770 /* NearbyStationsViewController.xib */; };
+		256D4095168A92AB00241770 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256D4094168A92AB00241770 /* CoreLocation.framework */; };
+		256D4097168A92B200241770 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 256D4096168A92B200241770 /* MapKit.framework */; };
+		256D409C168AA73200241770 /* StationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256D4099168AA73200241770 /* StationMapViewController.m */; };
+		256D409D168AA73200241770 /* StationMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256D409A168AA73200241770 /* StationMapViewController.xib */; };
 		258C446C168800B800965BEE /* CharToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 258C446A168800B800965BEE /* CharToPinyin.m */; };
 		259A21C31682007700B337E4 /* menu_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C11682007700B337E4 /* menu_cell_bg.png */; };
 		259A21C41682007700B337E4 /* menu_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C21682007700B337E4 /* menu_cell_bg@2x.png */; };
@@ -214,6 +222,16 @@
 		2520EAE71681B0180034BA32 /* LeftMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuViewController.m; sourceTree = "<group>"; };
 		2520EAE91681B4C60034BA32 /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
 		2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_icon@2x.png"; sourceTree = "<group>"; };
+		2563F184168ADF7B00C1E7A3 /* map_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_icon.png; sourceTree = "<group>"; };
+		2563F185168ADF7B00C1E7A3 /* map_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_icon@2x.png"; sourceTree = "<group>"; };
+		256D408E168A928D00241770 /* NearbyStationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = NearbyStationsViewController.h; sourceTree = "<group>"; };
+		256D408F168A928D00241770 /* NearbyStationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyStationsViewController.m; sourceTree = "<group>"; };
+		256D4090168A928D00241770 /* NearbyStationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyStationsViewController.xib; sourceTree = "<group>"; };
+		256D4094168A92AB00241770 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		256D4096168A92B200241770 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		256D4098168AA73200241770 /* StationMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = StationMapViewController.h; sourceTree = "<group>"; };
+		256D4099168AA73200241770 /* StationMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationMapViewController.m; sourceTree = "<group>"; };
+		256D409A168AA73200241770 /* StationMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationMapViewController.xib; sourceTree = "<group>"; };
 		258C4469168800B800965BEE /* CharToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = CharToPinyin.h; sourceTree = "<group>"; };
 		258C446A168800B800965BEE /* CharToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharToPinyin.m; sourceTree = "<group>"; };
 		259A21C11682007700B337E4 /* menu_cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_cell_bg.png; sourceTree = "<group>"; };
@@ -235,6 +253,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256D4097168A92B200241770 /* MapKit.framework in Frameworks */,
+				256D4095168A92AB00241770 /* CoreLocation.framework in Frameworks */,
 				251785F4168192900007589B /* libsqlite3.dylib in Frameworks */,
 				251785F21681928C0007589B /* libz.dylib in Frameworks */,
 				251785F0168192820007589B /* CFNetwork.framework in Frameworks */,
@@ -270,6 +290,8 @@
 		2517850816818FE90007589B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				256D4096168A92B200241770 /* MapKit.framework */,
+				256D4094168A92AB00241770 /* CoreLocation.framework */,
 				251785F3168192900007589B /* libsqlite3.dylib */,
 				251785F11681928C0007589B /* libz.dylib */,
 				251785EF168192820007589B /* CFNetwork.framework */,
@@ -429,6 +451,8 @@
 				259A21CA1682051D00B337E4 /* menu_cell_hl_bg@2x.png */,
 				2520EAE91681B4C60034BA32 /* menu_icon.png */,
 				2520EAEA1681B4C60034BA32 /* menu_icon@2x.png */,
+				2563F184168ADF7B00C1E7A3 /* map_icon.png */,
+				2563F185168ADF7B00C1E7A3 /* map_icon@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -502,8 +526,14 @@
 				25178583168191510007589B /* StationListViewController.h */,
 				25178584168191510007589B /* StationListViewController.m */,
 				25FA02FA16883DD400BF8942 /* StationListViewController.xib */,
+				256D4098168AA73200241770 /* StationMapViewController.h */,
+				256D4099168AA73200241770 /* StationMapViewController.m */,
+				256D409A168AA73200241770 /* StationMapViewController.xib */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
+				256D408E168A928D00241770 /* NearbyStationsViewController.h */,
+				256D408F168A928D00241770 /* NearbyStationsViewController.m */,
+				256D4090168A928D00241770 /* NearbyStationsViewController.xib */,
 				25178C1C16842F7F00B2C97D /* FavoritesViewController.h */,
 				25178C1D16842F8000B2C97D /* FavoritesViewController.m */,
 				25178581168191510007589B /* SettingsViewController.h */,
@@ -625,6 +655,10 @@
 				25CE0B09168452B700396503 /* find_bus_hl_button.png in Resources */,
 				25CE0B0A168452B700396503 /* find_bus_hl_button@2x.png in Resources */,
 				25FA02FB16883DD400BF8942 /* StationListViewController.xib in Resources */,
+				256D4093168A928D00241770 /* NearbyStationsViewController.xib in Resources */,
+				256D409D168AA73200241770 /* StationMapViewController.xib in Resources */,
+				2563F186168ADF7B00C1E7A3 /* map_icon.png in Resources */,
+				2563F187168ADF7B00C1E7A3 /* map_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +712,8 @@
 				25178C2416842FD300B2C97D /* UserDataSource.m in Sources */,
 				25178C281684310800B2C97D /* Favorite.m in Sources */,
 				258C446C168800B800965BEE /* CharToPinyin.m in Sources */,
+				256D4092168A928D00241770 /* NearbyStationsViewController.m in Sources */,
+				256D409C168AA73200241770 /* StationMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

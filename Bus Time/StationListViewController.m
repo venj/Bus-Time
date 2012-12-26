@@ -13,6 +13,9 @@
 #import "QueryResultViewController.h"
 #import "AppDelegate.h"
 #import "ODRefreshControl.h"
+#import "HandyFoundation.h"
+#import "UIBarButtonItem+Blocks.h"
+#import "StationMapViewController.h"
 
 @interface StationListViewController ()
 @property (nonatomic, strong) NSArray *stations;
@@ -35,6 +38,15 @@
     [super viewDidLoad];
     self.title = self.busRoute.segmentName;
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
+    StationListViewController *blockSelf = self;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+        stationVC.stations = blockSelf.stations;
+        stationVC.title = self.title;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }];
 }
 
 - (void)didReceiveMemoryWarning

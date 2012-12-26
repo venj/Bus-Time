@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
 
-static NSString *menuTitles[] = {@"收藏夹", @"公交线路", @"设置"};
+static NSString *menuTitles[] = {@"收藏夹", @"公交线路", @"附近的公交站", @"设置"};
 
 @interface LeftMenuViewController ()
 

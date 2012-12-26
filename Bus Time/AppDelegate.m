@@ -13,6 +13,7 @@
 #import "PPRevealSideViewController.h"
 #import "LeftMenuViewController.h"
 #import "SettingsViewController.h"
+#import "NearbyStationsViewController.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -56,12 +57,15 @@
     // FavList
     self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
     self.favoritesNavController = [[UINavigationController alloc] initWithRootViewController:self.favoritesViewController];
+    // Nearby stations
+    self.nearbyStationsViewController = [[NearbyStationsViewController alloc] initWithNibName:@"NearbyStationsViewController" bundle:nil];
+    self.nearbyStationsNavController = [[UINavigationController alloc] initWithRootViewController:self.nearbyStationsViewController];
     // Settings
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
     
     if (!self.menuViewControllers) {
-        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.favoritesNavController, self.busListNavController, self.settingsNavController, nil];
+        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController, nil];
     }
     
     self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.favoritesNavController];
