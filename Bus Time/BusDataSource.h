@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class BusRoute;
 @interface BusDataSource : NSObject
 + (id)shared;
 - (void)sharedClean;
 
+- (BusRoute *)routeForSegmentID:(NSString *)segmentID;
 - (NSArray *)stationsForBusRoute:(BusRoute *)busRoute;
+- (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius;
 
 @property (nonatomic, strong) NSMutableArray *busList;
 @end

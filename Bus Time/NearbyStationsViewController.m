@@ -9,9 +9,14 @@
 #import "NearbyStationsViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "UIAlertView+Blocks.h"
+#import "UIBarButtonItem+Blocks.h"
 #import "AppDelegate.h"
+#import "BusDataSource.h"
+#import "BusStation.h"
+#import "StationMapViewController.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
+@property (nonatomic, strong) NSArray *stations;
 @property (nonatomic, strong) NSArray *filteredStations;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) CLLocationManager *manager;
@@ -34,7 +39,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [[AppDelegate shared] showLeftMenu];
     }];
-    UIViewController *blockSelf = self;
+    NearbyStationsViewController *blockSelf = self;
     if (![CLLocationManager locationServicesEnabled]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位服务不可用" message:@"定位服务不可用。可能是因为您的设备不支持定位；或您没有打开定位服务；或您没有允许程序使用定位服务。" completionBlock:^(NSUInteger buttonIndex) {
             blockSelf.title = @"附近的公交站(定位服务不可用)";
@@ -51,6 +56,15 @@
             [self.manager startMonitoringSignificantLocationChanges];
         }
     }
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        if ([blockSelf.stations count] == 0) return;
+        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+        stationVC.stations = blockSelf.stations;
+        stationVC.title = self.title;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,76 +94,36 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return [self.stations count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"NearbyStationsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    BusStation *station = [self.stations objectAtIndex:indexPath.row];
+    cell.textLabel.text = station.busRoute.segmentName;
+    cell.detailTextLabel.text = station.stationName;
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     NSLog(@"%f, %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    self.stations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
+    [self.tableView reloadData];
 }
 
 @end

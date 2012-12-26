@@ -28,7 +28,7 @@ static BusDataSource *__shared = nil;
     if(__shared == nil){
         __shared = [[self alloc] init];
     }
-    [__shared loadBusRoutes];
+    [__shared busRoutes];
     return __shared;
 }
 
@@ -38,12 +38,8 @@ static BusDataSource *__shared = nil;
     }
 }
 
-- (void)loadBusRoutes {
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
-    if (![db open]) {
-        return;
-    }
+- (void)busRoutes {
+    FMDatabase *db = [self busDatabase];
     FMResultSet *s = [db executeQuery:@"SELECT * FROM bus_segment"];
     self.busList = [[NSMutableArray alloc] initWithCapacity:200];
     while ([s next]) {
@@ -63,12 +59,24 @@ static BusDataSource *__shared = nil;
     [db close];
 }
 
-- (NSArray *)stationsForBusRoute:(BusRoute *)busRoute {
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
-    if (![db open]) {
-        return nil;
+- (BusRoute *)routeForSegmentID:(NSString *)segmentID {
+    FMDatabase *db = [self busDatabase];
+    FMResultSet *s = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM bus_segment WHERE segment_id=%@", segmentID]];
+    BusRoute *route;
+    if ([s next]) {
+        NSDictionary *busDict;
+        busDict = @{
+            @"line_id":@([s intForColumn:@"line_id"]),
+            @"segment_id":[s stringForColumn:@"segment_id"],
+            @"segment_name":[s stringForColumn:@"segment_name"]
+        };
+        route = [[BusRoute alloc] initWithDictionary:busDict];
     }
+    return route;
+}
+
+- (NSArray *)stationsForBusRoute:(BusRoute *)busRoute {
+    FMDatabase *db = [self busDatabase];
     NSMutableArray *stations = [[NSMutableArray alloc] initWithCapacity:10];
     FMResultSet *s = [db executeQuery:
                       [NSString stringWithFormat:@"SELECT s.*,i.station_name,i.jd_str,i.wd_str FROM bus_station s left join bus_stationinfo i on s.station_id=i.station_id where segment_id='%@' and line_id='%@'", busRoute.segmentID, busRoute.lineID]
@@ -96,7 +104,61 @@ static BusDataSource *__shared = nil;
         station.stationSequence = @(i+1);
     }
     
+    [db close];
     return stations;
+}
+
+// Radius in meters. 1 km = 0.009 degree (latitude/longitude)
+- (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius {
+    double lat, lng, maxLat, minLat, maxLng, minLng;
+    double delta = (radius / 1000.0) * 0.009;
+    lat = coordinate.latitude; lng = coordinate.longitude;
+    maxLat = lat + delta; minLat = lat - delta; maxLng = lng + delta; minLng = lng - delta;
+    
+    FMDatabase *db = [self busDatabase];
+    NSMutableArray *stations = [[NSMutableArray alloc] initWithCapacity:10];
+    FMResultSet *s = [db executeQuery:
+                      [NSString stringWithFormat:@"SELECT s.*,i.station_name,i.jd_str,i.wd_str FROM bus_station s left join bus_stationinfo i on s.station_id=i.station_id where wd_str<%f and wd_str>%f and jd_str<%f and jd_str>%f", maxLat, minLat, maxLng, minLng]
+                      ];
+    while ([s next]) {
+        NSDictionary *stationDict;
+        stationDict = @{
+            @"station_num":@([s intForColumn:@"station_num"]),
+            @"station_type":[s stringForColumn:@"station_type"],
+            @"station_name":[s stringForColumn:@"station_name"],
+            @"station_id":[s stringForColumn:@"station_id"],
+            @"station_smsid":[s stringForColumn:@"station_smsid"],
+            @"latitude":[s stringForColumn:@"wd_str"],
+            @"longitude":[s stringForColumn:@"jd_str"],
+            @"bus_route": [self routeForSegmentID:[s stringForColumn:@"segment_id"]]
+        };
+        BusStation *station = [[BusStation alloc] initWithDictionary:stationDict];
+        [stations addObject:station];
+    }
+    [stations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[(BusStation *)obj1 stationNumber] compare:[(BusStation *)obj2 stationNumber] ];
+    }];
+    for (NSInteger i = 0; i < [stations count]; i++) {
+        BusStation *station = [stations objectAtIndex:i];
+        station.stationSequence = @(i+1);
+    }
+    
+    [db close];
+    return stations;
+    
+    return @[];
+}
+
+
+#pragma mark - Helper methods
+
+- (FMDatabase *)busDatabase {
+    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if (![db open]) {
+        return nil;
+    }
+    return db;
 }
 
 #pragma mark - File Attribute

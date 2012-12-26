@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSString *stationID;
 @property (nonatomic, strong) NSString *stationSMSID;
 @property (nonatomic, strong) CLLocation *location;
-@property (nonatomic, weak) BusRoute *busRoute;
+@property (nonatomic, strong) BusRoute *busRoute;
 // MKAnnotation
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *subtitle;
