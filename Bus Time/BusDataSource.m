@@ -138,15 +138,9 @@ static BusDataSource *__shared = nil;
     [stations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [[(BusStation *)obj1 stationNumber] compare:[(BusStation *)obj2 stationNumber] ];
     }];
-    for (NSInteger i = 0; i < [stations count]; i++) {
-        BusStation *station = [stations objectAtIndex:i];
-        station.stationSequence = @(i+1);
-    }
     
     [db close];
     return stations;
-    
-    return @[];
 }
 
 

@@ -52,8 +52,9 @@
         if (!self.manager) {
             self.manager = [[CLLocationManager alloc] init];
             self.manager.delegate = self;
-            self.manager.distanceFilter = 50.0; // Update if user moves more than 50m.
-            [self.manager startMonitoringSignificantLocationChanges];
+            self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
+            self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+            [self.manager startUpdatingLocation];
         }
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
