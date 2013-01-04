@@ -10,6 +10,7 @@
 #import "cl_BlockHead.h"
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
+#import "InfoPageViewController.h"
 
 @interface SettingsViewController ()
 
@@ -55,21 +56,16 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 1;
+        return 4;
     }
-    else if (section == 1) {
-        return 1;
-    }
-    else {
-        return 1;
-    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,14 +78,23 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"服务器地址";
-    }
-    else if (indexPath.section == 1) {
-        cell.textLabel.text = @"清空缓存和设置";
-    }
-    else {
-        cell.textLabel.text = @"版本号";
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ build %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"版本号";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ build %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+        }
+        else if (indexPath.row == 1) {
+            cell.textLabel.text = @"免责声明";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+        }
+        else if (indexPath.row == 2) {
+            cell.textLabel.text = @"版权协议";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if (indexPath.row == 3) {
+            cell.textLabel.text = @"致谢";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     
     return cell;
@@ -97,26 +102,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"基本设置";
+        return @"关于本程序";
     }
-    else if (section == 1) {
-        return @"高级设置";
-    }
-    else {
-        return @"版本信息";
-    }
+    return @"";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"暂未实现";
-    }
-    else if (section == 1){
-        return @"暂未实现";
-    }
-    else {
-        return nil;
-    }
+    return @"";
 }
 
 #pragma mark - Table view delegate
@@ -126,13 +118,17 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-    }
-    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            [[[UIAlertView alloc] initWithTitle:@"清空缓存和设置" message:@"即将清空程序缓存和程序设置，是否继续？" completionBlock:^(NSUInteger buttonIndex) {
-                if (buttonIndex != 0) {
-                }
-            } cancelButtonTitle:@"取消" otherButtonTitles:@"清空", nil] show];
+            return;
+        }
+        else {
+            NSArray *files = @[@"disclaimer", @"copyright", @"acknowledgements"];
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:files[indexPath.row - 1] ofType:@"html"];
+            NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+            InfoPageViewController *webVC = [[InfoPageViewController alloc] initWithNibName:@"InfoPageViewController" bundle:nil];
+            webVC.fileURL = fileURL;
+            webVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+            [self.navigationController pushViewController:webVC animated:YES];
         }
     }
 }
