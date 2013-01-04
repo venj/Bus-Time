@@ -54,9 +54,11 @@
     [super viewDidLoad];
     // Empty View
     self.title = @"收藏夹";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        [[AppDelegate shared] showLeftMenu];
-    }];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+            [[AppDelegate shared] showLeftMenu];
+        }];
+    }
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [self changeEditingStatusAnimated:YES];
@@ -116,7 +118,16 @@
         Favorite *f = [self.favorites objectAtIndex:indexPath.row];
         [[UserDataSource shared] removeFavoriteWithUserItem:f];
         self.favorites = [[UserDataSource shared] favorites];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        if ([self.favorites count] == 0) {
+            self.tableView.backgroundView = self.emptyView;
+            self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            [self changeEditingStatusAnimated:YES];
+            [self.tableView reloadData];
+        }
+        else {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
     }
 }
 
@@ -204,7 +215,12 @@
 }
 
 - (void)showBusList:(id)sender {
-    [[AppDelegate shared] showLeftMenu];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [[AppDelegate shared] showLeftMenu];
+    }
+    else {
+        [[AppDelegate shared] showBusList];
+    }
 }
 
 - (void)changeEditingStatusAnimated:(BOOL)animated {

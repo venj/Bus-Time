@@ -18,6 +18,9 @@
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
 #import "UserItem.h"
+#import "HistoryViewController.h"
+#import "FavoritesViewController.h"
+#import "AppDelegate.h"
 
 @interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -149,12 +152,19 @@
 }
 
 - (void)loadResult {
+    if (self.station == nil && self.userItem == nil) {
+        [self.refControl endRefreshing];
+        return;
+    }
     if (self.station != nil) {
         [self loadResultWithStation:self.station];
+        [[UserDataSource shared] addOrUpdateHistoryWithStation:self.station];
     }
     else if (self.userItem != nil) {
         [self loadResultWithUserItem:self.userItem];
+        [[UserDataSource shared] addOrUpdateHistoryWithUserItem:self.userItem];
     }
+    //TODO:为History增加下拉更新后，在这里调用。
 }
 
 - (void)loadResultWithStation:(BusStation *)station {
@@ -236,6 +246,9 @@
 
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     if(event.type == UIEventSubtypeMotionShake) {
+        if (self.station == nil && self.userItem == nil) {
+            return;
+        }
         [self.tableView setContentOffset:CGPointMake(0, -44) animated:YES];
         [self.refControl beginRefreshing];
         [self loadResult];
@@ -246,7 +259,6 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        
         id object = (self.station == nil ? self.userItem : self.station);
         if ([[UserDataSource shared] isFavoritedObject:object]) {
             [[UserDataSource shared] removeFavoriteWithObject:object];
@@ -254,6 +266,7 @@
         else {
             [[UserDataSource shared] addOrUpdateFavoriteWithObject:object];
         }
+        //TODO:为Fav增加下拉更新后，在这里调用。
     }
     /*
     else if (buttonIndex == 1) {

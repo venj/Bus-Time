@@ -189,6 +189,21 @@ static BusDataSource *__shared = nil;
     return stations;
 }
 
+- (NSDictionary *)routeInfoForBusRoute:(BusRoute *)busRoute {
+    FMDatabase *db = [self busDatabase];
+    FMResultSet *s = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM 'bus_line' WHERE `line_id`=%@", busRoute.lineID]];
+    NSDictionary *infoDict;
+    if ([s next]) {
+        infoDict = @{
+            @"line_id": [s stringForColumn:@"line_id"],
+            @"line_name": [s stringForColumn:@"line_name"],
+            @"line_info": [s stringForColumn:@"line_info"]
+        };
+    }
+    [db close];
+    return infoDict;
+}
+
 #pragma mark - Helper methods
 
 - (FMDatabase *)busDatabase {

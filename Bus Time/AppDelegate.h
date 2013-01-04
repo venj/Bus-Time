@@ -14,6 +14,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) PPRevealSideViewController *revealController;
+@property (nonatomic, strong) UITabBarController *tabBarController;
 @property (strong, nonatomic) LeftMenuViewController *leftMenuViewController;
 @property (nonatomic, strong) FavoritesViewController *favoritesViewController;
 @property (strong, nonatomic) UINavigationController *favoritesNavController;
@@ -30,6 +31,7 @@
 - (NSArray *)menuViewControllers;
 
 - (void)showLeftMenu;
+- (void)showBusList;
 - (void)hideMenu;
 - (void)preloadMenus;
 - (void)popViewControllerAtIndex:(NSUInteger)index;

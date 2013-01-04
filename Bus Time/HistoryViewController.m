@@ -54,15 +54,17 @@
     [super viewDidLoad];
     // Empty View
     self.title = @"查询历史";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        [[AppDelegate shared] showLeftMenu];
-    }];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+            [[AppDelegate shared] showLeftMenu];
+        }];
+        [[AppDelegate shared] preloadMenus];
+    }
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [self changeEditingStatusAnimated:YES];
     }];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    [[AppDelegate shared] preloadMenus];
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,7 +114,16 @@
         History *h = [self.histories objectAtIndex:indexPath.row];
         [[UserDataSource shared] removeHistoryWithUserItem:h];
         self.histories = [[UserDataSource shared] histories];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        if ([self.histories count] == 0) {
+            self.tableView.backgroundView = self.emptyView;
+            self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            [self changeEditingStatusAnimated:YES];
+            [self.tableView reloadData];
+        }
+        else {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
     }
 }
 
@@ -201,7 +212,12 @@
 }
 
 - (void)showBusList:(id)sender {
-    [[AppDelegate shared] showLeftMenu];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [[AppDelegate shared] showLeftMenu];
+    }
+    else {
+        [[AppDelegate shared] showBusList];
+    }
 }
 
 - (void)changeEditingStatusAnimated:(BOOL)animated {

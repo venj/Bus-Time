@@ -16,7 +16,7 @@
 #import "NearbyStationsViewController.h"
 #import "HistoryViewController.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate>
+@interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
 @property (nonatomic, strong) NSMutableArray *menuViewControllers;
 @end
@@ -35,23 +35,13 @@
         [self loadRevealVC];
     }
     else {
-        self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
-        self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
-        self.splitViewController = [[UISplitViewController alloc] init];
-        self.queryResultController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        self.queryResultController.title = @"暂未查询";
-        UINavigationController *queryNavControl = [[UINavigationController alloc] initWithRootViewController:self.queryResultController];
-        self.splitViewController.viewControllers = @[self.busListNavController, queryNavControl];
-        self.splitViewController.delegate = self;
-        self.window.rootViewController = self.splitViewController;
+        [self loadTabBarVC];
     }
     [self.window makeKeyAndVisible];
     return YES;
 }
 
-- (void)loadRevealVC {
-    // LeftMenu
-    self.leftMenuViewController = [[LeftMenuViewController alloc] initWithStyle:UITableViewStylePlain];
+- (NSArray *)loadCommonVC {
     // BusList
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
@@ -68,8 +58,28 @@
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
     
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.busListNavController.title = @"公交查询";
+        self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.favoritesNavController.title = @"收藏夹";
+        self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.historiesNavController.title = @"查询历史";
+        self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.nearbyStationsNavController.title = @"附近的公交站";
+        self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.settingsNavController.title = @"设置";
+        self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+    }
+    
+    return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController];
+}
+
+- (void)loadRevealVC {
+    // LeftMenu
+    self.leftMenuViewController = [[LeftMenuViewController alloc] initWithStyle:UITableViewStylePlain];
+    
     if (!self.menuViewControllers) {
-        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController, nil];
+        self.menuViewControllers = [[NSMutableArray alloc] initWithArray:[self loadCommonVC]];
     }
     
     self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.historiesNavController];
@@ -79,6 +89,19 @@
     self.window.rootViewController = self.revealController;
 }
 
+- (void)loadTabBarVC {
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = [self loadCommonVC];
+    self.tabBarController.delegate = self;
+    self.splitViewController = [[UISplitViewController alloc] init];
+    self.queryResultController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.queryResultController.title = @"暂未查询";
+    UINavigationController *queryNavControl = [[UINavigationController alloc] initWithRootViewController:self.queryResultController];
+    self.splitViewController.viewControllers = @[self.tabBarController, queryNavControl];
+    self.splitViewController.delegate = self;
+    self.window.rootViewController = self.splitViewController;
+}
+
 - (void)preloadMenus {
     [self.revealController preloadViewController:self.leftMenuViewController forSide:PPRevealSideDirectionLeft];
 }
@@ -86,6 +109,10 @@
 - (void)showLeftMenu {
     [self.revealController pushViewController:self.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:YES];
     [self.leftMenuViewController.tableView reloadData];
+}
+
+- (void)showBusList {
+    [self.tabBarController setSelectedViewController:self.busListNavController];
 }
 
 - (void)hideMenu {

@@ -17,6 +17,6 @@
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID;
 - (NSArray *)stationsForBusRoute:(BusRoute *)busRoute;
 - (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius;
-
+- (NSDictionary *)routeInfoForBusRoute:(BusRoute *)busRoute;
 @property (nonatomic, strong) NSMutableArray *busList;
 @end

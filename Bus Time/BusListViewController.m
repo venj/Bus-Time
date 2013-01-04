@@ -34,11 +34,13 @@
     [super viewDidLoad];
     BusDataSource *source = [BusDataSource shared];
     self.allBuses = source.busList;
-    
     self.title = @"公交查询";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        [[AppDelegate shared] showLeftMenu];
-    }];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+            [[AppDelegate shared] showLeftMenu];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,7 +86,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     // Configure the cell...
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell.textLabel.text = [(BusRoute *)[self.filterBuses objectAtIndex:indexPath.row] segmentName];
@@ -108,6 +110,18 @@
     StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
     stationListViewController.busRoute = [busRoutes objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:stationListViewController animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSArray *busRoutes;
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+        busRoutes = self.filterBuses;
+    else
+        busRoutes = self.allBuses;
+    BusRoute *route = [busRoutes objectAtIndex:indexPath.row];
+    NSDictionary *infoDict = [[BusDataSource shared] routeInfoForBusRoute:route];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"公交%@运营时间", [infoDict objectForKey:@"line_name"]] message:[infoDict objectForKey:@"line_info"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
