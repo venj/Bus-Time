@@ -16,8 +16,10 @@
 #import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 #import "StationMapViewController.h"
+#import "UserDataSource.h"
+#import "UserItem.h"
 
-@interface QueryResultViewController ()
+@interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
 @property (nonatomic, strong) id resultArray;
 @end
@@ -44,20 +46,22 @@
     else {
         self.refControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     }
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     [self.refControl addTarget:self action:@selector(loadResult) forControlEvents:UIControlEventValueChanged];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.tableView setContentOffset:CGPointMake(0, -44) animated:NO];
         [self.refControl beginRefreshing];
         [self loadResult];
     }
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = @[self.station];
-        stationVC.title = self.title;
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
-        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.navigationController presentModalViewController:nav animated:YES];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
+        NSString *message;
+        id object = (self.station == nil ? self.userItem : self.station);
+        if ([[UserDataSource shared] isFavoritedObject:object])
+            message = @"取消收藏";
+        else
+            message = @"加入收藏";
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择您要执行的操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:message/*, @"显示地图"*/, nil];
+        [sheet showInView:self.tableView];
     }];
 }
 
@@ -145,6 +149,23 @@
 }
 
 - (void)loadResult {
+    if (self.station != nil) {
+        [self loadResultWithStation:self.station];
+    }
+    else if (self.userItem != nil) {
+        [self loadResultWithUserItem:self.userItem];
+    }
+}
+
+- (void)loadResultWithStation:(BusStation *)station {
+    [self loadResultWithLineID:station.busRoute.lineID segmentID:station.busRoute.segmentID stationSequance:station.stationSequence];
+}
+
+- (void)loadResultWithUserItem:(UserItem *)userItem {
+    [self loadResultWithLineID:userItem.lineID segmentID:userItem.segmentID stationSequance:userItem.stationSequence];
+}
+
+- (void)loadResultWithLineID:(NSNumber *)lineID segmentID:(NSString *)segmentID stationSequance:(NSNumber *)stationSequence {
     if ([self.request inProgress]) {
         return;
     }
@@ -161,7 +182,7 @@
                                 "      <fdisMsg></fdisMsg>\n"
                                 "    </getBusALStationInfoCommon>\n"
                                 "  </soap:Body>\n"
-                                "</soap:Envelope>\n", self.station.busRoute.lineID, self.station.busRoute.segmentID, self.station.stationSequence];
+                                "</soap:Envelope>\n", lineID, segmentID, stationSequence];
     NSData *postData = [postBodyString dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableDictionary *headersDict = [[NSMutableDictionary alloc] init];
     [headersDict setObject:@([postData length]) forKey:@"Content-Length"];
@@ -219,6 +240,31 @@
         [self.refControl beginRefreshing];
         [self loadResult];
     }
+}
+
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        
+        id object = (self.station == nil ? self.userItem : self.station);
+        if ([[UserDataSource shared] isFavoritedObject:object]) {
+            [[UserDataSource shared] removeFavoriteWithObject:object];
+        }
+        else {
+            [[UserDataSource shared] addOrUpdateFavoriteWithObject:object];
+        }
+    }
+    /*
+    else if (buttonIndex == 1) {
+        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+        stationVC.stations = @[self.station];
+        stationVC.title = self.title;
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        [self.navigationController presentModalViewController:nav animated:YES];
+    }
+     */
 }
 
 @end

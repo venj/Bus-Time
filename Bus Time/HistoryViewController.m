@@ -1,28 +1,28 @@
 //
-//  FavoritesViewController.m
+//  HistoryViewController.m
 //  Bus Time
 //
-//  Created by venj on 12-12-21.
-//  Copyright (c) 2012年 venj. All rights reserved.
+//  Created by venj on 13-1-4.
+//  Copyright (c) 2013年 venj. All rights reserved.
 //
 
-#import "FavoritesViewController.h"
+#import "HistoryViewController.h"
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 #import "UserDataSource.h"
-#import "Favorite.h"
+#import "History.h"
 #import "BusDataSource.h"
 #import "BusInfoCell.h"
 #import "QueryResultViewController.h"
 
-@interface FavoritesViewController () {
+@interface HistoryViewController () {
     UIView *_emptyView;
 }
-@property (nonatomic, strong) NSArray *favorites;
+@property (nonatomic, strong) NSArray *histories;
 @property (nonatomic, strong, readonly) UIView *emptyView;
 @end
 
-@implementation FavoritesViewController
+@implementation HistoryViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,8 +35,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.favorites = [[UserDataSource shared] favorites];
-    if ([self.favorites count] == 0) {
+    self.histories = [[UserDataSource shared] histories];
+    if ([self.histories count] == 0) {
         self.tableView.backgroundView = self.emptyView;
         self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -53,14 +53,16 @@
 {
     [super viewDidLoad];
     // Empty View
-    self.title = @"收藏夹";
+    self.title = @"查询历史";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [[AppDelegate shared] showLeftMenu];
     }];
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [self changeEditingStatusAnimated:YES];
     }];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
+    [[AppDelegate shared] preloadMenus];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,7 +82,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.favorites count];
+    return [self.histories count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,52 +94,47 @@
     if (!cell) {
         cell = [[BusInfoCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    Favorite *f = [self.favorites objectAtIndex:indexPath.row];
+    History *h = [self.histories objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", f.stationSequence, f.stationName];
-    cell.detailTextLabel.text = f.segmentName;
+    cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", h.stationSequence, h.stationName];
+    cell.detailTextLabel.text = h.segmentName;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+     return YES;
 }
-*/
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Favorite *f = [self.favorites objectAtIndex:indexPath.row];
-        [[UserDataSource shared] removeFavoriteWithUserItem:f];
-        self.favorites = [[UserDataSource shared] favorites];
+        History *h = [self.histories objectAtIndex:indexPath.row];
+        [[UserDataSource shared] removeHistoryWithUserItem:h];
+        self.histories = [[UserDataSource shared] histories];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
 #pragma mark - Table view delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Favorite *favorite = [self.favorites objectAtIndex:indexPath.row];
-    [[UserDataSource shared] addOrUpdateHistoryWithUserItem:favorite];
+    History *history = [self.histories objectAtIndex:indexPath.row];
+    [[UserDataSource shared] addOrUpdateHistoryWithUserItem:history];
     QueryResultViewController *queryController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         queryController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        queryController.title = [NSString stringWithFormat:@"%@, %@", favorite.segmentName, favorite.stationName];
+        queryController.title = [NSString stringWithFormat:@"%@, %@", history.segmentName, history.stationName];
         queryController.station = nil;
-        queryController.userItem = favorite;
+        queryController.userItem = history;
         [self.navigationController pushViewController:queryController animated:YES];
     }
     else {
         queryController = [[AppDelegate shared] queryResultController];
-        queryController.title = [NSString stringWithFormat:@"%@, %@", favorite.segmentName, favorite.stationName];
+        queryController.title = [NSString stringWithFormat:@"%@, %@", history.segmentName, history.stationName];
         queryController.station = nil;
-        queryController.userItem = favorite;
+        queryController.userItem = history;
         [queryController loadResult];
     }
 }
@@ -153,13 +150,13 @@
         CGFloat y = (tvFrame.size.height - height - navBarHeight) / 2.0;
         
         UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-        UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star"]];
+        UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"history"]];
         starImageView.frame = CGRectMake(110., 0, 100, 100);
         [aView addSubview:starImageView];
         UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(60., 100., 200., 20.)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
-        infoLabel.text = @"您还没有收藏任何站点";
+        infoLabel.text = @"您还没有任何查询纪录";
         infoLabel.font = [UIFont boldSystemFontOfSize:16];
         infoLabel.textColor = [UIColor colorWithRed:(0x4c / 255.) green:(0x56 / 255.) blue:(0x6c / 255.) alpha:1];
         infoLabel.shadowColor = [UIColor whiteColor];
@@ -185,7 +182,7 @@
         UIButton *addFavoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [addFavoriteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [addFavoriteButton setBackgroundImage:buttonHighlightImage forState:UIControlStateHighlighted];
-        [addFavoriteButton setTitle:@"查找一个公交站" forState:UIControlStateNormal];
+        [addFavoriteButton setTitle:@"开始查询" forState:UIControlStateNormal];
         addFavoriteButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         addFavoriteButton.titleLabel.shadowColor = [UIColor grayColor];
         addFavoriteButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
@@ -219,5 +216,4 @@
         [self.tableView setEditing:YES animated:animated];
     }
 }
-
 @end

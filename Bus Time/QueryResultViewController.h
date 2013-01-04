@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class BusStation;
+@class BusStation, UserItem;
 @interface QueryResultViewController : UITableViewController
 @property (nonatomic, strong) BusStation *station;
+@property (nonatomic, strong) UserItem *userItem;
 @property (nonatomic, strong) id refControl;
 - (void)loadResult;
 @end

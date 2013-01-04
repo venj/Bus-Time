@@ -1,5 +1,5 @@
 //
-//  Favorite.h
+//  History.h
 //  Bus Time
 //
 //  Created by venj on 13-1-4.
@@ -8,6 +8,6 @@
 
 #import "UserItem.h"
 
-@interface Favorite : UserItem
+@interface History : UserItem
 
 @end

@@ -14,14 +14,56 @@
 @implementation BusDataSource
 static BusDataSource *__shared = nil;
 
-+ (void)initialize {
+#pragma mark - Class Helper Methods 
++ (BOOL)busDataBaseNeedsUpdate {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *oldDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    BOOL dbExists = [manager fileExistsAtPath:oldDBPath];
+    if (!dbExists) {
+        return YES;
+    }
+    
+    FMDatabase *oldDB = [FMDatabase databaseWithPath:oldDBPath];
+    if (![oldDB open]) {
+        return NO;
+    }
+    FMResultSet *s = [oldDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    NSString *oldUpdateDate, *newUpdateDate;
+    if ([s next]) {
+        oldUpdateDate = [s stringForColumn:@"value"];
+    }
+    [oldDB close];
+    
+    NSString *newDBPath = [[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"];
+    FMDatabase *newDB = [FMDatabase databaseWithPath:newDBPath];
+    if (![newDB open]) {
+        return NO;
+    }
+    FMResultSet *t = [newDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    if ([t next]) {
+        newUpdateDate = [t stringForColumn:@"value"];
+    }
+    [newDB close];
+    
+    if ([oldUpdateDate isEqualToString:newUpdateDate]) {
+        return NO;
+    }
+    return YES;
+}
+
++ (void)updateBusDataBase {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    BOOL dbExists = [manager fileExistsAtPath:dbPath];
-    if (!dbExists) {
+    if ([self busDataBaseNeedsUpdate]) {
         [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
     }
     [self addSkipBackupAttributeToItemAtPath:dbPath];
+}
+
+#pragma mark - Object life cycle
+
++ (void)initialize {
+    [self updateBusDataBase];
 }
 
 + (id)shared{
@@ -37,6 +79,8 @@ static BusDataSource *__shared = nil;
         __shared = nil;
     }
 }
+
+#pragma mark - Bus Route Database Query
 
 - (void)busRoutes {
     FMDatabase *db = [self busDatabase];
@@ -72,6 +116,8 @@ static BusDataSource *__shared = nil;
         };
         route = [[BusRoute alloc] initWithDictionary:busDict];
     }
+    
+    [db close];
     return route;
 }
 
@@ -143,11 +189,19 @@ static BusDataSource *__shared = nil;
     return stations;
 }
 
-
 #pragma mark - Helper methods
 
 - (FMDatabase *)busDatabase {
     NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if (![db open]) {
+        return nil;
+    }
+    return db;
+}
+
+- (FMDatabase *)userDatabase {
+    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"userdata.db"];
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return nil;

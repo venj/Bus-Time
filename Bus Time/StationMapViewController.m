@@ -33,6 +33,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone handler:^(id sender) {
         [self.navigationController dismissModalViewControllerAnimated:YES];
     }];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.075);
     BusStation *s = [self.stations objectAtIndex:[self.stations count] / 4];
     MKCoordinateRegion visibleRegion = MKCoordinateRegionMake(s.coordinate, span);

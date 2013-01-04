@@ -39,6 +39,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [[AppDelegate shared] showLeftMenu];
     }];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     NearbyStationsViewController *blockSelf = self;
     if (![CLLocationManager locationServicesEnabled]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位服务不可用" message:@"定位服务不可用。可能是因为您的设备不支持定位；或您没有打开定位服务；或您没有允许程序使用定位服务。" completionBlock:^(NSUInteger buttonIndex) {

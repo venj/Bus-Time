@@ -16,6 +16,7 @@
 #import "HandyFoundation.h"
 #import "UIBarButtonItem+Blocks.h"
 #import "StationMapViewController.h"
+#import "UserDataSource.h"
 
 @interface StationListViewController ()
 @property (nonatomic, strong) NSArray *stations;
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     self.title = self.busRoute.segmentName;
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
+    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     StationListViewController *blockSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
@@ -112,17 +114,20 @@
     else {
         station = [self.stations objectAtIndex:indexPath.row];
     }
+    [[UserDataSource shared] addOrUpdateHistoryWithStation:station];
     QueryResultViewController *queryController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         queryController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
         queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
         queryController.station = station;
+        queryController.userItem = nil;
         [self.navigationController pushViewController:queryController animated:YES];
     }
     else {
         queryController = [[AppDelegate shared] queryResultController];
         queryController.title = [NSString stringWithFormat:@"%@, %@", station.busRoute.segmentName, station.stationName];
         queryController.station = station;
+        queryController.userItem = nil;
         [queryController loadResult];
     }
 }

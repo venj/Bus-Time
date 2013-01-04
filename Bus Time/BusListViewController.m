@@ -35,7 +35,7 @@
     BusDataSource *source = [BusDataSource shared];
     self.allBuses = source.busList;
     
-    self.title = @"公交线路";
+    self.title = @"公交查询";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [[AppDelegate shared] showLeftMenu];
     }];

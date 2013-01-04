@@ -14,6 +14,7 @@
 #import "LeftMenuViewController.h"
 #import "SettingsViewController.h"
 #import "NearbyStationsViewController.h"
+#import "HistoryViewController.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -57,6 +58,9 @@
     // FavList
     self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
     self.favoritesNavController = [[UINavigationController alloc] initWithRootViewController:self.favoritesViewController];
+    // HistoryList
+    self.historiesViewController = [[HistoryViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.historiesNavController = [[UINavigationController alloc] initWithRootViewController:self.historiesViewController];
     // Nearby stations
     self.nearbyStationsViewController = [[NearbyStationsViewController alloc] initWithNibName:@"NearbyStationsViewController" bundle:nil];
     self.nearbyStationsNavController = [[UINavigationController alloc] initWithRootViewController:self.nearbyStationsViewController];
@@ -65,10 +69,10 @@
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
     
     if (!self.menuViewControllers) {
-        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController, nil];
+        self.menuViewControllers = [[NSMutableArray alloc] initWithObjects:self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController, nil];
     }
     
-    self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.favoritesNavController];
+    self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.historiesNavController];
     [self.revealController setDirectionsToShowBounce:PPRevealSideDirectionLeft];
     self.revealController.panInteractionsWhenClosed = PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView;
     self.revealController.delegate = self;
