@@ -109,14 +109,8 @@
      */
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.manager startUpdatingLocation];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)dealloc {
     [self.manager stopUpdatingLocation];
-    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
