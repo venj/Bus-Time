@@ -14,9 +14,12 @@
 #import "BusDataSource.h"
 #import "BusStation.h"
 #import "StationMapViewController.h"
+#import "NearbyStation.h"
+#import "UserDataSource.h"
+#import "QueryResultViewController.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
-@property (nonatomic, strong) NSArray *stations;
+@property (nonatomic, strong) NSArray *nearbyStations;
 @property (nonatomic, strong) NSArray *filteredStations;
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) CLLocationManager *manager;
@@ -89,19 +92,21 @@
             return;
         }
     }
+    /*
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        if ([blockSelf.stations count] == 0) {
+        if ([blockSelf.nearbyStations count] == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近没有任何公交车站。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             return;
         };
         StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = blockSelf.stations;
+        stationVC.stations = blockSelf.nearbyStations;
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
         nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self.navigationController presentModalViewController:nav animated:YES];
     }];
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -120,6 +125,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -131,7 +144,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.stations count];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.filteredStations count];
+    }
+    else {
+        return [self.nearbyStations count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -143,23 +161,81 @@
     }
     
     // Configure the cell...
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    BusStation *station = [self.stations objectAtIndex:indexPath.row];
-    cell.textLabel.text = station.busRoute.segmentName;
+    NSArray *nearbyStations;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        nearbyStations = self.filteredStations;
+    }
+    else {
+        nearbyStations = self.nearbyStations;
+    }
+    
+    NearbyStation *station = [nearbyStations objectAtIndex:indexPath.row];
+    cell.textLabel.text = station.segmentName;
     cell.detailTextLabel.text = station.stationName;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *nearbyStations;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        nearbyStations = self.filteredStations;
+    }
+    else {
+        nearbyStations = self.nearbyStations;
+    }
+    NearbyStation *nearbyStation = [nearbyStations objectAtIndex:indexPath.row];
+    [nearbyStation lookupStationSequence];
+    [[UserDataSource shared] addOrUpdateHistoryWithUserItem:nearbyStation];
+    QueryResultViewController *queryController;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        queryController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        queryController.title = [NSString stringWithFormat:@"%@, %@", nearbyStation.segmentName, nearbyStation.stationName];
+        queryController.station = nil;
+        queryController.userItem = nearbyStation;
+        [self.navigationController pushViewController:queryController animated:YES];
+    }
+    else {
+        queryController = [[AppDelegate shared] queryResultController];
+        queryController.title = [NSString stringWithFormat:@"%@, %@", nearbyStation.segmentName, nearbyStation.stationName];
+        queryController.station = nil;
+        queryController.userItem = nearbyStation;
+        [queryController loadResult];
+    }
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    NSIndexSet *resultSet = [self.nearbyStations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *stationName = [(NearbyStation *)obj stationName];
+        NSString *stationNamePY = [(NearbyStation *)obj stationNamePY];
+        NSString *segmentName = [(NearbyStation *)obj segmentName];
+        NSString *segmentNamePY = [(NearbyStation *)obj segmentNamePY];
+        
+        NSRange result1 = [stationName rangeOfString:[searchText strip]];
+        NSRange result2 = [stationNamePY rangeOfString:[searchText strip]];
+        NSRange result3 = [segmentName rangeOfString:[searchText strip]];
+        NSRange result4 = [segmentNamePY rangeOfString:[searchText strip]];
+        if (result1.location == NSNotFound && result2.location == NSNotFound && result3.location == NSNotFound && result4.location == NSNotFound) {
+            return NO;
+        }
+        return YES;
+    }];
+    
+    self.filteredStations = [self.nearbyStations objectsAtIndexes:resultSet];
+    [self.searchDisplayController.searchResultsTableView reloadData];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"%f, %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    self.stations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
+    self.nearbyStations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
+    if ([self.nearbyStations count] == 0) {
+        self.title = @"附近的公交站(附近无站点)";
+    }
+    else {
+        self.title = @"附近的公交站";
+    }
     [self.tableView reloadData];
 }
 

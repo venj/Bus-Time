@@ -131,7 +131,14 @@
             InfoPageViewController *webVC = [[InfoPageViewController alloc] initWithNibName:@"InfoPageViewController" bundle:nil];
             webVC.fileURL = fileURL;
             webVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-            [self.navigationController pushViewController:webVC animated:YES];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [self.navigationController pushViewController:webVC animated:YES];
+            }
+            else {
+                UINavigationController *webNav = [[UINavigationController alloc] initWithRootViewController:webVC];
+                webNav.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentModalViewController:webNav animated:YES];
+            }
         }
     }
 }

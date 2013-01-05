@@ -10,6 +10,7 @@
 #import "FMDatabase.h"
 #import "BusStation.h"
 #import "BusRoute.h"
+#import "NearbyStation.h"
 
 @implementation BusDataSource
 static BusDataSource *__shared = nil;
@@ -162,7 +163,7 @@ static BusDataSource *__shared = nil;
     maxLat = lat + delta; minLat = lat - delta; maxLng = lng + delta; minLng = lng - delta;
     
     FMDatabase *db = [self busDatabase];
-    NSMutableArray *stations = [[NSMutableArray alloc] initWithCapacity:10];
+    NSMutableArray *nearbyStations = [[NSMutableArray alloc] initWithCapacity:0];
     FMResultSet *s = [db executeQuery:
                       [NSString stringWithFormat:@"SELECT s.*,i.station_name,i.jd_str,i.wd_str FROM bus_station s left join bus_stationinfo i on s.station_id=i.station_id where wd_str<%f and wd_str>%f and jd_str<%f and jd_str>%f", maxLat, minLat, maxLng, minLng]
                       ];
@@ -179,14 +180,15 @@ static BusDataSource *__shared = nil;
             @"bus_route": [self routeForSegmentID:[s stringForColumn:@"segment_id"]]
         };
         BusStation *station = [[BusStation alloc] initWithDictionary:stationDict];
-        [stations addObject:station];
+        NearbyStation *nearbyStation = [[NearbyStation alloc] initWithBusStation:station];
+        [nearbyStations addObject:nearbyStation];
     }
-    [stations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [[(BusStation *)obj1 stationNumber] compare:[(BusStation *)obj2 stationNumber] ];
+    [nearbyStations sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[(NearbyStation *)obj1 lineID] compare:[(NearbyStation *)obj2 lineID] ];
     }];
     
     [db close];
-    return stations;
+    return nearbyStations;
 }
 
 - (NSDictionary *)routeInfoForBusRoute:(BusRoute *)busRoute {
@@ -202,6 +204,18 @@ static BusDataSource *__shared = nil;
     }
     [db close];
     return infoDict;
+}
+
+- (NSNumber *)stationSequenceForSegmentID:(NSString *)segmentID andStationID:(NSString *)stationID {
+    NSArray *stations = [self stationsForBusRoute:[self routeForSegmentID:segmentID]];
+    NSNumber *stationSequence;
+    for (BusStation *s in stations) {
+        if ([stationID isEqualToString:s.stationID]) {
+            stationSequence = s.stationSequence;
+            break;
+        }
+    }
+    return stationSequence;
 }
 
 #pragma mark - Helper methods

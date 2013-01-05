@@ -7,6 +7,7 @@
 //
 
 #import "InfoPageViewController.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface InfoPageViewController ()
 
@@ -29,12 +30,25 @@
     // Do any additional setup after loading the view from its nib.
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.fileURL];
     [self.webView loadRequest:request];
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone handler:^(id sender) {
+            [self dismissModalViewControllerAnimated:YES];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
 }
 
 - (void)viewDidUnload {

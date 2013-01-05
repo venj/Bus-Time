@@ -7,7 +7,7 @@
 //
 
 #import "StationMapViewController.h"
-#import "BusStation.h"
+#import "NearbyStation.h"
 #import <MapKit/MapKit.h>
 #import "UIBarButtonItem+Blocks.h"
 
@@ -35,7 +35,7 @@
     }];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.075);
-    BusStation *s = [self.stations objectAtIndex:[self.stations count] / 4];
+    id<MKAnnotation> s = [self.stations objectAtIndex:[self.stations count] / 4];
     MKCoordinateRegion visibleRegion = MKCoordinateRegionMake(s.coordinate, span);
     [self.mapView setRegion:visibleRegion animated:YES];
 }
@@ -44,6 +44,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
 }
 
 - (void)viewDidUnload {
@@ -80,12 +88,29 @@
         if ([annotation isKindOfClass:[BusStation class]]) {
             BusStation *station = (BusStation *)annotation;
             station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
+            station.subtitle = station.busRoute.segmentName;
+        }
+        else if ([annotation isKindOfClass:[NearbyStation class]]) {
+            NearbyStation *station = (NearbyStation *)annotation;
+            station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
+            station.subtitle = station.segmentName;
         }
     }
     return pinView;
 }
+/*
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    id<MKAnnotation> annotation = view.annotation;
+    if ([annotation isKindOfClass:[NearbyStation class]]) {
+        NearbyStation *station = (NearbyStation *)annotation;
+        [station lookupStationSequence];
+        station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
+        station.subtitle = station.segmentName;
+    }
+}*/
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    
 }
 
 @end

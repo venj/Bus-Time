@@ -57,7 +57,7 @@
         [self loadResult];
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
-        if (self.station == nil) {
+        if (self.station == nil && self.userItem == nil) {
             return;
         }
         NSString *message;
