@@ -18,6 +18,7 @@
 #import "UserDataSource.h"
 #import "QueryResultViewController.h"
 #import "HandyFoundation.h"
+#import "NSTimer+Blocks.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
 @property (nonatomic, strong) NSArray *nearbyStations;
@@ -111,8 +112,18 @@
      */
 }
 
-- (void)dealloc {
-    [self.manager stopUpdatingLocation];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [NSTimer scheduledTimerWithTimeInterval:5 block:^{
+        [self.manager startUpdatingLocation];
+    } repeats:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [NSTimer scheduledTimerWithTimeInterval:5 block:^{
+        [self.manager stopUpdatingLocation];
+    } repeats:NO];
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
