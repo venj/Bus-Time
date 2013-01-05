@@ -48,14 +48,12 @@
     }
     self.title = @"附近的公交站";
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    NearbyStationsViewController *blockSelf = self;
     if (!self.manager) {
         self.manager = [[CLLocationManager alloc] init];
         self.manager.purpose = @"“附近的站点”功能需要使用您的当前位置来发现附近的公交站点。";
         self.manager.delegate = self;
         self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
         self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-        self.manager.pausesLocationUpdatesAutomatically = YES;
         [self.manager startUpdatingLocation];
     }
     if (!([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
@@ -89,7 +87,6 @@
         }
         if (shouldShowAlert) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位服务不可用" message:msg completionBlock:^(NSUInteger buttonIndex) {
-                blockSelf.title = [NSString stringWithFormat:@"附近的公交站(%@)", addon];
             } cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             return;
@@ -114,7 +111,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [NSTimer scheduledTimerWithTimeInterval:5 block:^{
+    [NSTimer scheduledTimerWithTimeInterval:1 block:^{
         [self.manager startUpdatingLocation];
     } repeats:NO];
 }
@@ -236,14 +233,19 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    NSTimeInterval delta = [[NSDate date] timeIntervalSinceDate:newLocation.timestamp];
+    if (delta > (5 * 60)) {
+        return;
+    }
+    [self.manager stopUpdatingLocation];
     self.nearbyStations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
     if ([self.nearbyStations count] == 0) {
-        self.title = @"附近的公交站(附近无站点)";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近无任何公交站点。" completionBlock:^(NSUInteger buttonIndex) {
+        } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
     }
-    else {
-        self.title = @"附近的公交站";
-    }
-    [self.tableView reloadData];
+    else
+        [self.tableView reloadData];
 }
 
 @end
