@@ -175,7 +175,7 @@
         UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake((width - 200) / 2., 100., 200., 20.)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
-        infoLabel.text = @"您还没有任何查询纪录";
+        infoLabel.text = @"您还没有任何查询记录";
         infoLabel.font = [UIFont boldSystemFontOfSize:16];
         infoLabel.textColor = [UIColor colorWithRed:(0x4c / 255.) green:(0x56 / 255.) blue:(0x6c / 255.) alpha:1];
         infoLabel.shadowColor = [UIColor whiteColor];
