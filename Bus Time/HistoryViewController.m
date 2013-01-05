@@ -162,9 +162,9 @@
         
         UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"history"]];
-        starImageView.frame = CGRectMake(110., 0, 100, 100);
+        starImageView.frame = CGRectMake((width - 100) / 2., 0, 100, 100);
         [aView addSubview:starImageView];
-        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(60., 100., 200., 20.)];
+        UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake((width - 200) / 2., 100., 200., 20.)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
         infoLabel.text = @"您还没有任何查询纪录";
@@ -197,7 +197,7 @@
         addFavoriteButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         addFavoriteButton.titleLabel.shadowColor = [UIColor grayColor];
         addFavoriteButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
-        addFavoriteButton.frame = CGRectMake(60, 128, 200, 36);
+        addFavoriteButton.frame = CGRectMake((width - 200) / 2., 128, 200, 36);
         [addFavoriteButton addTarget:self action:@selector(showBusList:) forControlEvents:UIControlEventTouchUpInside];
         [aView addSubview:addFavoriteButton];
         
@@ -206,7 +206,7 @@
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0., 0., self.tableView.frame.size.width, self.tableView.frame.size.height - navBarHeight)];
         containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [containerView addSubview:aView];
-        return containerView;
+        _emptyView = containerView;
     }
     return _emptyView;
 }

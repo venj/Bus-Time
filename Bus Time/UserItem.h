@@ -7,14 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@interface UserItem : NSObject
+@interface UserItem : NSObject <MKAnnotation>
 @property (nonatomic, strong) NSString *segmentID;
 @property (nonatomic, strong) NSString *segmentName;
 @property (nonatomic, strong) NSNumber *lineID;
 @property (nonatomic, strong) NSNumber *stationSequence;
 @property (nonatomic, strong) NSString *stationID;
 @property (nonatomic, strong) NSString *stationName;
+@property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, assign) CGFloat updateDate;
 - (id)initWithDictionary:(NSDictionary *)dataDict;
+// MKAnnotation
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *subtitle;
+@property (nonatomic, assign, readonly) CLLocationCoordinate2D coordinate;
+// If you want to use the real coordinate for calculation, use this one, not `- coordinate`.
+- (CLLocationCoordinate2D)realCoordinate;
 @end

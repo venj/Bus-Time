@@ -12,6 +12,7 @@
 #import "LeftMenuCell.h"
 
 static NSString *menuTitles[] = {@"查询历史", @"收藏夹", @"公交查询", @"附近的公交站", @"设置"};
+static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", @"menu_position", @"menu_gear"};
 
 @interface LeftMenuViewController ()
 
@@ -64,6 +65,7 @@ static NSString *menuTitles[] = {@"查询历史", @"收藏夹", @"公交查询",
     }
     
     cell.textLabel.text = menuTitles[indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:imageNames[indexPath.row]];
     return cell;
 }
 

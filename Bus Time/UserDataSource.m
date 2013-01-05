@@ -93,6 +93,8 @@ static UserDataSource *__shared = nil;
             @"station_sequence": @([s intForColumn:@"station_sequence"]),
             @"station_id": [s stringForColumn:@"station_id"],
             @"station_name": [s stringForColumn:@"station_name"],
+            @"latitude": [s stringForColumn:@"latitude"],
+            @"longitude": [s stringForColumn:@"longitude"],
             @"updated_at": @([s doubleForColumn:@"updated_at"])
         };
         [favs addObject:[[Favorite alloc] initWithDictionary:dict]];
@@ -115,6 +117,8 @@ static UserDataSource *__shared = nil;
             @"station_sequence": @([s intForColumn:@"station_sequence"]),
             @"station_id": [s stringForColumn:@"station_id"],
             @"station_name": [s stringForColumn:@"station_name"],
+            @"latitude": [s stringForColumn:@"latitude"],
+            @"longitude": [s stringForColumn:@"longitude"],
             @"updated_at": @([s doubleForColumn:@"updated_at"])
         };
         [hists addObject:[[History alloc] initWithDictionary:dict]];
@@ -144,8 +148,8 @@ static UserDataSource *__shared = nil;
     BOOL result;
     NSTimeInterval ts = [[NSDate date] timeIntervalSince1970];
     if (count == 0) {
-        queryString = @"INSERT INTO 'histories' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?)";
-        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), userItem.segmentID, userItem.segmentName, userItem.lineID, userItem.stationSequence, userItem.stationID, userItem.stationName]];
+        queryString = @"INSERT INTO 'histories' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'latitude', 'longitude', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), userItem.segmentID, userItem.segmentName, userItem.lineID, userItem.stationSequence, userItem.stationID, @(userItem.location.coordinate.latitude), @(userItem.location.coordinate.longitude), userItem.stationName]];
     }
     else {
         queryString = @"UPDATE 'histories' SET `updated_at`=? WHERE `segment_id`=? AND `station_id`=?";
@@ -168,8 +172,8 @@ static UserDataSource *__shared = nil;
     BOOL result;
     NSTimeInterval ts = [[NSDate date] timeIntervalSince1970];
     if (count == 0) {
-        queryString = @"INSERT INTO 'histories' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?)";
-        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), route.segmentID, route.segmentName, route.lineID, station.stationSequence, station.stationID, station.stationName]];
+        queryString = @"INSERT INTO 'histories' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'latitude', 'longitude', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), route.segmentID, route.segmentName, route.lineID, station.stationSequence, station.stationID, @(station.location.coordinate.latitude), @(station.location.coordinate.longitude), station.stationName]];
     }
     else {
         queryString = @"UPDATE 'histories' SET `updated_at`=? WHERE `segment_id`=? AND `station_id`=?";
@@ -200,8 +204,8 @@ static UserDataSource *__shared = nil;
     BOOL result;
     NSTimeInterval ts = [[NSDate date] timeIntervalSince1970];
     if (count == 0) {
-        queryString = @"INSERT INTO 'favorites' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?)";
-        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), userItem.segmentID, userItem.segmentName, userItem.lineID, userItem.stationSequence, userItem.stationID, userItem.stationName]];
+        queryString = @"INSERT INTO 'favorites' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'latitude', 'longitude', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), userItem.segmentID, userItem.segmentName, userItem.lineID, userItem.stationSequence, userItem.stationID, @(userItem.location.coordinate.latitude), @(userItem.location.coordinate.longitude), userItem.stationName]];
     }
     else {
         queryString = @"UPDATE 'favorites' SET 'updated_at'=? WHERE `segment_id`=? AND `station_id`=?";
@@ -224,8 +228,8 @@ static UserDataSource *__shared = nil;
     BOOL result;
     NSTimeInterval ts = [[NSDate date] timeIntervalSince1970];
     if (count == 0) {
-        queryString = @"INSERT INTO 'favorites' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?)";
-        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), route.segmentID, route.segmentName, route.lineID, station.stationSequence, station.stationID, station.stationName]];
+        queryString = @"INSERT INTO 'favorites' ('updated_at', 'segment_id', 'segment_name', 'line_id', 'station_sequence', 'station_id', 'latitude', 'longitude', 'station_name') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), route.segmentID, route.segmentName, route.lineID, station.stationSequence, station.stationID, @(station.location.coordinate.latitude), @(station.location.coordinate.longitude), station.stationName]];
     }
     else {
         queryString = @"UPDATE 'favorites' SET `updated_at`=? WHERE `segment_id`=? AND `station_id`=?";

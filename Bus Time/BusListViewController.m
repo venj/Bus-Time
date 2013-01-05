@@ -120,7 +120,16 @@
         busRoutes = self.allBuses;
     BusRoute *route = [busRoutes objectAtIndex:indexPath.row];
     NSDictionary *infoDict = [[BusDataSource shared] routeInfoForBusRoute:route];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"公交%@运营时间", [infoDict objectForKey:@"line_name"]] message:[infoDict objectForKey:@"line_info"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    NSString *title, *message;
+    if (infoDict == nil || [[infoDict objectForKey:@"line_info"] isEqualToString:@""]) {
+        title = @"提示";
+        message = [NSString stringWithFormat:@"公交%@的运营时间不可用。", route.segmentName];
+    }
+    else {
+        title = [NSString stringWithFormat:@"公交%@运营时间", [infoDict objectForKey:@"line_name"]];
+        message = [infoDict objectForKey:@"line_info"];
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alert show];
 }
 

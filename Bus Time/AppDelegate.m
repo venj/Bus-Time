@@ -60,15 +60,15 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.busListNavController.title = @"公交查询";
-        self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_search"];
         self.favoritesNavController.title = @"收藏夹";
-        self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
         self.historiesNavController.title = @"查询历史";
-        self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
         self.nearbyStationsNavController.title = @"附近的公交站";
-        self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
         self.settingsNavController.title = @"设置";
-        self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"map_icon"];
+        self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }
     
     return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController];

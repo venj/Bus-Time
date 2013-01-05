@@ -57,6 +57,9 @@
         [self loadResult];
     }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
+        if (self.station == nil) {
+            return;
+        }
         NSString *message;
         id object = (self.station == nil ? self.userItem : self.station);
         if ([[UserDataSource shared] isFavoritedObject:object])

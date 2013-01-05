@@ -17,8 +17,18 @@
         _stationSequence = [dataDict objectForKey:@"station_sequence"];
         _stationID = [dataDict objectForKey:@"station_id"];
         _stationName = [dataDict objectForKey:@"station_name"];
+        _location = [[CLLocation alloc] initWithLatitude:[[dataDict objectForKey:@"latitude"] doubleValue] longitude:[[dataDict objectForKey:@"longitude"] doubleValue]];
         _updateDate = [[dataDict objectForKey:@"updated_at"] doubleValue];
     }
     return self;
 }
+
+- (CLLocationCoordinate2D)realCoordinate {
+    return [self.location coordinate];
+}
+- (CLLocationCoordinate2D)coordinate {
+    // Add calibration for Wuxi.
+    return CLLocationCoordinate2DMake(self.location.coordinate.latitude - 0.001906, self.location.coordinate.longitude + 0.004633);
+}
+
 @end
