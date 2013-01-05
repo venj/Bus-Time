@@ -17,6 +17,7 @@
 #import "NearbyStation.h"
 #import "UserDataSource.h"
 #import "QueryResultViewController.h"
+#import "HandyFoundation.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
 @property (nonatomic, strong) NSArray *nearbyStations;
@@ -53,6 +54,7 @@
         self.manager.delegate = self;
         self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
         self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+        self.manager.pausesLocationUpdatesAutomatically = YES;
         [self.manager startUpdatingLocation];
     }
     if (!([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {

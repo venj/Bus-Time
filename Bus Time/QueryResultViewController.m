@@ -21,6 +21,7 @@
 #import "HistoryViewController.h"
 #import "FavoritesViewController.h"
 #import "AppDelegate.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
