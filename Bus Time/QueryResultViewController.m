@@ -148,6 +148,13 @@
     return [NSString stringWithFormat:@"公交%@次班车于%@到达：", [resultDict valueForKeyPath:@"busselfid.text"], [resultDict valueForKeyPath:@"actdatetime.text"]];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (section == [tableView numberOfSections] - 1) {
+        return @"下拉本页面或摇动设备可以刷新班车状态。";
+    }
+    return nil;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
