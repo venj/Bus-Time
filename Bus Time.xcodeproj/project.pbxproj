@@ -103,7 +103,6 @@
 		259A21CC1682051D00B337E4 /* menu_cell_hl_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21CA1682051D00B337E4 /* menu_cell_hl_bg@2x.png */; };
 		25A34E7B169806A300C421B7 /* BusListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25A34E7D169806A300C421B7 /* BusListViewController.xib */; };
 		25A34E7F169806FE00C421B7 /* StationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25A34E81169806FE00C421B7 /* StationListViewController.xib */; };
-		25A34EF8169972CD00C421B7 /* NewsListViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 25A34EF6169972CC00C421B7 /* NewsListViewController.h */; };
 		25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A34EF7169972CD00C421B7 /* NewsListViewController.m */; };
 		25C3F930169671A90047FED7 /* userdata.db in Resources */ = {isa = PBXBuildFile; fileRef = 25C3F92F169671A90047FED7 /* userdata.db */; };
 		25C3F9351696768E0047FED7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3F9331696768E0047FED7 /* Favorite.m */; };
@@ -871,7 +870,6 @@
 				25307DB91696A38D00A40BCA /* HistoryViewController.m in Sources */,
 				25307DC71696C98D00A40BCA /* InfoPageViewController.m in Sources */,
 				25FF8D021697F2BB00B45D4A /* NearbyStation.m in Sources */,
-				25A34EF8169972CD00C421B7 /* NewsListViewController.h in Sources */,
 				25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

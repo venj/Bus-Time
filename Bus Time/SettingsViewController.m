@@ -129,7 +129,7 @@
             NSString *filePath = [[NSBundle mainBundle] pathForResource:files[indexPath.row - 1] ofType:@"html"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             InfoPageViewController *webVC = [[InfoPageViewController alloc] initWithNibName:@"InfoPageViewController" bundle:nil];
-            webVC.fileURL = fileURL;
+            webVC.linkURL = fileURL;
             webVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
             if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                 [self.navigationController pushViewController:webVC animated:YES];

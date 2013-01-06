@@ -9,7 +9,7 @@
 #import "InfoPageViewController.h"
 #import "UIBarButtonItem+Blocks.h"
 
-@interface InfoPageViewController ()
+@interface InfoPageViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -28,7 +28,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.fileURL];
+    self.webView.delegate = self;
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.linkURL];
     [self.webView loadRequest:request];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone handler:^(id sender) {
@@ -55,4 +56,20 @@
     [self setWebView:nil];
     [super viewDidUnload];
 }
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if ([[webView.request.URL absoluteString] rangeOfString:@"http://"].location != NSNotFound) {
+        NSString *js = @"var arr = document.getElementsByTagName('div');"
+                        "for(var i = 0; i < arr.length; i++){ "
+                        "    var oldcss = arr[i].style.cssText;"
+                        "    arr[i].style.cssText += 'color:black;padding-top:10px;';"
+                        "}"
+                        "var hr = document.getElementsByTagName('hr');"
+                        "hr[0].hidden=true;"
+                        "var spans = document.getElementsByTagName('span');"
+                        "spans[spans.length - 1].style.cssText += 'padding:0 10 5 0;font-size:1em;color:gray;'; ";
+        [webView stringByEvaluatingJavaScriptFromString:js];
+    }
+}
+
 @end

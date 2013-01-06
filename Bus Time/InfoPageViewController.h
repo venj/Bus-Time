@@ -10,5 +10,5 @@
 
 @interface InfoPageViewController : UIViewController <UIWebViewDelegate>
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
-@property (nonatomic, strong) NSURL *fileURL;
+@property (nonatomic, strong) NSURL *linkURL;
 @end
