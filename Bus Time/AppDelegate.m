@@ -69,10 +69,10 @@
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
         self.historiesNavController.title = @"查询历史";
         self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
-        self.nearbyStationsNavController.title = @"附近的公交站";
+        self.nearbyStationsNavController.title = @"附近站点";
         self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
-        self.settingsNavController.title = @"出行提示";
-        self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
+        self.newsNavViewController.title = @"出行提示";
+        self.newsNavViewController.tabBarItem.image = [UIImage imageNamed:@"tab_info"];
         self.settingsNavController.title = @"设置";
         self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }

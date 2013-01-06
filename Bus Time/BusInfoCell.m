@@ -21,7 +21,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone || self.contentView.frame.size.width <= 320) {
         CGRect contentViewFrame = self.contentView.frame;
         CGRect textLabelFrame = self.textLabel.frame;
         CGRect detailedTextLabelFrame = self.detailTextLabel.frame;

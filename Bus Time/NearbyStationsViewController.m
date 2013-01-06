@@ -46,11 +46,11 @@
             [[AppDelegate shared] showLeftMenu];
         }];
     }
-    self.title = @"附近的公交站";
+    self.title = @"附近站点";
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     if (!self.manager) {
         self.manager = [[CLLocationManager alloc] init];
-        self.manager.purpose = @"“附近的站点”功能需要使用您的当前位置来发现附近的公交站点。";
+        self.manager.purpose = @"“附近站点”功能需要使用您的当前位置来发现附近的公交站点。";
         self.manager.delegate = self;
         self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
         self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
