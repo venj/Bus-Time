@@ -15,6 +15,7 @@
 #import "SettingsViewController.h"
 #import "NearbyStationsViewController.h"
 #import "HistoryViewController.h"
+#import "NewsListViewController.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -54,6 +55,9 @@
     // Nearby stations
     self.nearbyStationsViewController = [[NearbyStationsViewController alloc] initWithNibName:@"NearbyStationsViewController" bundle:nil];
     self.nearbyStationsNavController = [[UINavigationController alloc] initWithRootViewController:self.nearbyStationsViewController];
+    // Nav news
+    self.newsListViewController = [[NewsListViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.newsNavViewController = [[UINavigationController alloc] initWithRootViewController:self.newsListViewController];
     // Settings
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
@@ -67,11 +71,13 @@
         self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
         self.nearbyStationsNavController.title = @"附近的公交站";
         self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
+        self.settingsNavController.title = @"出行提示";
+        self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
         self.settingsNavController.title = @"设置";
         self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }
     
-    return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.settingsNavController];
+    return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.newsNavViewController, self.settingsNavController];
 }
 
 - (void)loadRevealVC {
