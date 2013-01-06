@@ -238,14 +238,17 @@
         return;
     }
     [self.manager stopUpdatingLocation];
-    self.nearbyStations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
-    if ([self.nearbyStations count] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近无任何公交站点。" completionBlock:^(NSUInteger buttonIndex) {
-        } cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-    }
-    else
-        [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.nearbyStations = [[BusDataSource shared] nearbyStationsForCoordinate:newLocation.coordinate inRadius:500];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            if ([self.nearbyStations count] == 0) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近无任何公交站点。" completionBlock:^(NSUInteger buttonIndex) {
+                } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+        });
+    });
 }
 
 @end
