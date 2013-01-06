@@ -127,7 +127,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSArray *info = [self.newsList objectAtIndex:indexPath.row];
-    NSURL *URL = [NSURL fileURLWithPath:[info objectAtIndex:2]];
+    NSURL *URL = [NSURL URLWithString:[info objectAtIndex:2]];
     InfoPageViewController *webVC = [[InfoPageViewController alloc] initWithNibName:@"InfoPageViewController" bundle:nil];
     webVC.fileURL = URL;
     webVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
