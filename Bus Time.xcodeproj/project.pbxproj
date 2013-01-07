@@ -37,7 +37,6 @@
 		251785B7168191510007589B /* UIBarButtonItem+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178555168191510007589B /* UIBarButtonItem+Blocks.m */; };
 		251785B9168191510007589B /* UIControl+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178557168191510007589B /* UIControl+Blocks.m */; };
 		251785BB168191510007589B /* UIView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178559168191510007589B /* UIView+Blocks.m */; };
-		251785BC168191510007589B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2517855B168191510007589B /* InfoPlist.strings */; };
 		251785BE168191510007589B /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517855F168191510007589B /* FMDatabase.m */; };
 		251785C0168191510007589B /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178561168191510007589B /* FMDatabaseAdditions.m */; };
 		251785C2168191510007589B /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178563168191510007589B /* FMDatabasePool.m */; };
@@ -77,6 +76,7 @@
 		25178C2F168438D300B2C97D /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 25178C2D168438D300B2C97D /* star.png */; };
 		25178C30168438D300B2C97D /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25178C2E168438D300B2C97D /* star@2x.png */; };
 		2517C45816829B610094ACE3 /* ODRefreshControl+Addon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2517C45616829B610094ACE3 /* ODRefreshControl+Addon.m */; };
+		251843C3169A9C9D00049BDB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 251843C1169A9C9D00049BDB /* Localizable.strings */; };
 		2520EAE11681AF7C0034BA32 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */; };
 		2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2520EAE71681B0180034BA32 /* LeftMenuViewController.m */; };
 		2520EAEB1681B4C60034BA32 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2520EAE91681B4C60034BA32 /* menu_icon.png */; };
@@ -146,7 +146,7 @@
 		2517850B16818FE90007589B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2517850D16818FE90007589B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2517851116818FE90007589B /* Bus Time-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bus Time-Info.plist"; sourceTree = "<group>"; };
-		2517851316818FE90007589B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2517851316818FE90007589B /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2517851516818FE90007589B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2517851716818FEA0007589B /* Bus Time-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bus Time-Prefix.pch"; sourceTree = "<group>"; };
 		2517851816818FEA0007589B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -200,7 +200,6 @@
 		25178557168191510007589B /* UIControl+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Blocks.m"; sourceTree = "<group>"; };
 		25178558168191510007589B /* UIView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "UIView+Blocks.h"; sourceTree = "<group>"; };
 		25178559168191510007589B /* UIView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Blocks.m"; sourceTree = "<group>"; };
-		2517855C168191510007589B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		2517855E168191510007589B /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		2517855F168191510007589B /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		25178560168191510007589B /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -255,6 +254,8 @@
 		25178C2E168438D300B2C97D /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		2517C45516829B610094ACE3 /* ODRefreshControl+Addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "ODRefreshControl+Addon.h"; sourceTree = "<group>"; };
 		2517C45616829B610094ACE3 /* ODRefreshControl+Addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ODRefreshControl+Addon.m"; sourceTree = "<group>"; };
+		251843C2169A9C9D00049BDB /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		251843CA169AA1D000049BDB /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Bus Time/zh-Hans.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
 		2520EADF1681AF7C0034BA32 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
 		2520EAE01681AF7C0034BA32 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
 		2520EAE61681B0180034BA32 /* LeftMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuViewController.h; sourceTree = "<group>"; };
@@ -293,8 +294,7 @@
 		25A34E80169806FE00C421B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/StationListViewController.xib; sourceTree = "<group>"; };
 		25A34E821698075D00C421B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/BusListViewController.xib"; sourceTree = "<group>"; };
 		25A34E831698075D00C421B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/StationListViewController.xib"; sourceTree = "<group>"; };
-		25A34E841698075D00C421B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		25A34E851698075D00C421B7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		25A34E851698075D00C421B7 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		25A34EF6169972CC00C421B7 /* NewsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = NewsListViewController.h; sourceTree = "<group>"; };
 		25A34EF7169972CD00C421B7 /* NewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsListViewController.m; sourceTree = "<group>"; };
 		25A34EFE169A52AF00C421B7 /* menu_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_info.png; sourceTree = "<group>"; };
@@ -409,11 +409,11 @@
 			children = (
 				25178586168191510007589B /* wuxitraffic.db */,
 				25C3F92F169671A90047FED7 /* userdata.db */,
+				2517851216818FE90007589B /* InfoPlist.strings */,
+				251843C1169A9C9D00049BDB /* Localizable.strings */,
 				25307DC91696CF1900A40BCA /* webpages */,
 				2517856B168191510007589B /* Images */,
-				2517855A168191510007589B /* en.lproj */,
 				2517851116818FE90007589B /* Bus Time-Info.plist */,
-				2517851216818FE90007589B /* InfoPlist.strings */,
 				2517851516818FE90007589B /* main.m */,
 				2517851716818FEA0007589B /* Bus Time-Prefix.pch */,
 			);
@@ -471,14 +471,6 @@
 				25178559168191510007589B /* UIView+Blocks.m */,
 			);
 			path = cl_block;
-			sourceTree = "<group>";
-		};
-		2517855A168191510007589B /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				2517855B168191510007589B /* InfoPlist.strings */,
-			);
-			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		2517855D168191510007589B /* FMDatabase */ = {
@@ -760,7 +752,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2517851416818FE90007589B /* InfoPlist.strings in Resources */,
-				251785BC168191510007589B /* InfoPlist.strings in Resources */,
 				251785C9168191510007589B /* Default-568h@2x.png in Resources */,
 				251785CA168191510007589B /* Default-Landscape@2x~ipad.png in Resources */,
 				251785CB168191510007589B /* Default-Landscape~ipad.png in Resources */,
@@ -826,6 +817,7 @@
 				25A34F01169A52AF00C421B7 /* menu_info@2x.png in Resources */,
 				2502FBAF1699AD0900F28801 /* tab_info.png in Resources */,
 				2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */,
+				251843C3169A9C9D00049BDB /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,13 +894,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		2517855B168191510007589B /* InfoPlist.strings */ = {
+		251843C1169A9C9D00049BDB /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2517855C168191510007589B /* en */,
-				25A34E841698075D00C421B7 /* zh-Hans */,
+				251843C2169A9C9D00049BDB /* en */,
+				251843CA169AA1D000049BDB /* zh-Hans */,
 			);
-			name = InfoPlist.strings;
+			name = Localizable.strings;
+			path = en.lproj;
 			sourceTree = "<group>";
 		};
 		25A34E7D169806A300C421B7 /* BusListViewController.xib */ = {

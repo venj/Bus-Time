@@ -47,7 +47,8 @@
         stationVC.stations = blockSelf.stations;
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
-        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        nav.modalPresentationStyle = UIModalPresentationPageSheet;
+        nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [self.navigationController presentModalViewController:nav animated:YES];
     }];
 }

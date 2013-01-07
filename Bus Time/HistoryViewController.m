@@ -61,7 +61,7 @@
         [[AppDelegate shared] preloadMenus];
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", @"编辑") style:UIBarButtonItemStyleBordered handler:^(id sender) {
         [self changeEditingStatusAnimated:YES];
     }];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
@@ -230,11 +230,13 @@
 
 - (void)changeEditingStatusAnimated:(BOOL)animated {
     if ([self.tableView isEditing]) {
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemEdit;
+        self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", @"编辑");
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
         [self.tableView setEditing:NO animated:animated];
     }
     else {
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemDone;
+        self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Done", @"完成");
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
         [self.tableView setEditing:YES animated:animated];
     }
 }

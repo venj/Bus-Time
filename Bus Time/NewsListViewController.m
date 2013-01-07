@@ -86,6 +86,13 @@
     [self.request startAsynchronous];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -138,7 +145,7 @@
     }
     else {
         UINavigationController *webNav = [[UINavigationController alloc] initWithRootViewController:webVC];
-        webNav.modalPresentationStyle = UIModalPresentationFormSheet;
+        webNav.modalPresentationStyle = UIModalPresentationPageSheet;
         [self presentModalViewController:webNav animated:YES];
     }
 }
