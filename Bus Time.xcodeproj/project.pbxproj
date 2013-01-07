@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2502FBAF1699AD0900F28801 /* tab_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 2502FBAD1699AD0900F28801 /* tab_info.png */; };
+		2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2502FBAE1699AD0900F28801 /* tab_info@2x.png */; };
 		2517850A16818FE90007589B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2517850916818FE90007589B /* UIKit.framework */; };
 		2517850C16818FE90007589B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2517850B16818FE90007589B /* Foundation.framework */; };
 		2517850E16818FE90007589B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2517850D16818FE90007589B /* CoreGraphics.framework */; };
@@ -137,6 +139,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2502FBAD1699AD0900F28801 /* tab_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_info.png; sourceTree = "<group>"; };
+		2502FBAE1699AD0900F28801 /* tab_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_info@2x.png"; sourceTree = "<group>"; };
 		2517850516818FE90007589B /* Bus Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2517850916818FE90007589B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2517850B16818FE90007589B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -559,6 +563,8 @@
 				25FF8CDE1697C38C00B45D4A /* tab_search@2x.png */,
 				25FF8CDF1697C38C00B45D4A /* tab_star.png */,
 				25FF8CE01697C38C00B45D4A /* tab_star@2x.png */,
+				2502FBAD1699AD0900F28801 /* tab_info.png */,
+				2502FBAE1699AD0900F28801 /* tab_info@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -818,6 +824,8 @@
 				25FF8CFE1697C8D900B45D4A /* menu_star@2x.png in Resources */,
 				25A34F00169A52AF00C421B7 /* menu_info.png in Resources */,
 				25A34F01169A52AF00C421B7 /* menu_info@2x.png in Resources */,
+				2502FBAF1699AD0900F28801 /* tab_info.png in Resources */,
+				2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
