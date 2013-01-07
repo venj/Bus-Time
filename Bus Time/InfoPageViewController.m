@@ -32,7 +32,7 @@
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.linkURL];
     [self.webView loadRequest:request];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone handler:^(id sender) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone handler:^(id sender) {
             [self dismissModalViewControllerAnimated:YES];
         }];
     }

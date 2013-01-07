@@ -34,7 +34,8 @@
     [super viewDidLoad];
     BusDataSource *source = [BusDataSource shared];
     self.allBuses = source.busList;
-    self.title = @"公交查询";
+    self.title = NSLocalizedString(@"Buses", @"公交查询");
+    self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
@@ -122,11 +123,11 @@
     NSDictionary *infoDict = [[BusDataSource shared] routeInfoForBusRoute:route];
     NSString *title, *message;
     if (infoDict == nil || [[infoDict objectForKey:@"line_info"] isEqualToString:@""]) {
-        title = @"提示";
-        message = [NSString stringWithFormat:@"公交%@的运营时间不可用。", route.segmentName];
+        title = NSLocalizedString(@"Info", @"提示");
+        message = [NSString stringWithFormat:NSLocalizedString(@"Service hours for bus: %@ is not available.", @"公交%@的运营时间不可用。"), route.segmentName];
     }
     else {
-        title = [NSString stringWithFormat:@"公交%@运营时间", [infoDict objectForKey:@"line_name"]];
+        title = [NSString stringWithFormat:NSLocalizedString(@"Service hours for %@", @"公交%@运营时间"), [infoDict objectForKey:@"line_name"]];
         message = [infoDict objectForKey:@"line_info"];
     }
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

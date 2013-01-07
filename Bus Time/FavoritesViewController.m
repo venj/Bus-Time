@@ -53,14 +53,14 @@
 {
     [super viewDidLoad];
     // Empty View
-    self.title = @"收藏夹";
+    self.title = NSLocalizedString(@"Favorites", @"收藏夹");
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
             [[AppDelegate shared] showLeftMenu];
         }];
     }
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStyleBordered handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit handler:^(id sender) {
         [self changeEditingStatusAnimated:YES];
     }];
 }
@@ -178,7 +178,7 @@
         UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake((width - 200.)/2., 100., 200., 20.)];
         infoLabel.textAlignment = UITextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
-        infoLabel.text = @"您还没有收藏任何站点";
+        infoLabel.text = NSLocalizedString(@"No Favorites", @"您还没有收藏任何站点");
         infoLabel.font = [UIFont boldSystemFontOfSize:16];
         infoLabel.textColor = [UIColor colorWithRed:(0x4c / 255.) green:(0x56 / 255.) blue:(0x6c / 255.) alpha:1];
         infoLabel.shadowColor = [UIColor whiteColor];
@@ -204,7 +204,7 @@
         UIButton *addFavoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [addFavoriteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [addFavoriteButton setBackgroundImage:buttonHighlightImage forState:UIControlStateHighlighted];
-        [addFavoriteButton setTitle:@"查找一个公交站" forState:UIControlStateNormal];
+        [addFavoriteButton setTitle:NSLocalizedString(@"Start Use",@"查找一个公交站") forState:UIControlStateNormal];
         addFavoriteButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         addFavoriteButton.titleLabel.shadowColor = [UIColor grayColor];
         addFavoriteButton.titleLabel.shadowOffset = CGSizeMake(0.0, -1.0);
@@ -233,13 +233,11 @@
 
 - (void)changeEditingStatusAnimated:(BOOL)animated {
     if ([self.tableView isEditing]) {
-        self.navigationItem.rightBarButtonItem.title = @"编辑";
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemEdit;
         [self.tableView setEditing:NO animated:animated];
     }
     else {
-        self.navigationItem.rightBarButtonItem.title = @"完成";
-        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemDone;
         [self.tableView setEditing:YES animated:animated];
     }
 }

@@ -13,6 +13,7 @@
 #import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 #import "InfoPageViewController.h"
+#import "UIBarButtonItem+Blocks.h"
 
 @interface NewsListViewController ()
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -35,7 +36,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"出行提示";
+    self.title = NSLocalizedString(@"News", @"出行提示");
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -74,12 +75,12 @@
             [self.tableView reloadData];
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:[NSString stringWithFormat:@"出行提示加载失败，服务器错误：HTTP %d。请稍后再试。", request_b.responseStatusCode] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:[NSString stringWithFormat:@"出行提示加载失败，服务器错误：HTTP %d。请稍后再试。", request_b.responseStatusCode] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
         }
     }];
     [self.request setFailedBlock:^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:@"网络连接失败。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Network error, please retry later.", @"网络连接失败，请重试。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
         [alert show];
     }];
     [self.request startAsynchronous];

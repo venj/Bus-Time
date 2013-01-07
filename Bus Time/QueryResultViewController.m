@@ -64,10 +64,10 @@
         NSString *message;
         id object = (self.station == nil ? self.userItem : self.station);
         if ([[UserDataSource shared] isFavoritedObject:object])
-            message = @"取消收藏";
+            message = NSLocalizedString(@"Remove from Favorites", @"取消收藏");
         else
-            message = @"加入收藏";
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"选择您要执行的操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:message/*, @"显示地图"*/, nil];
+            message = NSLocalizedString(@"Add to Favorites", @"加入收藏");
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"取消") destructiveButtonTitle:nil otherButtonTitles:message/*, @"显示地图"*/, nil];
         [sheet showInView:self.tableView];
     }];
 }
@@ -132,7 +132,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
     [cell.textLabel setAdjustsFontSizeToFitWidth:YES];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"距离本站还有%@站", [resultDict valueForKeyPath:@"stationnum.text"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ stops away from here.", @"距离本站还有%@站"), [resultDict valueForKeyPath:@"stationnum.text"]];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     [cell.detailTextLabel setAdjustsFontSizeToFitWidth:YES];
     return cell;
@@ -146,12 +146,12 @@
     else {
         resultDict = [self.resultArray objectAtIndex:section];
     }
-    return [NSString stringWithFormat:@"公交%@次班车于%@到达：", [resultDict valueForKeyPath:@"busselfid.text"], [resultDict valueForKeyPath:@"actdatetime.text"]];
+    return [NSString stringWithFormat:NSLocalizedString(@"By %2$@, bus: %1$@ arrived at: ", @"公交%1$@次班车于%2$@到达："), [resultDict valueForKeyPath:@"busselfid.text"], [resultDict valueForKeyPath:@"actdatetime.text"]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == [tableView numberOfSections] - 1) {
-        return @"下拉本页面或摇动设备可以刷新班车状态。";
+        return NSLocalizedString(@"Shake your device or pull down to refresh.", @"下拉页面或摇动设备刷新班车状态。");
     }
     return nil;
 }
@@ -225,7 +225,7 @@
         NSDictionary *result = [XMLReader dictionaryForXMLString:responseString error:&error];
         NSString *infoString = (NSString *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.fdisMsg.text"];
         if (infoString != nil) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:infoString completionBlock:^(NSUInteger buttonIndex) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString completionBlock:^(NSUInteger buttonIndex) {
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                     if ([infoString rangeOfString:@"结束营运"].location != NSNotFound) {
                         [self.navigationController popViewControllerAnimated:YES];
@@ -235,7 +235,7 @@
                     self.resultArray = nil;
                     [self.tableView reloadData];
                 }
-            } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
             [self.refControl endRefreshing];
         }
@@ -249,7 +249,7 @@
     //网络请求失败
     [self.request setFailedBlock:^{
         [self.refControl endRefreshing];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络请求出错，请重试。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Network error, please retry later.", @"网络请求出错，请重试。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
         [alert show];
     }];
     [self.request startAsynchronous];

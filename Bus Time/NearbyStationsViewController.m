@@ -46,22 +46,22 @@
             [[AppDelegate shared] showLeftMenu];
         }];
     }
-    self.title = @"附近站点";
+    self.title = NSLocalizedString(@"Nearby", @"附近站点");
+    self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     if (!self.manager) {
         self.manager = [[CLLocationManager alloc] init];
-        self.manager.purpose = @"“附近站点”功能需要使用您的当前位置来发现附近的公交站点。";
+        self.manager.purpose = NSLocalizedString(@"\"Nearby\" feature needs your location to discover nearby bus stops.", @"“附近站点”功能需要使用您的当前位置来发现附近的公交站点。");
         self.manager.delegate = self;
         self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
         self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
         [self.manager startUpdatingLocation];
     }
     if (!([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-        NSString *msg, *addon;
+        NSString *msg;
         BOOL shouldShowAlert = YES;
         if (![CLLocationManager locationServicesEnabled]) {
-            msg = @"定位服务不可用。可能是因为您的设备不支持定位；或您没有打开定位服务；或您没有允许程序使用定位服务。";
-            addon = @"定位不可用";
+            msg = NSLocalizedString(@"Location Service is not available. Maybe Location Services is turned off on your device.", @"定位服务不可用。可能是您没有打开定位服务。");
         }
         else {
             switch([CLLocationManager authorizationStatus]){
@@ -70,13 +70,11 @@
                     break;
                 }
                 case kCLAuthorizationStatusDenied: {
-                    msg = @"您没有允许程序访问您的定位信息。如果你要修改定位授权，请打开“设置” - “隐私” - “位置”，并允许“无锡公交查询”访问您的定位信息。";
-                    addon = @"未允许定位";
+                    msg = NSLocalizedString(@"You are not allow app to access your location info. If you want to change your settings, please open \"Settings\" app, navigate to \"Privacy\" - \"Location Service\" and allow app to access your location info.", @"您没有允许程序访问您的定位信息。如果你要修改定位授权，请打开“设置” - “隐私” - “位置”，并允许“无锡公交查询”访问您的定位信息。") ;
                     break;
                 }
                 case kCLAuthorizationStatusRestricted:{
-                    msg = @"家长控制设置不允许本设备使用定位信息。";
-                    addon = @"家长控制";
+                    msg = NSLocalizedString(@"Parental Control denied the app to access your location info.", @"家长控制设置不允许本设备使用定位信息。");
                     break;
                 }
                 case kCLAuthorizationStatusNotDetermined: {
@@ -86,8 +84,8 @@
             }
         }
         if (shouldShowAlert) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位服务不可用" message:msg completionBlock:^(NSUInteger buttonIndex) {
-            } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:msg completionBlock:^(NSUInteger buttonIndex) {
+            } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
             return;
         }
@@ -243,8 +241,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             if ([self.nearbyStations count] == 0) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近无任何公交站点。" completionBlock:^(NSUInteger buttonIndex) {
-                } cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:@"No bus stops nearby." completionBlock:^(NSUInteger buttonIndex) {
+                } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
                 [alert show];
             }
         });

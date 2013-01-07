@@ -38,6 +38,7 @@
 {
     [super viewDidLoad];
     self.title = self.busRoute.segmentName;
+    self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     StationListViewController *blockSelf = self;

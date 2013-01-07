@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"设置";
+    self.title = NSLocalizedString(@"Settings", @"设置");
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -82,20 +82,20 @@
     }
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"版本号";
+            cell.textLabel.text = NSLocalizedString(@"Version", @"版本号");
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ build %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
         }
         else if (indexPath.row == 1) {
-            cell.textLabel.text = @"免责声明";
+            cell.textLabel.text = NSLocalizedString(@"Disclaimer", @"免责声明");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         else if (indexPath.row == 2) {
-            cell.textLabel.text = @"版权协议";
+            cell.textLabel.text = NSLocalizedString(@"Copyright", @"版权协议");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if (indexPath.row == 3) {
-            cell.textLabel.text = @"致谢";
+            cell.textLabel.text = NSLocalizedString(@"Acknowledgements", @"致谢");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
@@ -105,7 +105,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"关于本程序";
+        return NSLocalizedString(@"About", @"关于本程序");
     }
     return @"";
 }

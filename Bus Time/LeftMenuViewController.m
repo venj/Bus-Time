@@ -11,10 +11,11 @@
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
 
-static NSString *menuTitles[] = {@"查询历史", @"收藏夹", @"公交查询", @"附近的公交站", @"出行提示", @"设置"};
 static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", @"menu_position", @"menu_info", @"menu_gear"};
 
-@interface LeftMenuViewController ()
+@interface LeftMenuViewController () {
+    NSArray *__menuTitles;
+}
 
 @end
 
@@ -34,6 +35,7 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", 
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+    __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交查询"), NSLocalizedString(@"Nearby", @"附近的公交站"), NSLocalizedString(@"News", @"出行提示"), NSLocalizedString(@"Settings", @"设置")];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,7 +74,7 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", 
         cell = [[LeftMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = menuTitles[indexPath.row];
+    cell.textLabel.text = __menuTitles[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:imageNames[indexPath.row]];
     return cell;
 }

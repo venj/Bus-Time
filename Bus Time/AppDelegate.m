@@ -63,17 +63,17 @@
     self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.busListNavController.title = @"公交查询";
+        self.busListNavController.title = NSLocalizedString(@"Buses", @"公交查询");
         self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_search"];
-        self.favoritesNavController.title = @"收藏夹";
+        self.favoritesNavController.title = NSLocalizedString(@"Favorites", @"收藏夹");
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
-        self.historiesNavController.title = @"查询历史";
+        self.historiesNavController.title = NSLocalizedString(@"History", @"查询历史");
         self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
-        self.nearbyStationsNavController.title = @"附近站点";
+        self.nearbyStationsNavController.title = NSLocalizedString(@"Nearby", @"附近的公交站");
         self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
-        self.newsNavViewController.title = @"出行提示";
+        self.newsNavViewController.title = NSLocalizedString(@"News", @"出行提示");
         self.newsNavViewController.tabBarItem.image = [UIImage imageNamed:@"tab_info"];
-        self.settingsNavController.title = @"设置";
+        self.settingsNavController.title = NSLocalizedString(@"Settings", @"设置");
         self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }
     
@@ -101,7 +101,7 @@
     self.tabBarController.delegate = self;
     self.splitViewController = [[UISplitViewController alloc] init];
     self.queryResultController = [[QueryResultViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    self.queryResultController.title = @"暂未查询";
+    self.queryResultController.title = NSLocalizedString(@"No result yet.", @"暂未查询");
     UINavigationController *queryNavControl = [[UINavigationController alloc] initWithRootViewController:self.queryResultController];
     self.splitViewController.viewControllers = @[self.tabBarController, queryNavControl];
     self.splitViewController.delegate = self;
