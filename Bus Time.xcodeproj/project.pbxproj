@@ -308,6 +308,10 @@
 		25CE0B03168451C600396503 /* find_bus_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "find_bus_button@2x.png"; sourceTree = "<group>"; };
 		25CE0B07168452B700396503 /* find_bus_hl_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find_bus_hl_button.png; sourceTree = "<group>"; };
 		25CE0B08168452B700396503 /* find_bus_hl_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "find_bus_hl_button@2x.png"; sourceTree = "<group>"; };
+		25D1B671169AA92000F11E0C /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/BusListViewController.xib; sourceTree = "<group>"; };
+		25D1B672169AA92000F11E0C /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/StationListViewController.xib; sourceTree = "<group>"; };
+		25D1B673169AA92000F11E0C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		25D1B676169AAA4D00F11E0C /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = "Bus Time/ja.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
 		25FF8CD71697C38C00B45D4A /* tab_gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_gear.png; sourceTree = "<group>"; };
 		25FF8CD81697C38C00B45D4A /* tab_gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_gear@2x.png"; sourceTree = "<group>"; };
 		25FF8CD91697C38C00B45D4A /* tab_history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_history.png; sourceTree = "<group>"; };
@@ -735,6 +739,7 @@
 			knownRegions = (
 				en,
 				"zh-Hans",
+				ja,
 			);
 			mainGroup = 251784FA16818FE90007589B;
 			productRefGroup = 2517850616818FE90007589B /* Products */;
@@ -890,6 +895,7 @@
 			children = (
 				2517851316818FE90007589B /* en */,
 				25A34E851698075D00C421B7 /* zh-Hans */,
+				25D1B673169AA92000F11E0C /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -899,6 +905,7 @@
 			children = (
 				251843C2169A9C9D00049BDB /* en */,
 				251843CA169AA1D000049BDB /* zh-Hans */,
+				25D1B676169AAA4D00F11E0C /* ja */,
 			);
 			name = Localizable.strings;
 			path = en.lproj;
@@ -909,6 +916,7 @@
 			children = (
 				25A34E7C169806A300C421B7 /* en */,
 				25A34E821698075D00C421B7 /* zh-Hans */,
+				25D1B671169AA92000F11E0C /* ja */,
 			);
 			name = BusListViewController.xib;
 			sourceTree = "<group>";
@@ -918,6 +926,7 @@
 			children = (
 				25A34E80169806FE00C421B7 /* en */,
 				25A34E831698075D00C421B7 /* zh-Hans */,
+				25D1B672169AA92000F11E0C /* ja */,
 			);
 			name = StationListViewController.xib;
 			sourceTree = "<group>";
