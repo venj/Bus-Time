@@ -74,7 +74,7 @@
                     break;
                 }
                 case kCLAuthorizationStatusRestricted:{
-                    msg = NSLocalizedString(@"Parental Control denied the app to access your location info.", @"家长控制设置不允许本设备使用定位信息。");
+                    msg = NSLocalizedString(@"Parental Control denied the app to access your location info.", @"家长控制设置不允许本程序使用定位信息。");
                     break;
                 }
                 case kCLAuthorizationStatusNotDetermined: {
