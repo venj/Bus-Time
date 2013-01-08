@@ -36,6 +36,9 @@
     self.allBuses = source.busList;
     self.title = NSLocalizedString(@"Buses", @"公交查询");
     self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
+    self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.searchDisplayController.searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
