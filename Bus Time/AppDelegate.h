@@ -10,7 +10,7 @@
 
 @class BusListViewController, QueryResultViewController, LeftMenuViewController, SettingsViewController,
     FavoritesViewController, PPRevealSideViewController, NearbyStationsViewController, HistoryViewController,
-    NewsListViewController;
+    NewsListViewController, StationSearchViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
@@ -23,6 +23,8 @@
 @property (strong, nonatomic) UINavigationController *historiesNavController;
 @property (strong, nonatomic) BusListViewController *busListController;
 @property (strong, nonatomic) UINavigationController *busListNavController;
+@property (strong, nonatomic) StationSearchViewController *stationSearchController;
+@property (strong, nonatomic) UINavigationController *stationSearchNavController;
 @property (strong, nonatomic) NearbyStationsViewController *nearbyStationsViewController;
 @property (strong, nonatomic) UINavigationController *nearbyStationsNavController;
 @property (strong, nonatomic) NewsListViewController *newsListViewController;

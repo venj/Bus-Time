@@ -32,8 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    BusDataSource *source = [BusDataSource shared];
-    self.allBuses = source.busList;
     self.title = NSLocalizedString(@"Buses", @"公交查询");
     self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;

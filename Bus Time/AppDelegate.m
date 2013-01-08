@@ -14,8 +14,10 @@
 #import "LeftMenuViewController.h"
 #import "SettingsViewController.h"
 #import "NearbyStationsViewController.h"
+#import "StationSearchViewController.h"
 #import "HistoryViewController.h"
 #import "NewsListViewController.h"
+#import "BusDataSource.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -45,6 +47,7 @@
 - (NSArray *)loadCommonVC {
     // BusList
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
+    self.busListController.allBuses = [[BusDataSource shared] busRoutes];
     self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
     // FavList
     self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -52,6 +55,9 @@
     // HistoryList
     self.historiesViewController = [[HistoryViewController alloc] initWithStyle:UITableViewStylePlain];
     self.historiesNavController = [[UINavigationController alloc] initWithRootViewController:self.historiesViewController];
+    // Station Search
+    self.stationSearchController = [[StationSearchViewController alloc] initWithNibName:@"StationSearchViewController" bundle:nil];
+    self.stationSearchNavController = [[UINavigationController alloc] initWithRootViewController:self.stationSearchController];
     // Nearby stations
     self.nearbyStationsViewController = [[NearbyStationsViewController alloc] initWithNibName:@"NearbyStationsViewController" bundle:nil];
     self.nearbyStationsNavController = [[UINavigationController alloc] initWithRootViewController:self.nearbyStationsViewController];
@@ -69,6 +75,8 @@
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
         self.historiesNavController.title = NSLocalizedString(@"History", @"查询历史");
         self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
+        self.stationSearchController.title = NSLocalizedString(@"Search", @"站名搜索");
+        self.stationSearchNavController.tabBarItem.image = [UIImage imageNamed:@"tab_search"];
         self.nearbyStationsNavController.title = NSLocalizedString(@"Nearby", @"附近站点");
         self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
         self.newsNavViewController.title = NSLocalizedString(@"News", @"出行提示");
@@ -77,7 +85,8 @@
         self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }
     
-    return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.nearbyStationsNavController, self.newsNavViewController, self.settingsNavController];
+    return @[self.historiesNavController, self.favoritesNavController, self.busListNavController, self.stationSearchNavController,
+             self.nearbyStationsNavController, self.newsNavViewController, self.settingsNavController];
 }
 
 - (void)loadRevealVC {

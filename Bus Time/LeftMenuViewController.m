@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
 
-static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", @"menu_position", @"menu_info", @"menu_gear"};
+static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", @"menu_search", @"menu_position", @"menu_info", @"menu_gear"};
 
 @interface LeftMenuViewController () {
     NSArray *__menuTitles;
@@ -35,7 +35,8 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", 
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
-    __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交查询"), NSLocalizedString(@"Nearby", @"附近站点"), NSLocalizedString(@"News", @"出行提示"), NSLocalizedString(@"Settings", @"设置")];
+    __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交查询"), NSLocalizedString(@"Search", @"站名搜索"), NSLocalizedString(@"Nearby", @"附近站点"), NSLocalizedString(@"News", @"出行提示"),
+        NSLocalizedString(@"Settings", @"设置")];
 }
 
 - (void)didReceiveMemoryWarning

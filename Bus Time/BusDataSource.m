@@ -83,10 +83,10 @@ static BusDataSource *__shared = nil;
 
 #pragma mark - Bus Route Database Query
 
-- (void)busRoutes {
+- (NSArray *)busRoutes {
     FMDatabase *db = [self busDatabase];
     FMResultSet *s = [db executeQuery:@"SELECT * FROM bus_segment"];
-    self.busList = [[NSMutableArray alloc] initWithCapacity:200];
+    NSMutableArray *busRoutes = [[NSMutableArray alloc] initWithCapacity:200];
     while ([s next]) {
         NSDictionary *busDict;
         busDict = @{
@@ -95,13 +95,14 @@ static BusDataSource *__shared = nil;
             @"segment_name":[s stringForColumn:@"segment_name"],
         };
         BusRoute *route = [[BusRoute alloc] initWithDictionary:busDict];
-        [self.busList addObject:route];
+        [busRoutes addObject:route];
     }
-    [self.busList sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    [busRoutes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         return [[(BusRoute *)obj1 lineID] compare:[(BusRoute *)obj2 lineID]];
     }];
     
     [db close];
+    return busRoutes;
 }
 
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID {
@@ -216,6 +217,10 @@ static BusDataSource *__shared = nil;
         }
     }
     return stationSequence;
+}
+
+- (NSArray *)stationsForText:(NSString *)text {
+    return @[];
 }
 
 #pragma mark - Helper methods

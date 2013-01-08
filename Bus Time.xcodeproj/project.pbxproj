@@ -115,6 +115,8 @@
 		25CE0B05168451C600396503 /* find_bus_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B03168451C600396503 /* find_bus_button@2x.png */; };
 		25CE0B09168452B700396503 /* find_bus_hl_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B07168452B700396503 /* find_bus_hl_button.png */; };
 		25CE0B0A168452B700396503 /* find_bus_hl_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B08168452B700396503 /* find_bus_hl_button@2x.png */; };
+		25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D1B67C169C120A00F11E0C /* StationSearchViewController.m */; };
+		25D1B680169C120B00F11E0C /* StationSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D1B67D169C120A00F11E0C /* StationSearchViewController.xib */; };
 		25FF8CE11697C38C00B45D4A /* tab_gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD71697C38C00B45D4A /* tab_gear.png */; };
 		25FF8CE21697C38C00B45D4A /* tab_gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD81697C38C00B45D4A /* tab_gear@2x.png */; };
 		25FF8CE31697C38C00B45D4A /* tab_history.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD91697C38C00B45D4A /* tab_history.png */; };
@@ -312,6 +314,9 @@
 		25D1B672169AA92000F11E0C /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ja; path = ja.lproj/StationListViewController.xib; sourceTree = "<group>"; };
 		25D1B673169AA92000F11E0C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		25D1B676169AAA4D00F11E0C /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = "Bus Time/ja.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
+		25D1B67B169C120900F11E0C /* StationSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = StationSearchViewController.h; sourceTree = "<group>"; };
+		25D1B67C169C120A00F11E0C /* StationSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationSearchViewController.m; sourceTree = "<group>"; };
+		25D1B67D169C120A00F11E0C /* StationSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationSearchViewController.xib; sourceTree = "<group>"; };
 		25FF8CD71697C38C00B45D4A /* tab_gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_gear.png; sourceTree = "<group>"; };
 		25FF8CD81697C38C00B45D4A /* tab_gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_gear@2x.png"; sourceTree = "<group>"; };
 		25FF8CD91697C38C00B45D4A /* tab_history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_history.png; sourceTree = "<group>"; };
@@ -645,6 +650,9 @@
 				256D409A168AA73200241770 /* StationMapViewController.xib */,
 				2517857E168191510007589B /* QueryResultViewController.h */,
 				2517857F168191510007589B /* QueryResultViewController.m */,
+				25D1B67B169C120900F11E0C /* StationSearchViewController.h */,
+				25D1B67C169C120A00F11E0C /* StationSearchViewController.m */,
+				25D1B67D169C120A00F11E0C /* StationSearchViewController.xib */,
 				256D408E168A928D00241770 /* NearbyStationsViewController.h */,
 				256D408F168A928D00241770 /* NearbyStationsViewController.m */,
 				256D4090168A928D00241770 /* NearbyStationsViewController.xib */,
@@ -823,6 +831,7 @@
 				2502FBAF1699AD0900F28801 /* tab_info.png in Resources */,
 				2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */,
 				251843C3169A9C9D00049BDB /* Localizable.strings in Resources */,
+				25D1B680169C120B00F11E0C /* StationSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -884,6 +893,7 @@
 				25307DC71696C98D00A40BCA /* InfoPageViewController.m in Sources */,
 				25FF8D021697F2BB00B45D4A /* NearbyStation.m in Sources */,
 				25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */,
+				25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
