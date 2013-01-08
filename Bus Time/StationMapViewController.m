@@ -34,9 +34,11 @@
         [self.navigationController dismissModalViewControllerAnimated:YES];
     }];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.075);
-    id<MKAnnotation> s = [self.stations objectAtIndex:[self.stations count] / 4];
-    MKCoordinateRegion visibleRegion = MKCoordinateRegionMake(s.coordinate, span);
+    NSArray *delta = [self deltaForLatitudeAndLongitude];
+    CGFloat height = [delta[0] doubleValue];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.75 * height, height);
+    CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake([delta[1] doubleValue], [delta[2] doubleValue]);
+    MKCoordinateRegion visibleRegion = MKCoordinateRegionMake(centerCoord, span);
     [self.mapView setRegion:visibleRegion animated:YES];
 }
 
@@ -90,15 +92,15 @@
             station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
             station.subtitle = station.busRoute.segmentName;
         }
-        else if ([annotation isKindOfClass:[NearbyStation class]]) {
-            NearbyStation *station = (NearbyStation *)annotation;
+        else if ([annotation isKindOfClass:[UserItem class]]) {
+            UserItem *station = (UserItem *)annotation;
             station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
             station.subtitle = station.segmentName;
         }
     }
     return pinView;
 }
-/*
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     id<MKAnnotation> annotation = view.annotation;
     if ([annotation isKindOfClass:[NearbyStation class]]) {
@@ -107,10 +109,27 @@
         station.title = [NSString stringWithFormat:@"%@. %@", station.stationSequence, station.stationName];
         station.subtitle = station.segmentName;
     }
-}*/
+}
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+- (NSArray *)deltaForLatitudeAndLongitude {
+    CGFloat maxDelta = 0;
+    CGFloat maxLat = 0, maxLng = 0, minLat = 10000, minLng = 10000;
+    for (id<MKAnnotation>m in self.stations) {
+        if ([m coordinate].latitude == 0 || [m coordinate].longitude == 0)
+            continue;
+        maxLat = MAX(maxLat, [m coordinate].latitude);
+        maxLng = MAX(maxLng, [m coordinate].longitude);
+        minLat = MIN(minLat, [m coordinate].latitude);
+        minLng = MIN(minLng, [m coordinate].longitude);
+    }
+    maxDelta = MAX((maxLat - minLat), (maxLng - minLng)) / 0.75; // For height;
+    if (maxDelta == 0) { // Maybe only showing one stop
+        maxDelta = 0.05;
+    }
+    CGFloat lat = (maxLat + minLat) / 2.0;
+    CGFloat lng = (maxLng + minLng) / 2.0;
     
+    return @[@(maxDelta), @(lat), @(lng)];
 }
 
 @end

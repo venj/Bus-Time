@@ -47,8 +47,13 @@
         stationVC.stations = blockSelf.stations;
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
-        nav.modalPresentationStyle = UIModalPresentationPageSheet;
-        nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        }
+        else {
+            nav.modalPresentationStyle = UIModalPresentationPageSheet;
+            nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        }
         [self.navigationController presentModalViewController:nav animated:YES];
     }];
 }

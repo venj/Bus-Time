@@ -67,7 +67,7 @@
             message = NSLocalizedString(@"Remove from Favorites", @"取消收藏");
         else
             message = NSLocalizedString(@"Add to Favorites", @"加入收藏");
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"取消") destructiveButtonTitle:nil otherButtonTitles:message/*, @"显示地图"*/, nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"取消") destructiveButtonTitle:nil otherButtonTitles:message, NSLocalizedString(@"Show on map", @"显示地图"), nil];
         [sheet showInView:self.tableView];
     }];
 }
@@ -279,16 +279,24 @@
         }
         //TODO:为Fav增加下拉更新后，在这里调用。
     }
-    /*
     else if (buttonIndex == 1) {
+        id<MKAnnotation> annotation = (self.station == nil) ? self.userItem : self.station;
+        if (annotation == nil) {
+            return;
+        }
         StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = @[self.station];
+        stationVC.stations = @[annotation];
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
-        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        }
+        else {
+            nav.modalPresentationStyle = UIModalPresentationPageSheet;
+            nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        }
         [self.navigationController presentModalViewController:nav animated:YES];
     }
-     */
 }
 
 @end

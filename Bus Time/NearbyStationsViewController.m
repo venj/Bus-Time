@@ -55,7 +55,6 @@
         self.manager.delegate = self;
         self.manager.distanceFilter = 100.0; // Update if user moves more than 100m.
         self.manager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-        [self.manager startUpdatingLocation];
     }
     if (!([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
         NSString *msg;
@@ -89,22 +88,24 @@
             [alert show];
             return;
         }
+        else {
+            [self.manager startUpdatingLocation];
+        }
     }
-    /*
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        if ([blockSelf.nearbyStations count] == 0) {
+        if ([self.nearbyStations count] == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近没有任何公交车站。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             return;
         };
         StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = blockSelf.nearbyStations;
+        stationVC.stations = self.nearbyStations;
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
         nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self.navigationController presentModalViewController:nav animated:YES];
     }];
-     */
 }
 
 - (void)viewWillAppear:(BOOL)animated {
