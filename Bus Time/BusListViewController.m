@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 
-@interface BusListViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
+@interface BusListViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) NSArray *filterBuses;
 @end
 
@@ -40,6 +40,7 @@
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchDisplayController.searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
+    
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
             [[AppDelegate shared] showLeftMenu];

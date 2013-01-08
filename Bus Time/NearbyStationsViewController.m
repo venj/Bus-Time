@@ -19,6 +19,7 @@
 #import "QueryResultViewController.h"
 #import "HandyFoundation.h"
 #import "NSTimer+Blocks.h"
+#import "StationListViewController.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
 @property (nonatomic, strong) NSArray *nearbyStations;
@@ -180,7 +181,7 @@
     NearbyStation *station = [nearbyStations objectAtIndex:indexPath.row];
     cell.textLabel.text = station.segmentName;
     cell.detailTextLabel.text = station.stationName;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
@@ -215,6 +216,22 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    NSArray *nearbyStations;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        nearbyStations = self.filteredStations;
+    }
+    else {
+        nearbyStations = self.nearbyStations;
+    }
+    NearbyStation *nearbyStation = [nearbyStations objectAtIndex:indexPath.row];
+    BusRoute *route = [[BusDataSource shared] routeForSegmentID:nearbyStation.segmentID];
+    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
+    stationListViewController.busRoute = route;
+    [self.navigationController pushViewController:stationListViewController animated:YES];
+}
+
+#pragma mark - UISearchViewController Delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     NSIndexSet *resultSet = [self.nearbyStations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         NSString *stationName = [(NearbyStation *)obj stationName];

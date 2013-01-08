@@ -14,6 +14,7 @@
 #import "BusDataSource.h"
 #import "BusInfoCell.h"
 #import "QueryResultViewController.h"
+#import "StationListViewController.h"
 
 @interface HistoryViewController () {
     UIView *_emptyView;
@@ -108,7 +109,7 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", h.stationSequence, h.stationName];
     cell.detailTextLabel.text = h.segmentName;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
@@ -156,6 +157,14 @@
         queryController.userItem = history;
         [queryController loadResult];
     }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    History *history = [self.histories objectAtIndex:indexPath.row];
+    BusRoute *route = [[BusDataSource shared] routeForSegmentID:history.segmentID];
+    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
+    stationListViewController.busRoute = route;
+    [self.navigationController pushViewController:stationListViewController animated:YES];
 }
 
 #pragma mark - Helper Methods

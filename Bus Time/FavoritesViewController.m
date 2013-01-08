@@ -14,6 +14,7 @@
 #import "BusDataSource.h"
 #import "BusInfoCell.h"
 #import "QueryResultViewController.h"
+#import "StationListViewController.h"
 
 @interface FavoritesViewController () {
     UIView *_emptyView;
@@ -106,19 +107,10 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@. %@", f.stationSequence, f.stationName];
     cell.detailTextLabel.text = f.segmentName;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -159,6 +151,14 @@
         queryController.userItem = favorite;
         [queryController loadResult];
     }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    Favorite *favorite = [self.favorites objectAtIndex:indexPath.row];
+    BusRoute *route = [[BusDataSource shared] routeForSegmentID:favorite.segmentID];
+    StationListViewController *stationListViewController = [[StationListViewController alloc] initWithNibName:@"StationListViewController" bundle:nil];
+    stationListViewController.busRoute = route;
+    [self.navigationController pushViewController:stationListViewController animated:YES];
 }
 
 #pragma mark - Helper Methods
