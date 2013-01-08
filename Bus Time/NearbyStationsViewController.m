@@ -73,7 +73,7 @@
                     break;
                 }
                 case kCLAuthorizationStatusDenied: {
-                    msg = NSLocalizedString(@"You are not allow app to access your location info. If you want to change your settings, please open \"Settings\" app, navigate to \"Privacy\" - \"Location Service\" and allow app to access your location info.", @"您没有允许程序访问您的定位信息。如果你要修改定位授权，请打开“设置” - “隐私” - “位置”，并允许“无锡公交查询”访问您的定位信息。") ;
+                    msg = NSLocalizedString(@"You are not allow app to access your location info. If you want to change your settings, please use \"Settings\" app and allow  app to access your location info.", @"您没有允许程序访问您的定位信息。如果你要修改定位授权，请打开“设置”程序，并允许“无锡公交查询”访问您的定位信息。") ;
                     break;
                 }
                 case kCLAuthorizationStatusRestricted:{
