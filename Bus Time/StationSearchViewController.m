@@ -12,8 +12,12 @@
 #import "BusDataSource.h"
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
+#import "CharToPinyin.h"
+#import "HandyFoundation.h"
 
-@interface StationSearchViewController ()
+@interface StationSearchViewController () {
+    NSArray *_stationDicts;
+}
 @property (nonatomic, strong) NSArray *stations;
 @property (nonatomic, strong) NSArray *filteredStations;
 @end
@@ -85,8 +89,15 @@
     }
     
     // Configure the cell...
-    BusStation *station = [self.stations objectAtIndex:indexPath.row];
-    cell.textLabel.text = station.stationName;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell.textLabel.text = [self.filteredStations objectAtIndex:indexPath.row];
+        //NSDictionary *station = [self.filteredStations objectAtIndex:indexPath.row];
+        //cell.textLabel.text = [station objectForKey:@"station_name"];
+    }
+    else {
+        BusStation *station = [self.stations objectAtIndex:indexPath.row];
+        cell.textLabel.text = station.stationName;
+    }
     
     return cell;
 }
@@ -114,8 +125,38 @@
 
 #pragma mark - SearchBar Delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    self.filteredStations = [[BusDataSource shared] stationsForText:searchText];
-    [self.searchDisplayController.searchResultsTableView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (!_stationDicts) {
+            _stationDicts = [[BusDataSource shared] stationDicts];
+        }
+        else if ([[[_stationDicts objectAtIndex:0] objectForKey:@"station_name_py"] isEqualToString:@""]) {
+            for (NSInteger i = 0 ; i < [_stationDicts count]; i++) {
+                NSMutableDictionary *dict = [_stationDicts objectAtIndex:i];
+                NSString *n = [dict objectForKey:@"station_name"];
+                NSString *py = [[CharToPinyin shared] abbreviation:n];
+                [dict setObject:py forKey:@"station_name_py"];
+            }
+        }
+        NSMutableArray *result = [[NSMutableArray alloc] init];
+        for (NSDictionary *d in _stationDicts) {
+            NSString *n = [d objectForKey:@"station_name"];
+            NSString *py = [d objectForKey:@"station_name_py"];
+            NSString *s = [searchText strip];
+            if ([n rangeOfString:s].location != NSNotFound || [py rangeOfString:s].location != NSNotFound) {
+                if ([result indexOfObject:n] == NSNotFound) {
+                    [result addObject:n];
+                }
+            }
+        }
+        [result sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 caseInsensitiveCompare:obj2];//[[obj1 objectForKey:@"station_name"] caseInsensitiveCompare:[obj2 objectForKey:@"station_name"]];
+        }];
+        self.filteredStations = result;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.searchDisplayController.searchResultsTableView reloadData];
+        });
+    });
+    
 }
 
 @end

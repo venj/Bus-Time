@@ -282,7 +282,7 @@ static CharToPinyin *__shared = nil;
                 default: {
                     index = _spellCodeIndex[char2int(local[i]) - 129][char2int(local[i + 1]) - 64] - 1;
                     // 无此汉字, 不能翻译的字符, GBK 保留
-                    if (index == 0) {
+                    if (index <= 0) {
                         //是否翻译为问号
                         if ((options & CPSpellOptionsTranslateUnknowWordToInterrogation) == CPSpellOptionsTranslateUnknowWordToInterrogation) {
                             strcpy(tmp, "?");

@@ -11,6 +11,7 @@
 #import "BusStation.h"
 #import "BusRoute.h"
 #import "NearbyStation.h"
+#import "CharToPinyin.h"
 
 @implementation BusDataSource
 static BusDataSource *__shared = nil;
@@ -219,8 +220,21 @@ static BusDataSource *__shared = nil;
     return stationSequence;
 }
 
-- (NSArray *)stationsForText:(NSString *)text {
-    return @[];
+- (NSArray *)stationDicts {
+    FMDatabase *db = [self busDatabase];
+    NSString *queryString = @"SELECT * FROM 'bus_stationinfo'";
+    FMResultSet *s = [db executeQuery:queryString];
+    NSMutableArray *stations = [[NSMutableArray alloc] init];
+    NSDictionary *infoDict;
+    while ([s next]) {
+        infoDict = @{
+            @"station_name": [s stringForColumn:@"station_name"],
+            @"station_name_py": @"",
+            @"station_id": [s stringForColumn:@"station_id"]
+        };
+        [stations addObject:[infoDict mutableCopy]];
+    }
+    return stations;
 }
 
 #pragma mark - Helper methods

@@ -62,9 +62,7 @@
         [[AppDelegate shared] preloadMenus];
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", @"编辑") style:UIBarButtonItemStyleBordered handler:^(id sender) {
-        [self changeEditingStatusAnimated:YES];
-    }];
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
 }
 
