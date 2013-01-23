@@ -16,7 +16,22 @@
 @implementation BusDataSource
 static BusDataSource *__shared = nil;
 
-#pragma mark - Class Helper Methods 
+#pragma mark - Class Helper Methods
++ (NSString *)busDataBaseVersion {
+    NSString *newUpdateDate;
+    NSString *newDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    FMDatabase *newDB = [FMDatabase databaseWithPath:newDBPath];
+    if (![newDB open]) {
+        return NO;
+    }
+    FMResultSet *t = [newDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    if ([t next]) {
+        newUpdateDate = [t stringForColumn:@"value"];
+    }
+    [newDB close];
+    return [[newUpdateDate componentsSeparatedByString:@" "] objectAtIndex:0];
+}
+
 + (BOOL)busDataBaseNeedsUpdate {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *oldDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
@@ -57,6 +72,7 @@ static BusDataSource *__shared = nil;
     NSFileManager *manager = [NSFileManager defaultManager];
     NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
     if ([self busDataBaseNeedsUpdate]) {
+        [manager removeItemAtPath:dbPath error:nil];
         [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
     }
     [self addSkipBackupAttributeToItemAtPath:dbPath];
@@ -220,19 +236,17 @@ static BusDataSource *__shared = nil;
     return stationSequence;
 }
 
-- (NSArray *)stationDicts {
+- (NSArray *)stationDictWithKeyword:(NSString *)keyword {
     FMDatabase *db = [self busDatabase];
-    NSString *queryString = @"SELECT * FROM 'bus_stationinfo'";
+    NSMutableString *kw = [keyword mutableCopy];
+    NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"[^\\w]" options:NSRegularExpressionCaseInsensitive error:nil];
+    [regex replaceMatchesInString:kw options:NSMatchingWithoutAnchoringBounds range:NSMakeRange(0, [kw length]) withTemplate:@""];
+    NSString *queryString = [NSString stringWithFormat:@"SELECT DISTINCT `station_name` FROM `bus_stationinfo` WHERE `station_name` LIKE '%%%@%%' ORDER BY `station_name`", kw];
+    
     FMResultSet *s = [db executeQuery:queryString];
     NSMutableArray *stations = [[NSMutableArray alloc] init];
-    NSDictionary *infoDict;
     while ([s next]) {
-        infoDict = @{
-            @"station_name": [s stringForColumn:@"station_name"],
-            @"station_name_py": @"",
-            @"station_id": [s stringForColumn:@"station_id"]
-        };
-        [stations addObject:[infoDict mutableCopy]];
+        [stations addObject:[s stringForColumn:@"station_name"]];
     }
     return stations;
 }

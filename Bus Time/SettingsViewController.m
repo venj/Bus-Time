@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 #import "InfoPageViewController.h"
+#import "BusDataSource.h"
 
 @interface SettingsViewController ()
 
@@ -66,7 +67,7 @@
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 4;
+        return 5;
     }
     return 0;
 }
@@ -86,15 +87,20 @@
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ build %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
         }
         else if (indexPath.row == 1) {
+            cell.textLabel.text = NSLocalizedString(@"DB Version", @"数据库版本");
+            cell.detailTextLabel.text = [BusDataSource busDataBaseVersion];
+            
+        }
+        else if (indexPath.row == 2) {
             cell.textLabel.text = NSLocalizedString(@"Disclaimer", @"免责声明");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
-        else if (indexPath.row == 2) {
+        else if (indexPath.row == 3) {
             cell.textLabel.text = NSLocalizedString(@"Copyright", @"版权协议");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if (indexPath.row == 3) {
+        else if (indexPath.row == 4) {
             cell.textLabel.text = NSLocalizedString(@"Acknowledgements", @"致谢");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -121,12 +127,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row < 2) {
             return;
         }
         else {
             NSArray *files = @[@"disclaimer", @"copyright", @"acknowledgements"];
-            NSString *filePath = [[NSBundle mainBundle] pathForResource:files[indexPath.row - 1] ofType:@"html"];
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:files[indexPath.row - 2] ofType:@"html"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             InfoPageViewController *webVC = [[InfoPageViewController alloc] initWithNibName:@"InfoPageViewController" bundle:nil];
             webVC.linkURL = fileURL;

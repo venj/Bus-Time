@@ -14,11 +14,12 @@
 + (id)shared;
 - (void)sharedClean;
 
++ (NSString *)busDataBaseVersion;
 - (NSArray *)busRoutes;
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID;
 - (NSArray *)stationsForBusRoute:(BusRoute *)busRoute;
 - (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius;
 - (NSDictionary *)routeInfoForBusRoute:(BusRoute *)busRoute;
 - (NSNumber *)stationSequenceForSegmentID:(NSString *)segmentID andStationID:(NSString *)stationID;
-- (NSArray *)stationDicts;
+- (NSArray *)stationDictWithKeyword:(NSString *)keyword;
 @end

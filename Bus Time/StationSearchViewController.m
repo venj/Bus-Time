@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Search", @"站名搜索");
-    self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
+    self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Please enter bus stop name", @"请输入站名");
     self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchDisplayController.searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
@@ -90,9 +90,8 @@
     
     // Configure the cell...
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        cell.textLabel.text = [self.filteredStations objectAtIndex:indexPath.row];
-        //NSDictionary *station = [self.filteredStations objectAtIndex:indexPath.row];
-        //cell.textLabel.text = [station objectForKey:@"station_name"];
+        NSString *station = [self.filteredStations objectAtIndex:indexPath.row];
+        cell.textLabel.text = station;
     }
     else {
         BusStation *station = [self.stations objectAtIndex:indexPath.row];
@@ -120,38 +119,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSString *stationName = cell.textLabel.text;
     
 }
 
 #pragma mark - SearchBar Delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if (!_stationDicts) {
-            _stationDicts = [[BusDataSource shared] stationDicts];
-        }
-        else if ([[[_stationDicts objectAtIndex:0] objectForKey:@"station_name_py"] isEqualToString:@""]) {
-            for (NSInteger i = 0 ; i < [_stationDicts count]; i++) {
-                NSMutableDictionary *dict = [_stationDicts objectAtIndex:i];
-                NSString *n = [dict objectForKey:@"station_name"];
-                NSString *py = [[CharToPinyin shared] abbreviation:n];
-                [dict setObject:py forKey:@"station_name_py"];
-            }
-        }
-        NSMutableArray *result = [[NSMutableArray alloc] init];
-        for (NSDictionary *d in _stationDicts) {
-            NSString *n = [d objectForKey:@"station_name"];
-            NSString *py = [d objectForKey:@"station_name_py"];
-            NSString *s = [searchText strip];
-            if ([n rangeOfString:s].location != NSNotFound || [py rangeOfString:s].location != NSNotFound) {
-                if ([result indexOfObject:n] == NSNotFound) {
-                    [result addObject:n];
-                }
-            }
-        }
-        [result sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            return [obj1 caseInsensitiveCompare:obj2];//[[obj1 objectForKey:@"station_name"] caseInsensitiveCompare:[obj2 objectForKey:@"station_name"]];
-        }];
-        self.filteredStations = result;
+        _stationDicts = [[BusDataSource shared] stationDictWithKeyword:searchText];
+        self.filteredStations = _stationDicts;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.searchDisplayController.searchResultsTableView reloadData];
         });
