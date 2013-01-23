@@ -1,0 +1,2 @@
+CREATE TABLE 'station_histories' ( 'id' integer primary key AUTOINCREMENT, 'segment_id' varchar,  'station_name' varchar, 'updated_at' REAL );
+INSERT INTO 'migrations' ('version') VALUES (1);
