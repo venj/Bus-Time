@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2501980916AFDEF20046A56C /* 1_down in Resources */ = {isa = PBXBuildFile; fileRef = 2501980716AFDEF20046A56C /* 1_down */; };
-		2501980A16AFDEF20046A56C /* 1_up in Resources */ = {isa = PBXBuildFile; fileRef = 2501980816AFDEF20046A56C /* 1_up */; };
+		2501980916AFDEF20046A56C /* 1_down.migration in Resources */ = {isa = PBXBuildFile; fileRef = 2501980716AFDEF20046A56C /* 1_down.migration */; };
+		2501980A16AFDEF20046A56C /* 1_up.migration in Resources */ = {isa = PBXBuildFile; fileRef = 2501980816AFDEF20046A56C /* 1_up.migration */; };
 		2502FBAF1699AD0900F28801 /* tab_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 2502FBAD1699AD0900F28801 /* tab_info.png */; };
 		2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2502FBAE1699AD0900F28801 /* tab_info@2x.png */; };
 		2517850A16818FE90007589B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2517850916818FE90007589B /* UIKit.framework */; };
@@ -110,6 +110,7 @@
 		25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A34EF7169972CD00C421B7 /* NewsListViewController.m */; };
 		25A34F00169A52AF00C421B7 /* menu_info.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A34EFE169A52AF00C421B7 /* menu_info.png */; };
 		25A34F01169A52AF00C421B7 /* menu_info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A34EFF169A52AF00C421B7 /* menu_info@2x.png */; };
+		25B2BF3316B0D77B00461ACB /* DBMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B2BF3116B0D77B00461ACB /* DBMigrator.m */; };
 		25C3F930169671A90047FED7 /* userdata.db in Resources */ = {isa = PBXBuildFile; fileRef = 25C3F92F169671A90047FED7 /* userdata.db */; };
 		25C3F9351696768E0047FED7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3F9331696768E0047FED7 /* Favorite.m */; };
 		25C3F9391696769B0047FED7 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3F9371696769B0047FED7 /* History.m */; };
@@ -143,8 +144,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2501980716AFDEF20046A56C /* 1_down */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1_down; sourceTree = "<group>"; };
-		2501980816AFDEF20046A56C /* 1_up */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1_up; sourceTree = "<group>"; };
+		2501980716AFDEF20046A56C /* 1_down.migration */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1_down.migration; sourceTree = "<group>"; };
+		2501980816AFDEF20046A56C /* 1_up.migration */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1_up.migration; sourceTree = "<group>"; };
 		2502FBAD1699AD0900F28801 /* tab_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_info.png; sourceTree = "<group>"; };
 		2502FBAE1699AD0900F28801 /* tab_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_info@2x.png"; sourceTree = "<group>"; };
 		2517850516818FE90007589B /* Bus Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,6 +306,8 @@
 		25A34EF7169972CD00C421B7 /* NewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsListViewController.m; sourceTree = "<group>"; };
 		25A34EFE169A52AF00C421B7 /* menu_info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_info.png; sourceTree = "<group>"; };
 		25A34EFF169A52AF00C421B7 /* menu_info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_info@2x.png"; sourceTree = "<group>"; };
+		25B2BF3016B0D77B00461ACB /* DBMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = DBMigrator.h; sourceTree = "<group>"; };
+		25B2BF3116B0D77B00461ACB /* DBMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBMigrator.m; sourceTree = "<group>"; };
 		25C3F92F169671A90047FED7 /* userdata.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = userdata.db; sourceTree = "<group>"; };
 		25C3F9321696768E0047FED7 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = Favorite.h; sourceTree = "<group>"; };
 		25C3F9331696768E0047FED7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Favorite.m; sourceTree = "<group>"; };
@@ -370,8 +373,8 @@
 		2501980616AFDEF20046A56C /* migrations */ = {
 			isa = PBXGroup;
 			children = (
-				2501980716AFDEF20046A56C /* 1_down */,
-				2501980816AFDEF20046A56C /* 1_up */,
+				2501980716AFDEF20046A56C /* 1_down.migration */,
+				2501980816AFDEF20046A56C /* 1_up.migration */,
 			);
 			path = migrations;
 			sourceTree = "<group>";
@@ -617,6 +620,8 @@
 		251785E6168191920007589B /* Data & Models */ = {
 			isa = PBXGroup;
 			children = (
+				25B2BF3016B0D77B00461ACB /* DBMigrator.h */,
+				25B2BF3116B0D77B00461ACB /* DBMigrator.m */,
 				2517853D168191510007589B /* BusDataSource.h */,
 				2517853E168191510007589B /* BusDataSource.m */,
 				25178544168191510007589B /* BusRoute.h */,
@@ -846,8 +851,8 @@
 				2502FBB01699AD0900F28801 /* tab_info@2x.png in Resources */,
 				251843C3169A9C9D00049BDB /* Localizable.strings in Resources */,
 				25D1B680169C120B00F11E0C /* StationSearchViewController.xib in Resources */,
-				2501980916AFDEF20046A56C /* 1_down in Resources */,
-				2501980A16AFDEF20046A56C /* 1_up in Resources */,
+				2501980916AFDEF20046A56C /* 1_down.migration in Resources */,
+				2501980A16AFDEF20046A56C /* 1_up.migration in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -910,6 +915,7 @@
 				25FF8D021697F2BB00B45D4A /* NearbyStation.m in Sources */,
 				25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */,
 				25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */,
+				25B2BF3316B0D77B00461ACB /* DBMigrator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

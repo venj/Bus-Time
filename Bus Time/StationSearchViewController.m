@@ -14,11 +14,10 @@
 #import "UIBarButtonItem+Blocks.h"
 #import "CharToPinyin.h"
 #import "HandyFoundation.h"
+#import "UserDataSource.h"
 
-@interface StationSearchViewController () {
-    NSArray *_stationDicts;
-}
-@property (nonatomic, strong) NSArray *stations;
+@interface StationSearchViewController ()
+@property (nonatomic, strong) NSArray *stationHistories;
 @property (nonatomic, strong) NSArray *filteredStations;
 @end
 
@@ -48,7 +47,24 @@
             [[AppDelegate shared] showLeftMenu];
         }];
     }
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.stationHistories = [[UserDataSource shared] stationNameHistories];
+    [self.tableView reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -70,7 +86,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return [self.filteredStations count];
     }
-    return [self.stations count];
+    return [self.stationHistories count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -94,26 +110,28 @@
         cell.textLabel.text = station;
     }
     else {
-        BusStation *station = [self.stations objectAtIndex:indexPath.row];
-        cell.textLabel.text = station.stationName;
+        NSString *station = [self.stationHistories objectAtIndex:indexPath.row];
+        cell.textLabel.text = station;
     }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
-/*
-// Override to support editing the table view.
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        NSString *stationName = cell.textLabel.text;
+        [[UserDataSource shared] removeStationHistoryWithStationName:stationName];
+        self.stationHistories = [[UserDataSource shared] stationNameHistories];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        if ([self.stationHistories count] == 0) {
+            [self changeEditingStatusAnimated:YES];
+        }
+    }
 }
-*/
 
 #pragma mark - Table view delegate
 
@@ -121,19 +139,33 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *stationName = cell.textLabel.text;
+    [[UserDataSource shared] addOrUpdateStationName:stationName];
     
 }
 
 #pragma mark - SearchBar Delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        _stationDicts = [[BusDataSource shared] stationDictWithKeyword:searchText];
-        self.filteredStations = _stationDicts;
+        self.filteredStations = [[BusDataSource shared] stationNamesWithKeyword:searchText];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.searchDisplayController.searchResultsTableView reloadData];
         });
     });
-    
+}
+
+#pragma mark - Search
+
+- (void)changeEditingStatusAnimated:(BOOL)animated {
+    if ([self.tableView isEditing]) {
+        self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Edit", @"编辑");
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+        [self.tableView setEditing:NO animated:animated];
+    }
+    else {
+        self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Done", @"完成");
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleDone;
+        [self.tableView setEditing:YES animated:animated];
+    }
 }
 
 @end

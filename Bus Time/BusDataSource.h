@@ -21,5 +21,5 @@
 - (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius;
 - (NSDictionary *)routeInfoForBusRoute:(BusRoute *)busRoute;
 - (NSNumber *)stationSequenceForSegmentID:(NSString *)segmentID andStationID:(NSString *)stationID;
-- (NSArray *)stationDictWithKeyword:(NSString *)keyword;
+- (NSArray *)stationNamesWithKeyword:(NSString *)keyword;
 @end

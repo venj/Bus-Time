@@ -30,4 +30,8 @@
 - (BOOL)isFavoritedStation:(BusStation *)station;
 - (BOOL)isFavoritedUserItem:(UserItem *)userItem;
 - (BOOL)isFavoritedObject:(id)object;
+// Station Name Search History
+- (NSArray *)stationNameHistories;
+- (BOOL)addOrUpdateStationName:(NSString *)stationName;
+- (BOOL)removeStationHistoryWithStationName:(NSString *)stationName;
 @end

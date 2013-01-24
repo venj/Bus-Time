@@ -236,7 +236,7 @@ static BusDataSource *__shared = nil;
     return stationSequence;
 }
 
-- (NSArray *)stationDictWithKeyword:(NSString *)keyword {
+- (NSArray *)stationNamesWithKeyword:(NSString *)keyword {
     FMDatabase *db = [self busDatabase];
     NSMutableString *kw = [keyword mutableCopy];
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"[^\\w]" options:NSRegularExpressionCaseInsensitive error:nil];

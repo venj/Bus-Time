@@ -12,12 +12,13 @@
 #import "FMDatabase.h"
 #import "BusStation.h"
 #import "BusRoute.h"
+#import "DBMigrator.h"
 
 @implementation UserDataSource
 static UserDataSource *__shared = nil;
 
 + (void)initialize {
-    [self migrateUserDataBase];
+    [DBMigrator copyOrMigrate];
 }
 
 + (id)shared{
@@ -31,50 +32,6 @@ static UserDataSource *__shared = nil;
 - (void)sharedClean{
     if (__shared) {
         __shared = nil;
-    }
-}
-
-+ (BOOL)userDataBaseNeedsMigrate {
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *oldDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"userdata.db"];
-    BOOL dbExists = [manager fileExistsAtPath:oldDBPath];
-    if (!dbExists) {
-        return YES;
-    }
-    
-    FMDatabase *oldDB = [FMDatabase databaseWithPath:oldDBPath];
-    if (![oldDB open]) {
-        return NO;
-    }
-    FMResultSet *s = [oldDB executeQuery:@"SELECT * FROM migrations LIMIT 1"];
-    NSString *oldUpdateDate, *newUpdateDate;
-    if ([s next]) {
-        oldUpdateDate = [s stringForColumn:@"version"];
-    }
-    [oldDB close];
-    
-    NSString *newDBPath = [[NSBundle mainBundle] pathForResource:@"userdata" ofType:@"db"];
-    FMDatabase *newDB = [FMDatabase databaseWithPath:newDBPath];
-    if (![newDB open]) {
-        return NO;
-    }
-    FMResultSet *t = [newDB executeQuery:@"SELECT * FROM migrations LIMIT 1"];
-    if ([t next]) {
-        newUpdateDate = [t stringForColumn:@"version"];
-    }
-    [newDB close];
-    
-    if ([oldUpdateDate isEqualToString:newUpdateDate]) {
-        return NO;
-    }
-    return YES;
-}
-
-+ (void)migrateUserDataBase {
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"userdata.db"];
-    if ([self userDataBaseNeedsMigrate]) {
-        [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"userdata" ofType:@"db"] toPath:dbPath error:nil];
     }
 }
 
@@ -340,6 +297,50 @@ static UserDataSource *__shared = nil;
     else {
         return [self removeFavoriteWithStation:(BusStation *)object];
     }
+}
+
+- (NSArray *)stationNameHistories {
+    FMDatabase *db = [self userDatabase];
+    FMResultSet *s = [db executeQuery:@"SELECT * FROM 'station_histories' ORDER BY `updated_at` DESC"];
+    NSMutableArray *snHistory = [[NSMutableArray alloc] initWithCapacity:0];
+    while ([s next]) {
+        NSString *name = [s stringForColumn:@"station_name"];
+        [snHistory addObject:name];
+    }
+    
+    [db close];
+    return snHistory;
+}
+
+- (BOOL)addOrUpdateStationName:(NSString *)stationName {
+    FMDatabase *db = [self userDatabase];
+    FMResultSet *s = [db executeQuery:[NSString stringWithFormat:@"SELECT COUNT(*) FROM 'station_histories' WHERE `station_name`='%@'", stationName]];
+    NSInteger count = 0;
+    if ([s next]) {
+        count = [s intForColumnIndex:0];
+    }
+    NSString *queryString;
+    BOOL result;
+    NSTimeInterval ts = [[NSDate date] timeIntervalSince1970];
+    if (count == 0) {
+        queryString = @"INSERT INTO 'station_histories' ('updated_at', 'station_name') VALUES (?, ?)";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), stationName]];
+    }
+    else {
+        queryString = @"UPDATE 'station_histories' SET `updated_at`=? WHERE `station_name`=?";
+        result = [db executeUpdate:queryString withArgumentsInArray:@[@(ts), stationName]];
+    }
+    
+    [db close];
+    return result;
+}
+
+- (BOOL)removeStationHistoryWithStationName:(NSString *)stationName {
+    FMDatabase *db = [self userDatabase];
+    NSString *queryString = @"DELETE FROM 'station_histories' WHERE `station_name`=?";
+    BOOL result = [db executeUpdate:queryString withArgumentsInArray:@[stationName]];    
+    [db close];
+    return result;
 }
 
 #pragma mark - Helper Method
