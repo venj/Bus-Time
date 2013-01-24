@@ -115,7 +115,7 @@
     CGFloat maxDelta = 0;
     CGFloat maxLat = 0, maxLng = 0, minLat = 10000, minLng = 10000;
     for (id<MKAnnotation>m in self.stations) {
-        if ([m coordinate].latitude == 0 || [m coordinate].longitude == 0)
+        if ([m coordinate].latitude < 25. || [m coordinate].longitude < 115.)
             continue;
         maxLat = MAX(maxLat, [m coordinate].latitude);
         maxLng = MAX(maxLng, [m coordinate].longitude);

@@ -124,7 +124,9 @@ static BusDataSource *__shared = nil;
 
 - (NSArray *)busRoutesWithStationName:(NSString *)stationName {
     FMDatabase *db = [self busDatabase];
-    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM 'bus_segment' WHERE `segment_id` IN (SELECT `segment_id` FROM 'bus_station' WHERE `station_id` IN (SELECT `station_id` FROM 'bus_stationinfo' WHERE `station_name`='%@'))", stationName];
+    // 所有包含英文括号的站名都会被替换为中文括号再搜索 
+    NSString *name = [[stationName stringByReplacingOccurrencesOfString:@"(" withString:@"（"] stringByReplacingOccurrencesOfString:@")" withString:@"）"];
+    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM 'bus_segment' WHERE `segment_id` IN (SELECT `segment_id` FROM 'bus_station' WHERE `station_id` IN (SELECT `station_id` FROM 'bus_stationinfo' WHERE `station_name`='%@'))", name];
     FMResultSet *s = [db executeQuery:queryString];
     NSMutableArray *busRoutes = [[NSMutableArray alloc] init];
     while ([s next]) {
@@ -269,7 +271,11 @@ static BusDataSource *__shared = nil;
     FMResultSet *s = [db executeQuery:queryString];
     NSMutableArray *stations = [[NSMutableArray alloc] init];
     while ([s next]) {
-        [stations addObject:[s stringForColumn:@"station_name"]];
+        NSString *name = [s stringForColumn:@"station_name"];
+        // 忽略站名中包含“上行”和“下行”的站名
+        if ([name rangeOfString:@"上行"].location == NSNotFound && [name rangeOfString:@"下行"].location == NSNotFound) {
+            [stations addObject:[s stringForColumn:@"station_name"]];
+        }
     }
     return stations;
 }

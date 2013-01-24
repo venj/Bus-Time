@@ -67,7 +67,6 @@
     [self.tableView reloadData];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -148,13 +147,14 @@
         busListViewController.allBuses = busList;
         busListViewController.shouldShowMenuIcon = NO;
         [self.navigationController pushViewController:busListViewController animated:YES];
+        [self.searchDisplayController setActive:NO animated:YES];
     }
     else {
         [self.searchDisplayController.searchBar resignFirstResponder];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus lines pass the bus stop is not included in the system yet.", @"途径该站的公交线路暂未被系统收录。")  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
         [alert show];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
