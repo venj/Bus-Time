@@ -99,7 +99,7 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         if ([self.nearbyStations count] == 0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"附近没有任何公交车站。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
             return;
         };
@@ -264,7 +264,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             if ([self.nearbyStations count] == 0) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:@"No bus stops nearby." completionBlock:^(NSUInteger buttonIndex) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") completionBlock:^(NSUInteger buttonIndex) {
                 } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
                 [alert show];
             }

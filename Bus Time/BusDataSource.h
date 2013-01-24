@@ -16,6 +16,7 @@
 
 + (NSString *)busDataBaseVersion;
 - (NSArray *)busRoutes;
+- (NSArray *)busRoutesWithStationName:(NSString *)stationName;
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID;
 - (NSArray *)stationsForBusRoute:(BusRoute *)busRoute;
 - (NSArray *)nearbyStationsForCoordinate:(CLLocationCoordinate2D)coordinate inRadius:(double)radius;

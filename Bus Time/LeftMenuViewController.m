@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
 
-static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_search", @"menu_search", @"menu_position", @"menu_info", @"menu_gear"};
+static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_bus", @"menu_search", @"menu_position", @"menu_info", @"menu_gear"};
 
 @interface LeftMenuViewController () {
     NSArray *__menuTitles;

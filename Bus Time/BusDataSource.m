@@ -122,6 +122,29 @@ static BusDataSource *__shared = nil;
     return busRoutes;
 }
 
+- (NSArray *)busRoutesWithStationName:(NSString *)stationName {
+    FMDatabase *db = [self busDatabase];
+    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM 'bus_segment' WHERE `segment_id` IN (SELECT `segment_id` FROM 'bus_station' WHERE `station_id` IN (SELECT `station_id` FROM 'bus_stationinfo' WHERE `station_name`='%@'))", stationName];
+    FMResultSet *s = [db executeQuery:queryString];
+    NSMutableArray *busRoutes = [[NSMutableArray alloc] init];
+    while ([s next]) {
+        NSDictionary *busDict;
+        busDict = @{
+        @"line_id":@([s intForColumn:@"line_id"]),
+        @"segment_id":[s stringForColumn:@"segment_id"],
+        @"segment_name":[s stringForColumn:@"segment_name"],
+        };
+        BusRoute *route = [[BusRoute alloc] initWithDictionary:busDict];
+        [busRoutes addObject:route];
+    }
+    [busRoutes sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[(BusRoute *)obj1 lineID] compare:[(BusRoute *)obj2 lineID]];
+    }];
+    
+    [db close];
+    return busRoutes;
+}
+
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID {
     FMDatabase *db = [self busDatabase];
     FMResultSet *s = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM bus_segment WHERE segment_id=%@", segmentID]];

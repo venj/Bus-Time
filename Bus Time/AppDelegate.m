@@ -48,6 +48,7 @@
     // BusList
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     self.busListController.allBuses = [[BusDataSource shared] busRoutes];
+    self.busListController.shouldShowMenuIcon = YES;
     self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
     // FavList
     self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -70,7 +71,7 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.busListNavController.title = NSLocalizedString(@"Buses", @"公交查询");
-        self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_search"];
+        self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_bus"];
         self.favoritesNavController.title = NSLocalizedString(@"Favorites", @"收藏夹");
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
         self.historiesNavController.title = NSLocalizedString(@"History", @"查询历史");

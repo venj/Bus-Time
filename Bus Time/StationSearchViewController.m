@@ -12,9 +12,11 @@
 #import "BusDataSource.h"
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
+#import "UIAlertView+Blocks.h"
 #import "CharToPinyin.h"
 #import "HandyFoundation.h"
 #import "UserDataSource.h"
+#import "BusListViewController.h"
 
 @interface StationSearchViewController ()
 @property (nonatomic, strong) NSArray *stationHistories;
@@ -139,8 +141,24 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *stationName = cell.textLabel.text;
-    [[UserDataSource shared] addOrUpdateStationName:stationName];
-    
+    NSArray *busList = [[BusDataSource shared] busRoutesWithStationName:stationName];
+    if ([busList count] > 0) {
+        [[UserDataSource shared] addOrUpdateStationName:stationName];
+        BusListViewController *busListViewController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
+        busListViewController.allBuses = busList;
+        busListViewController.shouldShowMenuIcon = NO;
+        [self.navigationController pushViewController:busListViewController animated:YES];
+    }
+    else {
+        [self.searchDisplayController.searchBar resignFirstResponder];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus lines pass the bus stop is not included in the system yet.", @"途径该站的公交线路暂未被系统收录。")  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
+        [alert show];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.searchDisplayController.searchBar resignFirstResponder];
 }
 
 #pragma mark - SearchBar Delegate

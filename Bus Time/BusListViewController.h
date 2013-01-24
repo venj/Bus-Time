@@ -10,4 +10,5 @@
 
 @interface BusListViewController : UITableViewController
 @property (nonatomic, strong) NSArray *allBuses;
+@property (nonatomic, assign) BOOL shouldShowMenuIcon;
 @end
