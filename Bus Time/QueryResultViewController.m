@@ -194,6 +194,7 @@
         return;
     }
     self.request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://218.90.160.85:10086/BusTravelGuideWebService/bustravelguide.asmx"]];
+    __block QueryResultViewController *blockSelf = self;
     __block ASIHTTPRequest *request_b = self.request;
     NSString *postBodyString = [NSString stringWithFormat:
                                 @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -231,27 +232,27 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString completionBlock:^(NSUInteger buttonIndex) {
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                     if ([infoString rangeOfString:@"结束营运"].location != NSNotFound) {
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [blockSelf.navigationController popViewControllerAnimated:YES];
                     }
                 }
                 else {
-                    self.resultArray = nil;
-                    [self.tableView reloadData];
+                    blockSelf.resultArray = nil;
+                    [blockSelf.tableView reloadData];
                 }
             } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
-            [self.refControl endRefreshing];
+            [blockSelf.refControl endRefreshing];
         }
         else {
             NSArray *infoArray = (NSArray *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
-            self.resultArray = infoArray;
-            [self.tableView reloadData];
-            [self.refControl endRefreshing];
+            blockSelf.resultArray = infoArray;
+            [blockSelf.tableView reloadData];
+            [blockSelf.refControl endRefreshing];
         }
     }];
     //网络请求失败
     [self.request setFailedBlock:^{
-        [self.refControl endRefreshing];
+        [blockSelf.refControl endRefreshing];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Network error, please retry later.", @"网络连接失败，请重试。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
         [alert show];
     }];

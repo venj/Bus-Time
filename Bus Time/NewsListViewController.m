@@ -52,6 +52,7 @@
         return;
     }
     self.request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://221.130.60.79:8080/Bus/sendinfo.action?length=all&index=0"]];
+    __block NewsListViewController *blockSelf = self;
     __block ASIHTTPRequest *request_b = self.request;
     [self.request setRequestMethod:@"POST"];
     [self.request setStartedBlock:^{}];
@@ -63,16 +64,16 @@
         if (request_b.responseStatusCode == 200) {
             NSMutableArray *stringParts = [NSMutableArray arrayWithArray:[responseString split:@":;" rule:HFSplitRuleWhole]];
             NSInteger subArrayCount = [stringParts count] / 4;
-            self.newsList = [[NSMutableArray alloc] initWithCapacity:subArrayCount];
+            blockSelf.newsList = [[NSMutableArray alloc] initWithCapacity:subArrayCount];
             if ([stringParts count] % 4 != 0 && [[stringParts objectAtIndex:0] rangeOfString:@"月"].location == NSNotFound) {
                 [stringParts removeObjectAtIndex:0];
             }
             for (NSInteger i = 0; i < subArrayCount; i++) {
                 NSInteger sinceIndex = i * 4;
                 NSArray *info = @[ stringParts[sinceIndex], stringParts[sinceIndex + 2], stringParts[sinceIndex + 3] ];
-                [self.newsList addObject:info];
+                [blockSelf.newsList addObject:info];
             }
-            [self.tableView reloadData];
+            [blockSelf.tableView reloadData];
         }
         else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:[NSString stringWithFormat:@"出行提示加载失败，服务器错误：HTTP %d。请稍后再试。", request_b.responseStatusCode] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
