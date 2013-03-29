@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 venj. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 #import "FavoritesViewController.h"
 #import "BusListViewController.h"
@@ -18,10 +19,12 @@
 #import "HistoryViewController.h"
 #import "NewsListViewController.h"
 #import "BusDataSource.h"
+#import "ASIHTTPRequest.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
 @property (nonatomic, strong) NSMutableArray *menuViewControllers;
+@property (nonatomic, strong) ASIHTTPRequest *req;
 @end
 
 @implementation AppDelegate
@@ -33,6 +36,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Register push notification
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+	application.applicationIconBadgeNumber = 0;
+    
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self loadRevealVC];
@@ -42,6 +49,93 @@
     }
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+#if !TARGET_IPHONE_SIMULATOR
+	// Get Bundle Info for Remote Registration (handy if you have more than one app)
+	NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+	NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	// Check what Notifications the user has turned on.  We registered for all three, but they may have manually disabled some or all of them.
+	NSUInteger rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+	
+	// Set the defaults to disabled unless we find otherwise...
+	NSString *pushBadge = (rntypes & UIRemoteNotificationTypeBadge) ? @"enabled" : @"disabled";
+	NSString *pushAlert = (rntypes & UIRemoteNotificationTypeAlert) ? @"enabled" : @"disabled";
+	NSString *pushSound = (rntypes & UIRemoteNotificationTypeSound) ? @"enabled" : @"disabled";
+	
+	// Get the users Device Model, Display Name, Unique ID, Token & Version Number
+	UIDevice *dev = [UIDevice currentDevice];
+	NSString *deviceUuid;
+	if ([dev respondsToSelector:@selector(uniqueIdentifier)])
+		deviceUuid = [dev uniqueIdentifier];
+	else {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		id uuid = [defaults objectForKey:@"deviceUuid"];
+		if (uuid)
+			deviceUuid = (NSString *)uuid;
+		else {
+			CFStringRef cfUuid = CFUUIDCreateString(NULL, CFUUIDCreate(NULL));
+			deviceUuid = (__bridge_transfer NSString *)cfUuid;
+			CFRelease(cfUuid);
+			[defaults setObject:deviceUuid forKey:@"deviceUuid"];
+		}
+	}
+	NSString *deviceName = dev.name;
+	NSString *deviceModel = dev.model;
+	NSString *deviceSystemVersion = dev.systemVersion;
+	
+	// Prepare the Device Token for Registration (remove spaces and < >)
+	NSString *deviceToken = [[[[devToken description]
+                               stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                              stringByReplacingOccurrencesOfString:@">" withString:@""]
+                             stringByReplacingOccurrencesOfString: @" " withString: @""];
+	NSString *host = @"apns.sukiapps.com";
+	NSString *urlString = [NSString stringWithFormat:@"/apns.php?task=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@", @"register", appName,appVersion, deviceUuid, deviceToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
+    
+	NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    __block AppDelegate *blockSelf = self;
+    self.req = [[ASIHTTPRequest alloc] initWithURL:url];
+    [self.req setCompletionBlock:^{
+        NSData *returnData = [blockSelf.req responseData];
+        NSLog(@"Register URL: %@", url);
+        NSLog(@"Return Data: %@", returnData);
+    }];
+    [self.req setFailedBlock:^{
+        NSLog(@"Register request failed with error %d: %@", blockSelf.req.responseStatusCode, [[blockSelf.req error] description]);
+    }];
+    [self.req startAsynchronous];
+#endif
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+#if !TARGET_IPHONE_SIMULATOR
+	NSLog(@"Error in registration. Error: %@", error);
+#endif
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+#if !TARGET_IPHONE_SIMULATOR
+	NSLog(@"remote notification: %@",[userInfo description]);
+	NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+	
+	NSString *alert = [apsInfo objectForKey:@"alert"];
+	NSLog(@"Received Push Alert: %@", alert);
+	
+	NSString *sound = [apsInfo objectForKey:@"sound"];
+	NSLog(@"Received Push Sound: %@", sound);
+    //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    SystemSoundID mBeep;
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"notification" ofType:@"wav"];
+    NSURL* url = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &mBeep);
+    AudioServicesPlaySystemSound(mBeep);
+    AudioServicesDisposeSystemSoundID(mBeep);
+	
+	NSString *badge = [apsInfo objectForKey:@"badge"];
+	NSLog(@"Received Push Badge: %@", badge);
+	application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+#endif
 }
 
 - (NSArray *)loadCommonVC {
