@@ -126,7 +126,6 @@
 		25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D1B67C169C120A00F11E0C /* StationSearchViewController.m */; };
 		25D1B680169C120B00F11E0C /* StationSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D1B67D169C120A00F11E0C /* StationSearchViewController.xib */; };
 		25FCA49E1701DB0E002DE2E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FCA49D1701DB0E002DE2E5 /* AudioToolbox.framework */; };
-		25FCA4A01701E602002DE2E5 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 25FCA49F1701E602002DE2E5 /* notification.wav */; };
 		25FF8CE11697C38C00B45D4A /* tab_gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD71697C38C00B45D4A /* tab_gear.png */; };
 		25FF8CE21697C38C00B45D4A /* tab_gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD81697C38C00B45D4A /* tab_gear@2x.png */; };
 		25FF8CE31697C38C00B45D4A /* tab_history.png in Resources */ = {isa = PBXBuildFile; fileRef = 25FF8CD91697C38C00B45D4A /* tab_history.png */; };
@@ -338,7 +337,6 @@
 		25D1B67C169C120A00F11E0C /* StationSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationSearchViewController.m; sourceTree = "<group>"; };
 		25D1B67D169C120A00F11E0C /* StationSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationSearchViewController.xib; sourceTree = "<group>"; };
 		25FCA49D1701DB0E002DE2E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		25FCA49F1701E602002DE2E5 /* notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification.wav; sourceTree = "<group>"; };
 		25FF8CD71697C38C00B45D4A /* tab_gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_gear.png; sourceTree = "<group>"; };
 		25FF8CD81697C38C00B45D4A /* tab_gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_gear@2x.png"; sourceTree = "<group>"; };
 		25FF8CD91697C38C00B45D4A /* tab_history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_history.png; sourceTree = "<group>"; };
@@ -451,7 +449,6 @@
 			children = (
 				25178586168191510007589B /* wuxitraffic.db */,
 				25C3F92F169671A90047FED7 /* userdata.db */,
-				25FCA49F1701E602002DE2E5 /* notification.wav */,
 				2501980616AFDEF20046A56C /* migrations */,
 				2517851216818FE90007589B /* InfoPlist.strings */,
 				251843C1169A9C9D00049BDB /* Localizable.strings */,
@@ -881,7 +878,6 @@
 				25A882C016B12C270091E5AB /* menu_bus@2x.png in Resources */,
 				25A882C116B12C270091E5AB /* tab_bus.png in Resources */,
 				25A882C216B12C270091E5AB /* tab_bus@2x.png in Resources */,
-				25FCA4A01701E602002DE2E5 /* notification.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

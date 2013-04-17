@@ -97,13 +97,15 @@
 	NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     __block AppDelegate *blockSelf = self;
     self.req = [[ASIHTTPRequest alloc] initWithURL:url];
+    //TODO: Do more to process the success action.
     [self.req setCompletionBlock:^{
         NSData *returnData = [blockSelf.req responseData];
         NSLog(@"Register URL: %@", url);
         NSLog(@"Return Data: %@", returnData);
     }];
     [self.req setFailedBlock:^{
-        NSLog(@"Register request failed with error %d: %@", blockSelf.req.responseStatusCode, [[blockSelf.req error] description]);
+        // Just fail it.
+        //NSLog(@"Register request failed with error %d: %@", blockSelf.req.responseStatusCode, [[blockSelf.req error] description]);
     }];
     [self.req startAsynchronous];
 #endif
@@ -117,27 +119,51 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 #if !TARGET_IPHONE_SIMULATOR
-	NSLog(@"remote notification: %@",[userInfo description]);
+	//NSLog(@"remote notification: %@",[userInfo description]);
 	NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
-	
-	NSString *alert = [apsInfo objectForKey:@"alert"];
-	NSLog(@"Received Push Alert: %@", alert);
-	
 	NSString *sound = [apsInfo objectForKey:@"sound"];
-	NSLog(@"Received Push Sound: %@", sound);
-    //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     SystemSoundID mBeep;
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"notification" ofType:@"wav"];
-    NSURL* url = [NSURL fileURLWithPath:path];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &mBeep);
-    AudioServicesPlaySystemSound(mBeep);
-    AudioServicesDisposeSystemSoundID(mBeep);
-	
+    NSString* path = [[NSBundle mainBundle] pathForResource:sound ofType:@""];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSURL* url = [NSURL fileURLWithPath:path];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &mBeep);
+        AudioServicesPlaySystemSound(mBeep);
+        AudioServicesDisposeSystemSoundID(mBeep);
+    }
+    
 	NSString *badge = [apsInfo objectForKey:@"badge"];
-	NSLog(@"Received Push Badge: %@", badge);
-	application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+	application.applicationIconBadgeNumber = [badge integerValue];
 #endif
 }
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    // Clean up app badge anyway.
+    application.applicationIconBadgeNumber = 0;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Load The Main UI
 
 - (NSArray *)loadCommonVC {
     // BusList
@@ -245,33 +271,6 @@
     else {
         [self.revealController popViewControllerWithNewCenterController:targetVC animated:YES];
     }
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 #pragma mark - UISplitViewController
