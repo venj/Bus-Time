@@ -68,20 +68,16 @@
 	// Get the users Device Model, Display Name, Unique ID, Token & Version Number
 	UIDevice *dev = [UIDevice currentDevice];
 	NSString *deviceUuid;
-	if ([dev respondsToSelector:@selector(uniqueIdentifier)])
-		deviceUuid = [dev uniqueIdentifier];
-	else {
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		id uuid = [defaults objectForKey:@"deviceUuid"];
-		if (uuid)
-			deviceUuid = (NSString *)uuid;
-		else {
-			CFStringRef cfUuid = CFUUIDCreateString(NULL, CFUUIDCreate(NULL));
-			deviceUuid = (__bridge_transfer NSString *)cfUuid;
-			CFRelease(cfUuid);
-			[defaults setObject:deviceUuid forKey:@"deviceUuid"];
-		}
-	}
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    id uuid = [defaults objectForKey:@"deviceUuid"];
+    if (uuid)
+        deviceUuid = (NSString *)uuid;
+    else {
+        CFStringRef cfUuid = CFUUIDCreateString(NULL, CFUUIDCreate(NULL));
+        deviceUuid = (__bridge_transfer NSString *)cfUuid;
+        CFRelease(cfUuid);
+        [defaults setObject:deviceUuid forKey:@"deviceUuid"];
+    }
 	NSString *deviceName = dev.name;
 	NSString *deviceModel = dev.model;
 	NSString *deviceSystemVersion = dev.systemVersion;
