@@ -74,9 +74,10 @@
         deviceUuid = (NSString *)uuid;
     else {
         CFStringRef cfUuid = CFUUIDCreateString(NULL, CFUUIDCreate(NULL));
-        deviceUuid = (__bridge_transfer NSString *)cfUuid;
+        deviceUuid = (__bridge NSString *)cfUuid;
         CFRelease(cfUuid);
         [defaults setObject:deviceUuid forKey:@"deviceUuid"];
+        [defaults synchronize];
     }
 	NSString *deviceName = dev.name;
 	NSString *deviceModel = dev.model;
@@ -95,9 +96,9 @@
     self.req = [[ASIHTTPRequest alloc] initWithURL:url];
     //TODO: Do more to process the success action.
     [self.req setCompletionBlock:^{
-        NSData *returnData = [blockSelf.req responseData];
-        NSLog(@"Register URL: %@", url);
-        NSLog(@"Return Data: %@", returnData);
+        //NSData *returnData = [blockSelf.req responseData];
+        //NSLog(@"Register URL: %@", url);
+        //NSLog(@"Return Data: %@", returnData);
     }];
     [self.req setFailedBlock:^{
         // Just fail it.
