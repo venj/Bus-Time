@@ -18,7 +18,7 @@
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
 
-@interface StationListViewController () <UIGestureRecognizerDelegate>
+@interface StationListViewController ()
 @property (nonatomic, strong) NSArray *stations;
 @property (nonatomic, strong) NSArray *filterStations;
 @end
@@ -43,9 +43,6 @@
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchDisplayController.searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.navigationController.navigationBar addGestureRecognizer:doubleTap];
     
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
     StationListViewController *blockSelf = self;
@@ -162,11 +159,6 @@
     
     self.filterStations = [self.stations objectsAtIndexes:resultSet];
     [self.searchDisplayController.searchResultsTableView reloadData];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (void)doubleTapped:(UITapGestureRecognizer *)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

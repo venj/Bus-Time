@@ -23,7 +23,7 @@
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 
-@interface QueryResultViewController () <UIActionSheetDelegate, UIGestureRecognizerDelegate>
+@interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
 @property (nonatomic, strong) id resultArray;
 @end
@@ -51,9 +51,6 @@
         self.refControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     }
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.navigationController.navigationBar addGestureRecognizer:doubleTap];
     [self.refControl addTarget:self action:@selector(loadResult) forControlEvents:UIControlEventValueChanged];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self.tableView setContentOffset:CGPointMake(0, -44) animated:NO];
@@ -301,11 +298,6 @@
         }
         [self.navigationController presentModalViewController:nav animated:YES];
     }
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (void)doubleTapped:(UITapGestureRecognizer *)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

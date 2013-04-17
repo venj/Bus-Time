@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 
-@interface BusListViewController () <UISearchDisplayDelegate, UISearchBarDelegate, UIGestureRecognizerDelegate>
+@interface BusListViewController () <UISearchDisplayDelegate, UISearchBarDelegate>
 @property (nonatomic, strong) NSArray *filterBuses;
 @end
 
@@ -38,9 +38,6 @@
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.searchDisplayController.searchBar.spellCheckingType = UITextSpellCheckingTypeNo;
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:115./255. green:123./255. blue:143./255. alpha:1];
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.navigationController.navigationBar addGestureRecognizer:doubleTap];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone && self.shouldShowMenuIcon == YES) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
@@ -155,11 +152,6 @@
     
     self.filterBuses = [self.allBuses objectsAtIndexes:resultSet];
     [self.searchDisplayController.searchResultsTableView reloadData];
-}
-
-#pragma mark - UIGestureRecognizerDelegate
-- (void)doubleTapped:(UITapGestureRecognizer *)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

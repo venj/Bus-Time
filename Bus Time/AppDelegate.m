@@ -20,6 +20,7 @@
 #import "NewsListViewController.h"
 #import "BusDataSource.h"
 #import "ASIHTTPRequest.h"
+#import "VCNavigationBar.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -143,25 +144,32 @@
     self.busListController = [[BusListViewController alloc] initWithNibName:@"BusListViewController" bundle:nil];
     self.busListController.allBuses = [[BusDataSource shared] busRoutes];
     self.busListController.shouldShowMenuIcon = YES;
-    self.busListNavController = [[UINavigationController alloc] initWithRootViewController:self.busListController];
+    self.busListNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.busListNavController addChildViewController:self.busListController];
     // FavList
     self.favoritesViewController = [[FavoritesViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.favoritesNavController = [[UINavigationController alloc] initWithRootViewController:self.favoritesViewController];
+    self.favoritesNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.favoritesNavController addChildViewController:self.favoritesViewController];
     // HistoryList
     self.historiesViewController = [[HistoryViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.historiesNavController = [[UINavigationController alloc] initWithRootViewController:self.historiesViewController];
+    self.historiesNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.historiesNavController addChildViewController:self.historiesViewController];
     // Station Search
     self.stationSearchController = [[StationSearchViewController alloc] initWithNibName:@"StationSearchViewController" bundle:nil];
-    self.stationSearchNavController = [[UINavigationController alloc] initWithRootViewController:self.stationSearchController];
+    self.stationSearchNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.stationSearchNavController addChildViewController:self.stationSearchController];
     // Nearby stations
     self.nearbyStationsViewController = [[NearbyStationsViewController alloc] initWithNibName:@"NearbyStationsViewController" bundle:nil];
-    self.nearbyStationsNavController = [[UINavigationController alloc] initWithRootViewController:self.nearbyStationsViewController];
+    self.nearbyStationsNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.nearbyStationsNavController addChildViewController:self.nearbyStationsViewController];
     // Nav news
     self.newsListViewController = [[NewsListViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.newsNavViewController = [[UINavigationController alloc] initWithRootViewController:self.newsListViewController];
+    self.newsNavViewController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.newsNavViewController addChildViewController:self.newsListViewController];
     // Settings
     self.settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    self.settingsNavController = [[UINavigationController alloc] initWithRootViewController:self.settingsViewController];
+    self.settingsNavController = [[UINavigationController alloc] initWithNavigationBarClass:[VCNavigationBar class] toolbarClass:nil];
+    [self.settingsNavController addChildViewController:self.settingsViewController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.busListNavController.title = NSLocalizedString(@"Buses", @"公交查询");
