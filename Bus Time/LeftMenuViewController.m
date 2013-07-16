@@ -41,6 +41,7 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_bus", @"m
         header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         header.backgroundColor = [UIColor clearColor];
         self.tableView.tableHeaderView = header;
+        self.tableView.backgroundColor = [UIColor colorWithRed:248./255. green:248./255. blue:248./255. alpha:1];
     }
     else {
         self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
