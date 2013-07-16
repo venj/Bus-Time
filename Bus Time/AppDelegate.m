@@ -22,6 +22,8 @@
 #import "ASIHTTPRequest.h"
 #import "VCNavigationBar.h"
 
+#define kBTIsDeviceRegistered @"BTIsDeviceRegistered"
+
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
 @property (nonatomic, strong) NSMutableArray *menuViewControllers;
@@ -38,7 +40,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Register push notification
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![[defaults valueForKey:kBTIsDeviceRegistered] boolValue]) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+        });
+    }
 	application.applicationIconBadgeNumber = 0;
     
     // Override point for customization after application launch.
@@ -92,17 +99,13 @@
 	NSString *urlString = [NSString stringWithFormat:@"/apns.php?task=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@", @"register", appName,appVersion, deviceUuid, deviceToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
     
 	NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    __block AppDelegate *blockSelf = self;
     self.req = [[ASIHTTPRequest alloc] initWithURL:url];
     //TODO: Do more to process the success action.
     [self.req setCompletionBlock:^{
-        //NSData *returnData = [blockSelf.req responseData];
-        //NSLog(@"Register URL: %@", url);
-        //NSLog(@"Return Data: %@", returnData);
+        [defaults setObject:@(YES) forKey:kBTIsDeviceRegistered];
     }];
     [self.req setFailedBlock:^{
         // Just fail it.
-        //NSLog(@"Register request failed with error %d: %@", blockSelf.req.responseStatusCode, [[blockSelf.req error] description]);
     }];
     [self.req startAsynchronous];
 #endif

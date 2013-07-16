@@ -108,16 +108,4 @@
     return [NSString stringWithFormat:@"%@%@", [[self componentsSeparatedByString:strippedString] firstObject] , strippedString];
 }
 
-- (NSString *)pinyinAbbreviation {
-    NSMutableString *pinyin = [self mutableCopy];
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformMandarinLatin, NO);
-    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformStripCombiningMarks, NO);
-    NSMutableString *result = [@"" mutableCopy];
-    [[pinyin componentsSeparatedByString:@" "] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [result appendString:[(NSString *)obj charStringAtIndex:0]];
-    }];
-    [result stringByReplacingOccurrencesOfString:@" " withString:@""]; // Git rid of blank chars.
-    return result;
-}
-
 @end

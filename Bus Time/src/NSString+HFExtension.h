@@ -114,7 +114,4 @@ typedef int HFSplitRule;
 /** Get rid of blank characters at the end of a string object. */
 - (NSString *)rstrip;
 
-/** Get pinyin abbreviation for a particular string. */
-- (NSString *)pinyinAbbreviation;
-
 @end

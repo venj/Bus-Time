@@ -108,6 +108,7 @@
 		25C3F930169671A90047FED7 /* userdata.db in Resources */ = {isa = PBXBuildFile; fileRef = 25C3F92F169671A90047FED7 /* userdata.db */; };
 		25C3F9351696768E0047FED7 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3F9331696768E0047FED7 /* Favorite.m */; };
 		25C3F9391696769B0047FED7 /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C3F9371696769B0047FED7 /* History.m */; };
+		25CD3B401795988A00D97276 /* CharToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 25CD3B3E1795988A00D97276 /* CharToPinyin.m */; };
 		25CE0B04168451C600396503 /* find_bus_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B02168451C600396503 /* find_bus_button.png */; };
 		25CE0B05168451C600396503 /* find_bus_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B03168451C600396503 /* find_bus_button@2x.png */; };
 		25CE0B09168452B700396503 /* find_bus_hl_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 25CE0B07168452B700396503 /* find_bus_hl_button.png */; };
@@ -281,6 +282,8 @@
 		25C3F9331696768E0047FED7 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Favorite.m; sourceTree = "<group>"; };
 		25C3F9361696769B0047FED7 /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = History.h; sourceTree = "<group>"; };
 		25C3F9371696769B0047FED7 /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
+		25CD3B3D1795988A00D97276 /* CharToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharToPinyin.h; sourceTree = "<group>"; };
+		25CD3B3E1795988A00D97276 /* CharToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharToPinyin.m; sourceTree = "<group>"; };
 		25CE0B02168451C600396503 /* find_bus_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find_bus_button.png; sourceTree = "<group>"; };
 		25CE0B03168451C600396503 /* find_bus_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "find_bus_button@2x.png"; sourceTree = "<group>"; };
 		25CE0B07168452B700396503 /* find_bus_hl_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find_bus_hl_button.png; sourceTree = "<group>"; };
@@ -509,6 +512,7 @@
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				25CD3B3C1795988A00D97276 /* CharToPinyin */,
 				25178587168191510007589B /* XMLReader */,
 			);
 			name = "Third Party";
@@ -637,6 +641,15 @@
 			);
 			name = "Handy Foundation";
 			path = src;
+			sourceTree = "<group>";
+		};
+		25CD3B3C1795988A00D97276 /* CharToPinyin */ = {
+			isa = PBXGroup;
+			children = (
+				25CD3B3D1795988A00D97276 /* CharToPinyin.h */,
+				25CD3B3E1795988A00D97276 /* CharToPinyin.m */,
+			);
+			path = CharToPinyin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -854,6 +867,7 @@
 				25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */,
 				25B2BF3316B0D77B00461ACB /* DBMigrator.m in Sources */,
 				255DF3AB171EAD1E00598905 /* VCNavigationBar.m in Sources */,
+				25CD3B401795988A00D97276 /* CharToPinyin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,12 +975,14 @@
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: WEN JIE ZHU (T2S97GVK69)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
 				INFOPLIST_FILE = "Bus Time/Bus Time-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "BF57A49F-72CE-41C2-95D4-A1FBE3EBEE88";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BF57A49F-72CE-41C2-95D4-A1FBE3EBEE88";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -976,14 +992,14 @@
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: WEN JIE ZHU";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
 				INFOPLIST_FILE = "Bus Time/Bus Time-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "F333D1E8-9C6F-4049-8AB7-CD432FF2D7A0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F333D1E8-9C6F-4049-8AB7-CD432FF2D7A0";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
