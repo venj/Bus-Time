@@ -512,7 +512,7 @@
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				25CD3B3C1795988A00D97276 /* CharToPinyin */,
+				25CD3B3C1795988A00D97276 /* CharToPY */,
 				25178587168191510007589B /* XMLReader */,
 			);
 			name = "Third Party";
@@ -643,12 +643,13 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		25CD3B3C1795988A00D97276 /* CharToPinyin */ = {
+		25CD3B3C1795988A00D97276 /* CharToPY */ = {
 			isa = PBXGroup;
 			children = (
 				25CD3B3D1795988A00D97276 /* CharToPinyin.h */,
 				25CD3B3E1795988A00D97276 /* CharToPinyin.m */,
 			);
+			name = CharToPY;
 			path = CharToPinyin;
 			sourceTree = "<group>";
 		};
