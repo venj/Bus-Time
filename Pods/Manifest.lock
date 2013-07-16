@@ -1,0 +1,41 @@
+PODS:
+  - ASIHTTPRequest (1.8.1):
+    - ASIHTTPRequest/ASIWebPageRequest
+    - ASIHTTPRequest/CloudFiles
+    - ASIHTTPRequest/S3
+    - Reachability
+  - ASIHTTPRequest/ASIWebPageRequest (1.8.1):
+    - Reachability
+  - ASIHTTPRequest/CloudFiles (1.8.1):
+    - Reachability
+  - ASIHTTPRequest/S3 (1.8.1):
+    - Reachability
+  - BlocksKit (1.8.2):
+    - libffi
+  - FMDB (2.1):
+    - FMDB/standard
+  - FMDB/common (2.1)
+  - FMDB/standard (2.1):
+    - FMDB/common
+  - libffi (3.0.13)
+  - ODRefreshControl (1.1.0)
+  - PPRevealSideViewController (1.0.1)
+  - Reachability (3.1.0)
+
+DEPENDENCIES:
+  - ASIHTTPRequest (~> 1.8.1)
+  - BlocksKit (~> 1.8.2)
+  - FMDB (~> 2.1)
+  - ODRefreshControl (~> 1.1.0)
+  - PPRevealSideViewController (~> 1.0.1)
+
+SPEC CHECKSUMS:
+  ASIHTTPRequest: a411b8d0f006ed8fc24248be6a0c4ad2abc9b101
+  BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
+  FMDB: 66010e9b750838dea71748df591fc118598f21c7
+  libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
+  ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
+  PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
+  Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
+
+COCOAPODS: 0.22.2

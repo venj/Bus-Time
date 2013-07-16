@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>73638E27-ADFA-4E5F-8C12-1537D3078637</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Bus Time</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C8D8E211-1AB0-4D1A-9E5C-C526AC8C0340</key>
+		<string>ssh://bitbucket.org/venj/bustime.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Bus Time.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C8D8E211-1AB0-4D1A-9E5C-C526AC8C0340</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://bitbucket.org/venj/bustime.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C8D8E211-1AB0-4D1A-9E5C-C526AC8C0340</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C8D8E211-1AB0-4D1A-9E5C-C526AC8C0340</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Bus Time</string>
+		</dict>
+	</array>
+</dict>
+</plist>

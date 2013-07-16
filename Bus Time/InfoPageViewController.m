@@ -7,7 +7,6 @@
 //
 
 #import "InfoPageViewController.h"
-#import "UIBarButtonItem+Blocks.h"
 
 @interface InfoPageViewController ()<UIWebViewDelegate>
 

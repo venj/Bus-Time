@@ -12,8 +12,6 @@
 #import "BusStation.h"
 #import "ODRefreshControl.h"
 #import "ODRefreshControl+Addon.h"
-#import "NSTimer+Blocks.h"
-#import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
@@ -21,7 +19,6 @@
 #import "HistoryViewController.h"
 #import "FavoritesViewController.h"
 #import "AppDelegate.h"
-#import "UIBarButtonItem+Blocks.h"
 
 @interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -226,7 +223,7 @@
         NSDictionary *result = [XMLReader dictionaryForXMLString:responseString error:&error];
         NSString *infoString = (NSString *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.fdisMsg.text"];
         if (infoString != nil) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString completionBlock:^(NSUInteger buttonIndex) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                     if ([infoString rangeOfString:@"结束营运"].location != NSNotFound) {
                         [blockSelf.navigationController popViewControllerAnimated:YES];
@@ -236,8 +233,7 @@
                     blockSelf.resultArray = nil;
                     [blockSelf.tableView reloadData];
                 }
-            } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
-            [alert show];
+            }];
             [blockSelf.refControl endRefreshing];
         }
         else {

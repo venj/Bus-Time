@@ -8,8 +8,6 @@
 
 #import "NearbyStationsViewController.h"
 #import <CoreLocation/CoreLocation.h>
-#import "UIAlertView+Blocks.h"
-#import "UIBarButtonItem+Blocks.h"
 #import "AppDelegate.h"
 #import "BusDataSource.h"
 #import "BusStation.h"
@@ -17,7 +15,6 @@
 #import "NearbyStation.h"
 #import "UserDataSource.h"
 #import "QueryResultViewController.h"
-#import "NSTimer+Blocks.h"
 #import "StationListViewController.h"
 
 @interface NearbyStationsViewController () <CLLocationManagerDelegate>
@@ -86,9 +83,7 @@
             }
         }
         if (shouldShowAlert) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:msg completionBlock:^(NSUInteger buttonIndex) {
-            } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
-            [alert show];
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:msg cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
             return;
         }
         else {
@@ -114,14 +109,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        [NSTimer scheduledTimerWithTimeInterval:1 block:^{
+        [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimeInterval time) {
                 [self.manager startUpdatingLocation];
         } repeats:NO];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [NSTimer scheduledTimerWithTimeInterval:5 block:^{
+    [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimeInterval time) {
         [self.manager stopUpdatingLocation];
     } repeats:NO];
     [super viewWillDisappear:animated];
@@ -263,9 +258,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             if ([self.nearbyStations count] == 0) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") completionBlock:^(NSUInteger buttonIndex) {
-                } cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
-                [alert show];
+                [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
             }
         });
     });

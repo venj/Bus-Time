@@ -9,10 +9,8 @@
 #import "NewsListViewController.h"
 #import "ASIHTTPRequest.h"
 #import "AppDelegate.h"
-#import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 #import "InfoPageViewController.h"
-#import "UIBarButtonItem+Blocks.h"
 
 @interface NewsListViewController ()
 @property (nonatomic, strong) ASIHTTPRequest *request;

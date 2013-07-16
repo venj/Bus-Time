@@ -8,7 +8,6 @@
 
 #import "FavoritesViewController.h"
 #import "AppDelegate.h"
-#import "UIBarButtonItem+Blocks.h"
 #import "UserDataSource.h"
 #import "Favorite.h"
 #import "BusDataSource.h"
