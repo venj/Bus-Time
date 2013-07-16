@@ -20,8 +20,8 @@
 @property (nonatomic, assign) CGFloat updateDate;
 - (id)initWithDictionary:(NSDictionary *)dataDict;
 // MKAnnotation
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, assign, readonly) CLLocationCoordinate2D coordinate;
 // If you want to use the real coordinate for calculation, use this one, not `- coordinate`.
 - (CLLocationCoordinate2D)realCoordinate;

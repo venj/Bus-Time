@@ -22,8 +22,8 @@
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, weak) BusRoute *busRoute;
 // MKAnnotation
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *subtitle;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
 @property (nonatomic, assign, readonly) CLLocationCoordinate2D coordinate;
 
 // Initializer

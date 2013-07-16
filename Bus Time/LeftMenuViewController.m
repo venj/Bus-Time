@@ -33,10 +33,18 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_bus", @"m
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
     __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交查询"), NSLocalizedString(@"Search", @"站名搜索"), NSLocalizedString(@"Nearby", @"附近站点"), NSLocalizedString(@"News", @"出行提示"),
         NSLocalizedString(@"Settings", @"设置")];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    if ([[AppDelegate shared] deviceSystemMajorVersion] > 6) {
+        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 20.)];
+        header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        header.backgroundColor = [UIColor clearColor];
+        self.tableView.tableHeaderView = header;
+    }
+    else {
+        self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,15 +89,26 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_bus", @"m
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    UIView *view = [[UIView alloc] initWithFrame:cell.frame];
-    view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_bg"]];
-    cell.backgroundView = view;
-    
-    UIView *hlView = [[UIView alloc] initWithFrame:cell.frame];
-    hlView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_hl_bg"]];
-    cell.selectedBackgroundView = hlView;
-    
+    if ([[AppDelegate shared] deviceSystemMajorVersion] < 7) {
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        UIView *view = [[UIView alloc] initWithFrame:cell.frame];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_bg"]];
+        cell.backgroundView = view;
+        
+        UIView *hlView = [[UIView alloc] initWithFrame:cell.frame];
+        hlView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_cell_hl_bg"]];
+        cell.selectedBackgroundView = hlView;
+        
+    }
+    else {
+        if (indexPath.row % 2 == 0) {
+            cell.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
+            UIView *hlView = [[UIView alloc] initWithFrame:cell.frame];
+            hlView.backgroundColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
+            cell.selectedBackgroundView = hlView;
+        }
+    }
+        
     if (indexPath.row == [[AppDelegate shared].menuViewControllers indexOfObject:[AppDelegate shared].revealController.rootViewController])
         cell.selected = YES;
     else

@@ -40,4 +40,6 @@
 - (void)hideMenu;
 - (void)preloadMenus;
 - (void)popViewControllerAtIndex:(NSUInteger)index;
+
+- (NSUInteger)deviceSystemMajorVersion;
 @end
