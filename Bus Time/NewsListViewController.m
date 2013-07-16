@@ -9,7 +9,6 @@
 #import "NewsListViewController.h"
 #import "ASIHTTPRequest.h"
 #import "AppDelegate.h"
-#import "HandyFoundation.h"
 #import "UIAlertView+Blocks.h"
 #import "BusInfoCell.h"
 #import "InfoPageViewController.h"

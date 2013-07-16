@@ -7,7 +7,6 @@
 //
 
 #import "BusStation.h"
-#import "CharToPinyin.h"
 
 @implementation BusStation
 
@@ -16,7 +15,7 @@
         _stationNumber = [stationDict objectForKey:@"station_num"];
         _stationType = [stationDict objectForKey:@"station_type"];
         _stationName = [stationDict objectForKey:@"station_name"];
-        _stationNamePY = [[CharToPinyin shared] abbreviation:_stationName];
+        _stationNamePY = [_stationName pinyinAbbreviation];
         _stationID = [stationDict objectForKey:@"station_id"];
         _stationSMSID = [stationDict objectForKey:@"station_smsid"];
         _location = [[CLLocation alloc] initWithLatitude:[[stationDict objectForKey:@"latitude"] doubleValue] longitude:[[stationDict objectForKey:@"longitude"] doubleValue]];

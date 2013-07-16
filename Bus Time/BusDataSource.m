@@ -11,7 +11,6 @@
 #import "BusStation.h"
 #import "BusRoute.h"
 #import "NearbyStation.h"
-#import "CharToPinyin.h"
 
 @implementation BusDataSource
 static BusDataSource *__shared = nil;

@@ -7,7 +7,6 @@
 //
 
 #import "DBMigrator.h"
-#import "HandyFoundation.h"
 
 @implementation DBMigrator
 

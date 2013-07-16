@@ -1,36 +1,15 @@
 //
-//  HandyFoundation.m
+//  NSString+HFExtension.m
 //  Handy Foundation
 //
-//  Created by 朱 文杰 on 12-2-21.
-//  Copyright (c) 2012年 Home. All rights reserved.
+//  Created by venj on 13-2-19.
+//  Copyright (c) 2013年 Home. All rights reserved.
 //
 
-#import "HandyFoundation.h"
+#import "NSString+HFExtension.h"
+#import "NSArray+HFExtension.h"
 
-# pragma mark NSArray Catagory 
-@implementation NSArray (HandyFoundation)
-// Syntactic Sugar
-- (NSUInteger) size {
-    return [self count];
-}
-
-- (NSUInteger) length {
-    return [self count];
-}
-
-- (id)firstObject {
-    if ([self count] == 0) {
-        return nil; //Return nil here. 
-    }
-    return [self objectAtIndex:0];
-}
-
-@end
-# pragma mark -
-
-# pragma mark NSString Catagory 
-@implementation NSString (HandyFoundation)
+@implementation NSString (HFExtension)
 // Syntactic Sugar
 - (NSString *)toUpper {
     return [self uppercaseString];
@@ -65,7 +44,7 @@
 }
 
 - (NSString *)baseName {
-    return [self lastPathComponent];
+    return [self baseNameWithExtension:YES];
 }
 
 // Enhancement.
@@ -90,13 +69,14 @@
     }
 }
 
-- (NSString *)baseNameWithoutExtension {
-    if ([[self pathExtension] isEqualToString:@""]) {
-        return [self lastPathComponent];
-    }
+- (NSString *)baseNameWithExtension:(BOOL)ext {
+    NSString *baseName = [self lastPathComponent];
+    if (ext) return baseName;
+    
+    if ([[self pathExtension] isEqualToString:@""])
+        return baseName;
     else {
         NSString *ext = [self pathExtension];
-        NSString *baseName = [self lastPathComponent];
         return [baseName substringToIndex:([baseName length] - [ext length] - 1)];
     }
 }
@@ -105,11 +85,11 @@
     NSMutableArray *components = [[self pathComponents] mutableCopy];
     [components removeLastObject];
     NSString *dirName = [NSString pathWithComponents:components];
-    [components release];
     return dirName;
 }
 
 - (NSString *)charStringAtIndex:(NSUInteger)index {
+    if (index >= [self length]) return nil;
     return [self substringWithRange:NSMakeRange(index, 1)];
 }
 
@@ -128,12 +108,16 @@
     return [NSString stringWithFormat:@"%@%@", [[self componentsSeparatedByString:strippedString] firstObject] , strippedString];
 }
 
+- (NSString *)pinyinAbbreviation {
+    NSMutableString *pinyin = [self mutableCopy];
+    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformMandarinLatin, NO);
+    CFStringTransform((__bridge CFMutableStringRef)pinyin, NULL, kCFStringTransformStripCombiningMarks, NO);
+    NSMutableString *result = [@"" mutableCopy];
+    [[pinyin componentsSeparatedByString:@" "] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [result appendString:[(NSString *)obj charStringAtIndex:0]];
+    }];
+    [result stringByReplacingOccurrencesOfString:@" " withString:@""]; // Git rid of blank chars.
+    return result;
+}
+
 @end
-# pragma mark -
-
-# pragma mark NSMutableString
-@implementation NSMutableString (HandyFoundation)
-
-
-@end
-

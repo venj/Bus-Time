@@ -17,7 +17,6 @@
 #import "NearbyStation.h"
 #import "UserDataSource.h"
 #import "QueryResultViewController.h"
-#import "HandyFoundation.h"
 #import "NSTimer+Blocks.h"
 #import "StationListViewController.h"
 

@@ -13,8 +13,6 @@
 #import "AppDelegate.h"
 #import "UIBarButtonItem+Blocks.h"
 #import "UIAlertView+Blocks.h"
-#import "CharToPinyin.h"
-#import "HandyFoundation.h"
 #import "UserDataSource.h"
 #import "BusListViewController.h"
 
