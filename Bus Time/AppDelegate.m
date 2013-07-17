@@ -11,7 +11,7 @@
 #import "FavoritesViewController.h"
 #import "BusListViewController.h"
 #import "QueryResultViewController.h"
-#import "PPRevealSideViewController.h"
+#import <PPRevealSideViewController/PPRevealSideViewController.h>
 #import "LeftMenuViewController.h"
 #import "SettingsViewController.h"
 #import "NearbyStationsViewController.h"
@@ -19,7 +19,7 @@
 #import "HistoryViewController.h"
 #import "NewsListViewController.h"
 #import "BusDataSource.h"
-#import "ASIHTTPRequest.h"
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import "VCNavigationBar.h"
 
 #define kBTIsDeviceRegistered @"BTIsDeviceRegistered"

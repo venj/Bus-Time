@@ -21,6 +21,7 @@ PODS:
   - ODRefreshControl (1.1.0)
   - PPRevealSideViewController (1.0.1)
   - Reachability (3.1.0)
+  - XMLReader (0.0.2)
 
 DEPENDENCIES:
   - ASIHTTPRequest (~> 1.8.1)
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - FMDB (~> 2.1)
   - ODRefreshControl (~> 1.1.0)
   - PPRevealSideViewController (~> 1.0.1)
+  - XMLReader (~> 0.0.2)
 
 SPEC CHECKSUMS:
   ASIHTTPRequest: a411b8d0f006ed8fc24248be6a0c4ad2abc9b101
@@ -37,5 +39,6 @@ SPEC CHECKSUMS:
   ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
   PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
   Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
+  XMLReader: d8a522b0362140b328bcaec7f289ff4ffffebf29
 
 COCOAPODS: 0.22.2

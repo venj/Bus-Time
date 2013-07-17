@@ -7,7 +7,7 @@
 //
 
 #import "LeftMenuViewController.h"
-#import "PPRevealSideViewController.h"
+#import <PPRevealSideViewController/PPRevealSideViewController.h>
 #import "AppDelegate.h"
 #import "LeftMenuCell.h"
 

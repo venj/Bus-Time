@@ -41,7 +41,6 @@
 		251785DE168191510007589B /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178582168191510007589B /* SettingsViewController.m */; };
 		251785E0168191510007589B /* StationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178584168191510007589B /* StationListViewController.m */; };
 		251785E2168191510007589B /* wuxitraffic.db in Resources */ = {isa = PBXBuildFile; fileRef = 25178586168191510007589B /* wuxitraffic.db */; };
-		251785E4168191510007589B /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 25178589168191510007589B /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		251785EA1681926D0007589B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785E91681926D0007589B /* QuartzCore.framework */; };
 		251785EC168192750007589B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785EB168192750007589B /* MobileCoreServices.framework */; };
 		251785EE1681927C0007589B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 251785ED1681927C0007589B /* SystemConfiguration.framework */; };
@@ -187,8 +186,6 @@
 		25178583168191510007589B /* StationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = StationListViewController.h; sourceTree = "<group>"; };
 		25178584168191510007589B /* StationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationListViewController.m; sourceTree = "<group>"; };
 		25178586168191510007589B /* wuxitraffic.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = wuxitraffic.db; sourceTree = "<group>"; };
-		25178588168191510007589B /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = XMLReader.h; sourceTree = "<group>"; };
-		25178589168191510007589B /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		251785E91681926D0007589B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		251785EB168192750007589B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		251785ED1681927C0007589B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -500,20 +497,10 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		25178587168191510007589B /* XMLReader */ = {
-			isa = PBXGroup;
-			children = (
-				25178588168191510007589B /* XMLReader.h */,
-				25178589168191510007589B /* XMLReader.m */,
-			);
-			path = XMLReader;
-			sourceTree = "<group>";
-		};
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
 				253DBD9D17959B0D00132F3F /* CharToPinyin */,
-				25178587168191510007589B /* XMLReader */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -846,7 +833,6 @@
 				251785DB168191510007589B /* QueryResultViewController.m in Sources */,
 				251785DE168191510007589B /* SettingsViewController.m in Sources */,
 				251785E0168191510007589B /* StationListViewController.m in Sources */,
-				251785E4168191510007589B /* XMLReader.m in Sources */,
 				2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */,
 				253DBD9C17959B0900132F3F /* CharToPinyin.m in Sources */,
 				25BE49411795287A00AC8FBE /* NSString+HFExtension.m in Sources */,

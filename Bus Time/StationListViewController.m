@@ -12,7 +12,7 @@
 #import "BusDataSource.h"
 #import "QueryResultViewController.h"
 #import "AppDelegate.h"
-#import "ODRefreshControl.h"
+#import <ODRefreshControl/ODRefreshControl.h>
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
 

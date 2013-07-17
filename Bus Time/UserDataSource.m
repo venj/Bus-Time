@@ -9,7 +9,7 @@
 #import "UserDataSource.h"
 #import "Favorite.h"
 #import "History.h"
-#import "FMDatabase.h"
+#import <FMDB/FMDatabase.h>
 #import "BusStation.h"
 #import "BusRoute.h"
 #import "DBMigrator.h"

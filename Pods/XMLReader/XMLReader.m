@@ -2,17 +2,21 @@
 //  XMLReader.m
 //
 //  Created by Troy on 9/18/10.
-//  Copyright 2010 Troy Brant. All rights reserved.
+//  Updated by Antoine Marcadet on 9/23/11.
 //
 
 #import "XMLReader.h"
 
-NSString *const kXMLReaderTextNodeKey = @"text";
+NSString *const kXMLReaderTextNodeKey		= @"text";
+NSString *const kXMLReaderAttributePrefix	= @"@";
 
-@interface XMLReader () <NSXMLParserDelegate>
+@interface XMLReader ()
+
 - (id)initWithError:(NSError **)error;
-- (NSDictionary *)objectWithData:(NSData *)data;
+- (NSDictionary *)objectWithData:(NSData *)data options:(XMLReaderOptions)options;
+
 @end
+
 
 @implementation XMLReader
 
@@ -22,7 +26,7 @@ NSString *const kXMLReaderTextNodeKey = @"text";
 + (NSDictionary *)dictionaryForXMLData:(NSData *)data error:(NSError **)error
 {
     XMLReader *reader = [[XMLReader alloc] initWithError:error];
-    NSDictionary *rootDictionary = [reader objectWithData:data];
+    NSDictionary *rootDictionary = [reader objectWithData:data options:0];
     [reader release];
     return rootDictionary;
 }
@@ -33,6 +37,20 @@ NSString *const kXMLReaderTextNodeKey = @"text";
     return [XMLReader dictionaryForXMLData:data error:error];
 }
 
++ (NSDictionary *)dictionaryForXMLData:(NSData *)data options:(XMLReaderOptions)options error:(NSError **)error
+{
+    XMLReader *reader = [[XMLReader alloc] initWithError:error];
+    NSDictionary *rootDictionary = [reader objectWithData:data options:options];
+    [reader release];
+    return rootDictionary;
+}
+
++ (NSDictionary *)dictionaryForXMLString:(NSString *)string options:(XMLReaderOptions)options error:(NSError **)error
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    return [XMLReader dictionaryForXMLData:data options:options error:error];
+}
+
 #pragma mark -
 #pragma mark Parsing
 
@@ -40,7 +58,7 @@ NSString *const kXMLReaderTextNodeKey = @"text";
 {
     if (self = [super init])
     {
-        errorPointer = *error;
+        errorPointer = error;
     }
     return self;
 }
@@ -52,7 +70,7 @@ NSString *const kXMLReaderTextNodeKey = @"text";
     [super dealloc];
 }
 
-- (NSDictionary *)objectWithData:(NSData *)data
+- (NSDictionary *)objectWithData:(NSData *)data options:(XMLReaderOptions)options
 {
     // Clear out any old data
     [dictionaryStack release];
@@ -66,8 +84,15 @@ NSString *const kXMLReaderTextNodeKey = @"text";
     
     // Parse the XML
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+    
+    [parser setShouldProcessNamespaces:(options & XMLReaderOptionsProcessNamespaces)];
+    [parser setShouldReportNamespacePrefixes:(options & XMLReaderOptionsReportNamespacePrefixes)];
+    [parser setShouldResolveExternalEntities:(options & XMLReaderOptionsResolveExternalEntities)];
+    
     parser.delegate = self;
     BOOL success = [parser parse];
+	
+	[parser release];
     
     // Return the stack's root dictionary on success
     if (success)
@@ -79,11 +104,12 @@ NSString *const kXMLReaderTextNodeKey = @"text";
     return nil;
 }
 
+
 #pragma mark -
 #pragma mark NSXMLParserDelegate methods
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
+{   
     // Get the dictionary for the current level in the stack
     NSMutableDictionary *parentDict = [dictionaryStack lastObject];
 
@@ -132,7 +158,9 @@ NSString *const kXMLReaderTextNodeKey = @"text";
     // Set the text property
     if ([textInProgress length] > 0)
     {
-        [dictInProgress setObject:textInProgress forKey:kXMLReaderTextNodeKey];
+        // trim after concatenating
+        NSString *trimmedString = [textInProgress stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [dictInProgress setObject:[[trimmedString mutableCopy] autorelease] forKey:kXMLReaderTextNodeKey];
 
         // Reset the text
         [textInProgress release];
@@ -146,13 +174,13 @@ NSString *const kXMLReaderTextNodeKey = @"text";
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     // Build the text value
-    [textInProgress appendString:string];
+	[textInProgress appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
     // Set the error pointer to the parser's error object
-    errorPointer = parseError;
+    *errorPointer = parseError;
 }
 
 @end

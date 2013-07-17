@@ -7,10 +7,10 @@
 //
 
 #import "QueryResultViewController.h"
-#import "ASIHTTPRequest.h"
-#import "XMLReader.h"
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import <XMLReader/XMLReader.h>
 #import "BusStation.h"
-#import "ODRefreshControl.h"
+#import <ODRefreshControl/ODRefreshControl.h>
 #import "ODRefreshControl+Addon.h"
 #import "BusInfoCell.h"
 #import "StationMapViewController.h"
