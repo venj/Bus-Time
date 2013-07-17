@@ -66,6 +66,7 @@
 		25307DCE1696CF1900A40BCA /* copyright.html in Resources */ = {isa = PBXBuildFile; fileRef = 25307DCB1696CF1900A40BCA /* copyright.html */; };
 		25307DCF1696CF1900A40BCA /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 25307DCC1696CF1900A40BCA /* disclaimer.html */; };
 		253DBD9C17959B0900132F3F /* CharToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 253DBD9B17959B0900132F3F /* CharToPinyin.m */; };
+		254BE06B17964DD70029CA66 /* QueryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 254BE06A17964DD70029CA66 /* QueryItem.m */; };
 		255DF3AB171EAD1E00598905 /* VCNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 255DF3AA171EAD1E00598905 /* VCNavigationBar.m */; };
 		2563F186168ADF7B00C1E7A3 /* map_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563F184168ADF7B00C1E7A3 /* map_icon.png */; };
 		2563F187168ADF7B00C1E7A3 /* map_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2563F185168ADF7B00C1E7A3 /* map_icon@2x.png */; };
@@ -220,6 +221,8 @@
 		25307DCC1696CF1900A40BCA /* disclaimer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = disclaimer.html; sourceTree = "<group>"; };
 		253DBD9A17959B0900132F3F /* CharToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharToPinyin.h; sourceTree = "<group>"; };
 		253DBD9B17959B0900132F3F /* CharToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharToPinyin.m; sourceTree = "<group>"; };
+		254BE06917964DD70029CA66 /* QueryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryItem.h; sourceTree = "<group>"; };
+		254BE06A17964DD70029CA66 /* QueryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryItem.m; sourceTree = "<group>"; };
 		255DF3A9171EAD1E00598905 /* VCNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCNavigationBar.h; sourceTree = "<group>"; };
 		255DF3AA171EAD1E00598905 /* VCNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCNavigationBar.m; sourceTree = "<group>"; };
 		2563F184168ADF7B00C1E7A3 /* map_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_icon.png; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 				25C3F9371696769B0047FED7 /* History.m */,
 				25FF8CFF1697F2BA00B45D4A /* NearbyStation.h */,
 				25FF8D001697F2BA00B45D4A /* NearbyStation.m */,
+				254BE06917964DD70029CA66 /* QueryItem.h */,
+				254BE06A17964DD70029CA66 /* QueryItem.m */,
 			);
 			name = "Data & Models";
 			sourceTree = "<group>";
@@ -832,6 +837,7 @@
 				251785AA168191510007589B /* BusStation.m in Sources */,
 				251785DB168191510007589B /* QueryResultViewController.m in Sources */,
 				251785DE168191510007589B /* SettingsViewController.m in Sources */,
+				254BE06B17964DD70029CA66 /* QueryItem.m in Sources */,
 				251785E0168191510007589B /* StationListViewController.m in Sources */,
 				2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */,
 				253DBD9C17959B0900132F3F /* CharToPinyin.m in Sources */,

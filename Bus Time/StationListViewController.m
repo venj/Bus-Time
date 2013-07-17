@@ -13,8 +13,12 @@
 #import "QueryResultViewController.h"
 #import "AppDelegate.h"
 #import <ODRefreshControl/ODRefreshControl.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import <XMLReader/XMLReader.h>
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
+#import "QueryItem.h"
 
 @interface StationListViewController ()
 @property (nonatomic, strong) NSArray *stations;
@@ -45,18 +49,96 @@
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
     StationListViewController *blockSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = blockSelf.stations;
-        stationVC.title = self.title;
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        }
-        else {
-            nav.modalPresentationStyle = UIModalPresentationPageSheet;
-            nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        }
-        [self.navigationController presentModalViewController:nav animated:YES];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作")];
+        [sheet addButtonWithTitle:NSLocalizedString(@"All stops", @"所有公交站") handler:^{
+            StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+            stationVC.stations = blockSelf.stations;
+            stationVC.title = self.title;
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            }
+            else {
+                nav.modalPresentationStyle = UIModalPresentationPageSheet;
+                nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            }
+            [self.navigationController presentModalViewController:nav animated:YES];
+        }];
+        [sheet addButtonWithTitle:NSLocalizedString(@"Buses on the way", @"在途的公交车") handler:^{
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
+            BusStation *station = [self.stations lastObject];
+            ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://218.90.160.85:10086/BusTravelGuideWebService/bustravelguide.asmx"]];
+            __block ASIHTTPRequest *request_b = request;
+            NSString *postBodyString = [NSString stringWithFormat:
+                                        @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                                        "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                                        "  <soap:Body>\n"
+                                        "    <getBusALStationInfoCommon xmlns=\"http://tempuri.org/\">\n"
+                                        "      <routeid>%@</routeid>\n"
+                                        "      <segmentid>%@</segmentid>\n"
+                                        "      <stationseq>%@</stationseq>\n"
+                                        "      <fdisMsg></fdisMsg>\n"
+                                        "    </getBusALStationInfoCommon>\n"
+                                        "  </soap:Body>\n"
+                                        "</soap:Envelope>\n", station.busRoute.lineID, station.busRoute.segmentID, station.stationSequence];
+            NSData *postData = [postBodyString dataUsingEncoding:NSUTF8StringEncoding];
+            NSMutableDictionary *headersDict = [[NSMutableDictionary alloc] init];
+            [headersDict setObject:@([postData length]) forKey:@"Content-Length"];
+            [headersDict setObject:@"text/xml" forKey:@"Content-Type"];
+            [headersDict setObject:@"http://tempuri.org/getBusALStationInfoCommon" forKey:@"soapActionString"];
+            [request setPostBody:[[NSMutableData alloc] initWithData:postData]];
+            [request setRequestMethod:@"POST"];
+            [request setRequestHeaders:headersDict];
+            //网络请求开始
+            [request setStartedBlock:^{}];
+            //网络请求成功
+            [request setCompletionBlock:^{
+                [hud hide:YES];
+                NSString *responseString = [request_b responseString];
+                NSError *error;
+                NSDictionary *result = [XMLReader dictionaryForXMLString:responseString error:&error];
+                NSString *infoString = (NSString *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.fdisMsg.text"];
+                if (infoString != nil) {
+                    [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
+                }
+                else {
+                    id infoArray = [result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
+                    NSArray *results;
+                    if ([infoArray isKindOfClass:[NSDictionary class]]) {
+                        results = @[infoArray];
+                    }
+                    else {
+                        results = infoArray;
+                    }
+                    NSMutableArray *queryItems = [NSMutableArray array];
+                    for (NSDictionary *infoDict in infoArray) {
+                        QueryItem *item = [[QueryItem alloc] initWithDictionary:infoDict userStation:station allStations:self.stations showCurrent:NO];
+                        [queryItems addObject:item];
+                    }
+                    StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
+                    stationVC.stations = queryItems;
+                    stationVC.title = @"Buses on the road";
+                    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
+                    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+                    }
+                    else {
+                        nav.modalPresentationStyle = UIModalPresentationPageSheet;
+                        nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                    }
+                    [self.navigationController presentModalViewController:nav animated:YES];
+                }
+            }];
+            //网络请求失败
+            [request setFailedBlock:^{
+                [hud hide:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Network error, please retry later.", @"网络连接失败，请重试。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
+                [alert show];
+            }];
+            [request startAsynchronous];
+        }];
+        [sheet setCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"取消") handler:NULL];
+        [sheet showInView:self.view];
     }];
 }
 

@@ -19,6 +19,8 @@
 #import "HistoryViewController.h"
 #import "FavoritesViewController.h"
 #import "AppDelegate.h"
+#import "QueryItem.h"
+#import "BusDataSource.h"
 
 @interface QueryResultViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) ASIHTTPRequest *request;
@@ -281,8 +283,26 @@
         if (annotation == nil) {
             return;
         }
+        NSArray *results;
+        if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
+            results = @[self.resultArray];
+        }
+        else {
+            results = self.resultArray;
+        }
+        NSMutableArray *queryItems = [NSMutableArray array];
+        BusRoute *route;
+        if ([annotation isKindOfClass:[UserItem class]])
+            route = [[BusDataSource shared] routeForSegmentID:((UserItem *)annotation).segmentID];
+        else
+            route = [[BusDataSource shared] routeForSegmentID:((BusStation *)annotation).busRoute.segmentID];
+        NSArray *stations = [[BusDataSource shared] stationsForBusRoute:route];
+        for (NSDictionary *infoDict in results) {
+            QueryItem *item = [[QueryItem alloc] initWithDictionary:infoDict userStation:annotation allStations:stations showCurrent:YES];
+            [queryItems addObject:item];
+        }
         StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
-        stationVC.stations = @[annotation];
+        stationVC.stations = queryItems;
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

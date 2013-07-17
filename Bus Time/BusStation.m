@@ -29,6 +29,7 @@
 - (CLLocationCoordinate2D)realCoordinate {
     return [self.location coordinate];
 }
+
 - (CLLocationCoordinate2D)coordinate {
     // Add calibration for Wuxi.
     return CLLocationCoordinate2DMake(self.location.coordinate.latitude - 0.001906, self.location.coordinate.longitude + 0.004633);
