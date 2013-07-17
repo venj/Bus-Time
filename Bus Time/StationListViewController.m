@@ -117,7 +117,7 @@
                     }
                     StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
                     stationVC.stations = queryItems;
-                    stationVC.title = @"Buses on the road";
+                    stationVC.title = NSLocalizedString(@"Buses on the way", @"在途的公交车");
                     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
                     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                         nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
