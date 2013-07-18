@@ -84,7 +84,7 @@
     MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
     if (!pinView) {
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
-        //pinView.animatesDrop = YES;
+        pinView.animatesDrop = YES;
         pinView.canShowCallout = YES;
         if ([annotation isKindOfClass:[BusStation class]]) {
             BusStation *station = (BusStation *)annotation;
