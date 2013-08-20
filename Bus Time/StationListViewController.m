@@ -16,6 +16,8 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import <XMLReader/XMLReader.h>
+#import <PPRevealSideViewController/PPRevealSideViewController.h>
+#import "LeftMenuViewController.h"
 #import "StationMapViewController.h"
 #import "UserDataSource.h"
 #import "QueryItem.h"
@@ -114,6 +116,14 @@
                     for (NSDictionary *infoDict in infoArray) {
                         QueryItem *item = [[QueryItem alloc] initWithDictionary:infoDict userStation:station allStations:self.stations showCurrent:NO];
                         [queryItems addObject:item];
+                    }
+                    if ([queryItems count] == 0) {
+                        [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus route may changed temporarily, please check \"News\" section.", @"公交线路可能临时调整，请查看“出行提示”的公交线路调整信息。") cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:@[NSLocalizedString(@"View", @"查看")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                            AppDelegate *appDelegate = [AppDelegate shared];
+                            [appDelegate.revealController pushViewController:appDelegate.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:NO];
+                            [appDelegate.revealController popViewControllerWithNewCenterController:appDelegate.newsNavViewController animated:YES];
+                        }];
+                        return;
                     }
                     StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
                     stationVC.stations = queryItems;
