@@ -119,9 +119,11 @@
                     }
                     if ([queryItems count] == 0) {
                         [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus route may changed temporarily, please check \"News\" section.", @"公交线路可能临时调整，请查看“出行提示”的公交线路调整信息。") cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:@[NSLocalizedString(@"View", @"查看")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                            AppDelegate *appDelegate = [AppDelegate shared];
-                            [appDelegate.revealController pushViewController:appDelegate.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:NO];
-                            [appDelegate.revealController popViewControllerWithNewCenterController:appDelegate.newsNavViewController animated:YES];
+                            if (buttonIndex != [alertView cancelButtonIndex]) {
+                                AppDelegate *appDelegate = [AppDelegate shared];
+                                [appDelegate.revealController pushViewController:appDelegate.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:NO];
+                                [appDelegate.revealController popViewControllerWithNewCenterController:appDelegate.newsNavViewController animated:YES];
+                            }
                         }];
                         return;
                     }
