@@ -38,7 +38,7 @@
 
 - (NSString *)subtitle {
     if (self.showCurrent)
-        return [NSString stringWithFormat:NSLocalizedString(@"Bus #%1$@ was %2$d stops to here at %3$@", @"%3$@，公交%1$@次班车距此%2$d站"), self.busSerial, self.stationNumber, self.timeString];
+        return [NSString stringWithFormat:NSLocalizedString(@"Bus #%1$@ was %2$d stops to your place at %3$@", @"%1$@次公交于%3$@到达，离您还有%2$d站"), self.busSerial, self.stationNumber, self.timeString];
     else
         return [NSString stringWithFormat:NSLocalizedString(@"Bus: %1$@ arrived here at %2$@", @"公交%1$@次班车于%2$@到达"), self.busSerial, self.timeString];
 }
