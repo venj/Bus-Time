@@ -674,6 +674,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = venj;
+				TargetAttributes = {
+					2517850416818FE90007589B = {
+						DevelopmentTeam = 32Y52676KN;
+					};
+				};
 			};
 			buildConfigurationList = 251784FF16818FE90007589B /* Build configuration list for PBXProject "Bus Time" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -966,15 +971,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: WEN JIE ZHU (T2S97GVK69)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
 				INFOPLIST_FILE = "Bus Time/Bus Time-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BF57A49F-72CE-41C2-95D4-A1FBE3EBEE88";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "BF57A49F-72CE-41C2-95D4-A1FBE3EBEE88";
+				PROVISIONING_PROFILE = "CA6A8FD0-446F-4CD6-98F6-6C876FA5729E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CA6A8FD0-446F-4CD6-98F6-6C876FA5729E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -983,7 +988,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: WEN JIE ZHU";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: WEN JIE ZHU";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bus Time/Bus Time-Prefix.pch";
