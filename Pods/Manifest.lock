@@ -21,7 +21,7 @@ PODS:
   - MBProgressHUD (0.7)
   - ODRefreshControl (1.1.0)
   - PPRevealSideViewController (1.0.1)
-  - Reachability (3.1.0)
+  - Reachability (3.1.1)
   - XMLReader (0.0.2)
 
 DEPENDENCIES:
@@ -36,12 +36,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ASIHTTPRequest: a411b8d0f006ed8fc24248be6a0c4ad2abc9b101
   BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
-  FMDB: 66010e9b750838dea71748df591fc118598f21c7
+  FMDB: 2769004a271eae0bbd8bd4f45a3f2acfd0d3df0e
   libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
   MBProgressHUD: 1fd8591a2216d5dec6de24e09187bb03bcbe9946
   ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
   PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
-  Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
+  Reachability: 2be6bc2fd2bd31d97f5db33e75e4b29c79e95883
   XMLReader: d8a522b0362140b328bcaec7f289ff4ffffebf29
 
-COCOAPODS: 0.22.2
+COCOAPODS: 0.23.0
