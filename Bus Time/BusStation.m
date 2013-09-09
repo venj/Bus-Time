@@ -8,6 +8,11 @@
 
 #import "BusStation.h"
 #import "CharToPinyin.h"
+#import "MarsHelper.h"
+
+@interface BusStation ()
+@property (nonatomic, assign) CLLocationCoordinate2D marsCoordinate;
+@end
 
 @implementation BusStation
 
@@ -21,6 +26,7 @@
         _stationSMSID = [stationDict objectForKey:@"station_smsid"];
         _location = [[CLLocation alloc] initWithLatitude:[[stationDict objectForKey:@"latitude"] doubleValue] longitude:[[stationDict objectForKey:@"longitude"] doubleValue]];
         _busRoute = [stationDict objectForKey:@"bus_route"];
+        _marsCoordinate = CLLocationCoordinate2DMake(0.0, 0.0);
     }
     
     return self;
@@ -32,7 +38,10 @@
 
 - (CLLocationCoordinate2D)coordinate {
     // Add calibration for Wuxi.
-    return CLLocationCoordinate2DMake(self.location.coordinate.latitude - 0.001906, self.location.coordinate.longitude + 0.004633);
+    if (self.marsCoordinate.latitude == 0.0 && self.marsCoordinate.longitude == 0.0) {
+        self.marsCoordinate = [MarsHelper convertToEarthCoordinateWithMarsCoordinate:self.location.coordinate];
+    }
+    return self.marsCoordinate;
 }
 
 @end

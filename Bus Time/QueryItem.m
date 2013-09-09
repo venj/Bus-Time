@@ -7,9 +7,11 @@
 //
 
 #import "QueryItem.h"
+#import "MarsHelper.h"
 
 @interface QueryItem ()
 @property (nonatomic, assign) BOOL showCurrent;
+@property (nonatomic, assign) CLLocationCoordinate2D marsCoordinate;
 @end
 
 @implementation QueryItem
@@ -49,7 +51,11 @@
 
 - (CLLocationCoordinate2D)coordinate {
     // Add calibration for Wuxi.
-    return CLLocationCoordinate2DMake(self.station.location.coordinate.latitude - 0.001906, self.station.location.coordinate.longitude + 0.004633);
+    if (self.marsCoordinate.latitude == 0.0 && self.marsCoordinate.longitude == 0.0) {
+        self.marsCoordinate = [MarsHelper convertToEarthCoordinateWithMarsCoordinate:self.station.location.coordinate];
+    }
+    return self.marsCoordinate;
 }
+
 
 @end

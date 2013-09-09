@@ -65,6 +65,8 @@
 		25307DCD1696CF1900A40BCA /* acknowledgements.html in Resources */ = {isa = PBXBuildFile; fileRef = 25307DCA1696CF1900A40BCA /* acknowledgements.html */; };
 		25307DCE1696CF1900A40BCA /* copyright.html in Resources */ = {isa = PBXBuildFile; fileRef = 25307DCB1696CF1900A40BCA /* copyright.html */; };
 		25307DCF1696CF1900A40BCA /* disclaimer.html in Resources */ = {isa = PBXBuildFile; fileRef = 25307DCC1696CF1900A40BCA /* disclaimer.html */; };
+		2536A3F617DDBF0500C20EEA /* gps.db in Resources */ = {isa = PBXBuildFile; fileRef = 2536A3EE17DDBF0500C20EEA /* gps.db */; };
+		2536A3FD17DDBFCE00C20EEA /* MarsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2536A3FC17DDBFCE00C20EEA /* MarsHelper.m */; };
 		253DBD9C17959B0900132F3F /* CharToPinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 253DBD9B17959B0900132F3F /* CharToPinyin.m */; };
 		254BE06B17964DD70029CA66 /* QueryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 254BE06A17964DD70029CA66 /* QueryItem.m */; };
 		255DF3AB171EAD1E00598905 /* VCNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 255DF3AA171EAD1E00598905 /* VCNavigationBar.m */; };
@@ -219,6 +221,9 @@
 		25307DCA1696CF1900A40BCA /* acknowledgements.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = acknowledgements.html; sourceTree = "<group>"; };
 		25307DCB1696CF1900A40BCA /* copyright.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = copyright.html; sourceTree = "<group>"; };
 		25307DCC1696CF1900A40BCA /* disclaimer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = disclaimer.html; sourceTree = "<group>"; };
+		2536A3EE17DDBF0500C20EEA /* gps.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = gps.db; sourceTree = "<group>"; };
+		2536A3FB17DDBFCE00C20EEA /* MarsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarsHelper.h; sourceTree = "<group>"; };
+		2536A3FC17DDBFCE00C20EEA /* MarsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarsHelper.m; sourceTree = "<group>"; };
 		253DBD9A17959B0900132F3F /* CharToPinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharToPinyin.h; sourceTree = "<group>"; };
 		253DBD9B17959B0900132F3F /* CharToPinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharToPinyin.m; sourceTree = "<group>"; };
 		254BE06917964DD70029CA66 /* QueryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryItem.h; sourceTree = "<group>"; };
@@ -503,6 +508,7 @@
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				2536A3FA17DDBF0B00C20EEA /* Mars Coordinate */,
 				253DBD9D17959B0D00132F3F /* CharToPinyin */,
 			);
 			name = "Third Party";
@@ -613,6 +619,16 @@
 			path = webpages;
 			sourceTree = "<group>";
 		};
+		2536A3FA17DDBF0B00C20EEA /* Mars Coordinate */ = {
+			isa = PBXGroup;
+			children = (
+				2536A3EE17DDBF0500C20EEA /* gps.db */,
+				2536A3FB17DDBFCE00C20EEA /* MarsHelper.h */,
+				2536A3FC17DDBFCE00C20EEA /* MarsHelper.m */,
+			);
+			name = "Mars Coordinate";
+			sourceTree = "<group>";
+		};
 		253DBD9D17959B0D00132F3F /* CharToPinyin */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,6 +723,7 @@
 				251785CD168191510007589B /* Default-Portrait~ipad.png in Resources */,
 				25BE4922179522D500AC8FBE /* Icon-7@2x.png in Resources */,
 				251785CE168191510007589B /* Default.png in Resources */,
+				2536A3F617DDBF0500C20EEA /* gps.db in Resources */,
 				251785CF168191510007589B /* Default@2x.png in Resources */,
 				251785D0168191510007589B /* Icon-72.png in Resources */,
 				251785D1168191510007589B /* Icon-72@2x.png in Resources */,
@@ -846,6 +863,7 @@
 				259A21C8168203B000B337E4 /* LeftMenuCell.m in Sources */,
 				2517C45816829B610094ACE3 /* ODRefreshControl+Addon.m in Sources */,
 				25178C1F16842F8000B2C97D /* FavoritesViewController.m in Sources */,
+				2536A3FD17DDBFCE00C20EEA /* MarsHelper.m in Sources */,
 				25178C2416842FD300B2C97D /* UserDataSource.m in Sources */,
 				25178C281684310800B2C97D /* UserItem.m in Sources */,
 				256D4092168A928D00241770 /* NearbyStationsViewController.m in Sources */,
