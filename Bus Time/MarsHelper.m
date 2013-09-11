@@ -9,17 +9,35 @@
 #import "MarsHelper.h"
 #import <FMDB/FMDatabase.h>
 
+@interface MarsHelper()
+@property (nonatomic, strong) FMDatabase *db;
+@end
+
 @implementation MarsHelper
-+ (CLLocationCoordinate2D)convertToEarthCoordinateWithMarsCoordinate:(CLLocationCoordinate2D)marsCoord {
+
++ (instancetype)sharedInstance {
+    static id sharedInstance = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+- (CLLocationCoordinate2D)convertToEarthCoordinateWithMarsCoordinate:(CLLocationCoordinate2D)marsCoord {
     int tenLat = 0;
     int tenLng = 0;
     tenLat = (int)(marsCoord.latitude * 10);
     tenLng = (int)(marsCoord.longitude * 10);
     
     NSString *gpsDBPath = [[NSBundle mainBundle] pathForResource:@"gps" ofType:@"db"];
-    FMDatabase *db = [FMDatabase databaseWithPath:gpsDBPath];
-    [db open];
-    FMResultSet *t = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM gpsT WHERE lat=%d AND log=%d", tenLat, tenLng]];
+    if (!self.db) {
+        self.db = [FMDatabase databaseWithPath:gpsDBPath];
+        [self.db open];
+    }
+    FMResultSet *t = [self.db executeQuery:[NSString stringWithFormat:@"SELECT * FROM gpsT WHERE lat=%d AND log=%d", tenLat, tenLng]];
     
     int offLat = 0, offLng = 0;
     if ([t next]) {
@@ -27,8 +45,11 @@
         offLng = [t intForColumn:@"offLog"];
     }
     
-    [db close];
-    
     return CLLocationCoordinate2DMake(marsCoord.latitude + offLat * 0.0001, marsCoord.longitude + offLng * 0.0001);
 }
+
+- (void)dealloc {
+    [self.db close];
+}
+
 @end

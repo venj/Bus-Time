@@ -58,7 +58,7 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
-
+/*
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
 #if !TARGET_IPHONE_SIMULATOR
 	// Get Bundle Info for Remote Registration (handy if you have more than one app)
@@ -141,7 +141,7 @@
     // Clean up app badge anyway.
     application.applicationIconBadgeNumber = 0;
 }
-
+*/
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
@@ -228,7 +228,6 @@
     
     self.revealController = [[PPRevealSideViewController alloc] initWithRootViewController:self.historiesNavController];
     [self.revealController setDirectionsToShowBounce:PPRevealSideDirectionLeft];
-    self.revealController.panInteractionsWhenClosed = PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView;
     self.revealController.delegate = self;
     self.window.rootViewController = self.revealController;
 }

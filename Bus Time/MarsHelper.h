@@ -10,5 +10,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface MarsHelper : NSObject
-+ (CLLocationCoordinate2D)convertToEarthCoordinateWithMarsCoordinate:(CLLocationCoordinate2D)marsCoord;
++ (instancetype)sharedInstance;
+- (CLLocationCoordinate2D)convertToEarthCoordinateWithMarsCoordinate:(CLLocationCoordinate2D)marsCoord;
 @end

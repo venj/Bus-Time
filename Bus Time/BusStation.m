@@ -39,7 +39,7 @@
 - (CLLocationCoordinate2D)coordinate {
     // Add calibration for Wuxi.
     if (self.marsCoordinate.latitude == 0.0 && self.marsCoordinate.longitude == 0.0) {
-        self.marsCoordinate = [MarsHelper convertToEarthCoordinateWithMarsCoordinate:self.location.coordinate];
+        self.marsCoordinate = [[MarsHelper sharedInstance] convertToEarthCoordinateWithMarsCoordinate:self.location.coordinate];
     }
     return self.marsCoordinate;
 }
