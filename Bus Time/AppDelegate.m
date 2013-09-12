@@ -198,7 +198,7 @@
     [self.settingsNavController addChildViewController:self.settingsViewController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.busListNavController.title = NSLocalizedString(@"Buses", @"公交查询");
+        self.busListNavController.title = NSLocalizedString(@"Buses", @"公交路线");
         self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_bus"];
         self.favoritesNavController.title = NSLocalizedString(@"Favorites", @"收藏夹");
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];

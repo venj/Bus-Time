@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"Buses", @"公交查询");
+    self.title = NSLocalizedString(@"Buses", @"公交路线");
     self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
