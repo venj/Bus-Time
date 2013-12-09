@@ -162,19 +162,23 @@
 }
 
 - (void)loadResult {
-    if (self.station == nil && self.userItem == nil) {
-        [self.refControl endRefreshing];
-        return;
-    }
-    if (self.station != nil) {
-        [self loadResultWithStation:self.station];
-        [[UserDataSource shared] addOrUpdateHistoryWithStation:self.station];
-    }
-    else if (self.userItem != nil) {
-        [self loadResultWithUserItem:self.userItem];
-        [[UserDataSource shared] addOrUpdateHistoryWithUserItem:self.userItem];
-    }
-    //TODO:为History增加下拉更新后，在这里调用。
+    [UIView animateWithDuration:0.25 animations:^{
+        [self.tableView scrollRectToVisible:CGRectMake(0, 0, 320, 0.01) animated:NO];
+    } completion:^(BOOL finished) {
+        if (self.station == nil && self.userItem == nil) {
+            [self.refControl endRefreshing];
+            return;
+        }
+        if (self.station != nil) {
+            [self loadResultWithStation:self.station];
+            [[UserDataSource shared] addOrUpdateHistoryWithStation:self.station];
+        }
+        else if (self.userItem != nil) {
+            [self loadResultWithUserItem:self.userItem];
+            [[UserDataSource shared] addOrUpdateHistoryWithUserItem:self.userItem];
+        }
+        //TODO:为History增加下拉更新后，在这里调用。
+    }];
 }
 
 - (void)loadResultWithStation:(BusStation *)station {

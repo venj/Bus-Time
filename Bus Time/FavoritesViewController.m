@@ -37,12 +37,12 @@
     [super viewWillAppear:animated];
     self.favorites = [[UserDataSource shared] favorites];
     if ([self.favorites count] == 0) {
-        self.tableView.backgroundView = self.emptyView;
+        self.tableView.tableHeaderView = self.emptyView;
         self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     else {
-        self.tableView.backgroundView = nil;
+        self.tableView.tableHeaderView = nil;
         self.tableView.backgroundColor = [UIColor whiteColor];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
@@ -116,13 +116,14 @@
         [[UserDataSource shared] removeFavoriteWithUserItem:f];
         self.favorites = [[UserDataSource shared] favorites];
         if ([self.favorites count] == 0) {
-            self.tableView.backgroundView = self.emptyView;
+            self.tableView.tableHeaderView = self.emptyView;
             self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1];
             self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             [self changeEditingStatusAnimated:YES];
             [self.tableView reloadData];
         }
         else {
+            self.tableView.tableHeaderView = nil;
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }
@@ -164,9 +165,16 @@
     if (_emptyView == nil) {
         CGRect tvFrame = self.tableView.frame;
         CGFloat navBarHeight = 44.0;
+        CGFloat statusBarHeight = 20.0;
         CGFloat width = self.tableView.frame.size.width, height = 164.;
         CGFloat x = (tvFrame.size.width - width) / 2.0;
-        CGFloat y = (tvFrame.size.height - height - navBarHeight) / 2.0;
+        CGFloat y;
+        if ([[AppDelegate shared] deviceSystemMajorVersion] > 6) {
+            y = (tvFrame.size.height - height - navBarHeight * 2 - statusBarHeight) / 2.0;
+        }
+        else {
+            y = (tvFrame.size.height - height - navBarHeight) / 2.0;
+        }
         
         UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(x, y, width, height)];
         UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"star"]];
