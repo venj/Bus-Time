@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "InfoPageViewController.h"
 #import "BusDataSource.h"
+#import <MBProgressHUD/MBProgressHUD.h>
+#import <ASIHTTPRequest/ASIHTTPRequest.h>
 
 @interface SettingsViewController ()
 
@@ -125,8 +127,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if (indexPath.row < 2) {
-            return;
+        if (indexPath.row == 0) {
+            [[AppDelegate shared] checkAppVersion];
+        }
+        else if (indexPath.row == 1) {
+            
         }
         else {
             NSArray *files = @[@"disclaimer", @"copyright", @"acknowledgements"];

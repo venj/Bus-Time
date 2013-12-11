@@ -42,4 +42,5 @@
 - (void)popViewControllerAtIndex:(NSUInteger)index;
 
 - (NSUInteger)deviceSystemMajorVersion;
+- (void)checkAppVersion;
 @end

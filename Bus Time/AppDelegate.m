@@ -23,6 +23,9 @@
 #import "VCNavigationBar.h"
 
 #define kBTIsDeviceRegistered @"BTIsDeviceRegistered"
+// 版本升级
+#define DoNotNotifyVersion @"kDoNotNotifyVersion"
+#define SERVER_ADDRESS @"http://sukiapps.com/bustime/"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -48,6 +51,7 @@
     }
 	application.applicationIconBadgeNumber = 0;
     
+    [self checkAppVersion];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self loadRevealVC];
@@ -290,6 +294,61 @@
         _deviceSystemMajorVersion = [[[[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."] objectAtIndex:0] intValue];
     });
     return _deviceSystemMajorVersion;
+}
+
+# pragma mark - Check App Version
+
+- (void)checkAppVersion {
+    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version.txt", SERVER_ADDRESS]]];
+    ASIHTTPRequest *request_b = versionRequest;
+    __weak AppDelegate *weakSelf = self;
+    //网络请求成功
+    [versionRequest setCompletionBlock:^{
+        NSString *versionString = [request_b responseString];
+        if ([self isVersion:versionString newerThanOtherVersionNumber:[self currentVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyVersion] isEqualToString:versionString]) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"New Version Found", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == [alertView cancelButtonIndex]) {
+                    return;
+                }
+                else if (buttonIndex == [alertView firstOtherButtonIndex]) {
+                    //升级
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/app/wuxi-bus/id588921563?mt=8"]];
+                }
+                else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
+                    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:DoNotNotifyVersion]; //不再提示
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            }];
+        }
+    }];
+    [versionRequest startAsynchronous];
+}
+
+- (NSString *)currentVersion {
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
+- (BOOL)isVersion:(NSString *)currentVersionNumber newerThanOtherVersionNumber:(NSString *)otherVersionNumber {
+    NSArray *versionParts = [otherVersionNumber componentsSeparatedByString:@"."];
+    
+    NSArray *currentVersionParts = [currentVersionNumber componentsSeparatedByString:@"."];
+    
+    if ([versionParts count] == 2)
+        versionParts = [versionParts arrayByAddingObject:@"0"];
+    if ([currentVersionParts count] == 2)
+        currentVersionParts = [currentVersionParts arrayByAddingObject:@"0"];
+    
+    for (NSInteger i = 0; i < 3; i++) {
+        NSInteger a = [[currentVersionParts objectAtIndex:i] integerValue];
+        NSInteger b = [[versionParts objectAtIndex:i] integerValue];
+        if (a > b)
+            return YES;
+        else if (a == b)
+            continue;
+        else
+            return NO;
+    }
+    return NO;
 }
 
 @end
