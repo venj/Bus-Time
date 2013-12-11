@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define SERVER_ADDRESS @"http://sukiapps.com/bustime/"
+
 @class BusListViewController, QueryResultViewController, LeftMenuViewController, SettingsViewController,
     FavoritesViewController, PPRevealSideViewController, NearbyStationsViewController, HistoryViewController,
     NewsListViewController, StationSearchViewController;

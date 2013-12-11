@@ -13,6 +13,8 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 
+#define DoNotNotifyDBVersion @"kDoNotNotifyDBVersion"
+
 @interface SettingsViewController ()
 
 @end
@@ -131,7 +133,7 @@
             [[AppDelegate shared] checkAppVersion];
         }
         else if (indexPath.row == 1) {
-            
+            [self checkDBVersion]; // Check, download and update.
         }
         else {
             NSArray *files = @[@"disclaimer", @"copyright", @"acknowledgements"];
@@ -149,6 +151,55 @@
                 [self presentModalViewController:webNav animated:YES];
             }
         }
+    }
+}
+
+#pragma mark - Update Database
+
+// Check and download
+- (void)checkDBVersion {
+    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version_db.txt", SERVER_ADDRESS]]];
+    ASIHTTPRequest *request_b = versionRequest;
+    //__weak BusDataSource *weakSelf = self;
+    //网络请求成功
+    [versionRequest setCompletionBlock:^{
+        NSString *versionString = [request_b responseString];
+        if (![[versionString strip] isEqualToString:[BusDataSource busDataBaseVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyDBVersion] isEqualToString:versionString]) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:NSLocalizedString(@"New bus database found, do you want to update?", @"公交车数据库已经更新。是否开始下载？") cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == [alertView cancelButtonIndex]) {
+                    return;
+                }
+                else if (buttonIndex == [alertView firstOtherButtonIndex]) {
+                    //升级
+                    [self downloadDatabaseFile];
+                }
+                else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
+                    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:DoNotNotifyDBVersion]; //不再提示
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            }];
+        }
+        else {
+            // Already the latest version of db.
+        }
+    }];
+    [versionRequest startAsynchronous];
+}
+
+// Download
+- (void)downloadDatabaseFile {
+    //TODO: Download file.
+    [self replaceDatabaseFile];
+}
+
+- (void)replaceDatabaseFile {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cacheDirectory = paths[0];
+    NSString *downloadedDatabaseFile = [cacheDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if ([fm fileExistsAtPath:downloadedDatabaseFile isDirectory:NO]) {
+        [BusDataSource updateDatabaseFileWithFileAtPath:downloadedDatabaseFile];
+        [self.tableView reloadData];
     }
 }
 

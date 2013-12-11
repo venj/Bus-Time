@@ -15,6 +15,7 @@
 - (void)sharedClean;
 
 + (NSString *)busDataBaseVersion;
++ (BOOL)updateDatabaseFileWithFileAtPath:(NSString *)updatedDatabaseFilePath;
 - (NSArray *)busRoutes;
 - (NSArray *)busRoutesWithStationName:(NSString *)stationName;
 - (BusRoute *)routeForSegmentID:(NSString *)segmentID;

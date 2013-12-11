@@ -25,7 +25,7 @@
 #define kBTIsDeviceRegistered @"BTIsDeviceRegistered"
 // 版本升级
 #define DoNotNotifyVersion @"kDoNotNotifyVersion"
-#define SERVER_ADDRESS @"http://sukiapps.com/bustime/"
+
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -299,14 +299,14 @@
 # pragma mark - Check App Version
 
 - (void)checkAppVersion {
-    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version.txt", SERVER_ADDRESS]]];
+    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version_app.txt", SERVER_ADDRESS]]];
     ASIHTTPRequest *request_b = versionRequest;
     __weak AppDelegate *weakSelf = self;
     //网络请求成功
     [versionRequest setCompletionBlock:^{
         NSString *versionString = [request_b responseString];
         if ([self isVersion:versionString newerThanOtherVersionNumber:[self currentVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyVersion] isEqualToString:versionString]) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"New Version Found", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"App Update", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == [alertView cancelButtonIndex]) {
                     return;
                 }

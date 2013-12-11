@@ -619,7 +619,7 @@
 		251784FC16818FE90007589B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = venj;
 				TargetAttributes = {
 					2517850416818FE90007589B = {
@@ -897,7 +897,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
@@ -917,7 +916,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CDDD33C5252A4BC5A3F2D62D /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: WEN JIE ZHU";

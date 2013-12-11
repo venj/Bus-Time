@@ -17,9 +17,13 @@ static BusDataSource *__shared = nil;
 
 #pragma mark - Class Helper Methods
 + (NSString *)busDataBaseVersion {
-    NSString *newUpdateDate;
     NSString *newDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    FMDatabase *newDB = [FMDatabase databaseWithPath:newDBPath];
+    return [self busDataBaseVersionForFile:newDBPath];
+}
+
++ (NSString *)busDataBaseVersionForFile:(NSString *)dbPath {
+    NSString *newUpdateDate;
+    FMDatabase *newDB = [FMDatabase databaseWithPath:dbPath];
     if (![newDB open]) {
         return NO;
     }
@@ -326,6 +330,26 @@ static BusDataSource *__shared = nil;
 #endif
     }
     return success;
+}
+
++ (BOOL)updateDatabaseFileWithFileAtPath:(NSString *)updatedDatabaseFilePath {
+    NSString *currentDatabaseFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *error;
+    if ([fm removeItemAtPath:currentDatabaseFile error:nil]) {
+        BOOL successed = [fm copyItemAtPath:updatedDatabaseFilePath toPath:currentDatabaseFile error:&error];
+        if (successed) {
+            [self addSkipBackupAttributeToItemAtPath:currentDatabaseFile];
+            [fm removeItemAtPath:updatedDatabaseFilePath error:nil];
+        }
+        else {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+        return successed;
+    }
+    else {
+        return NO;
+    }
 }
 
 @end
