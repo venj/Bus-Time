@@ -33,7 +33,7 @@ static NSString *imageNames[] = {@"menu_history", @"menu_star", @"menu_bus", @"m
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交查询"), NSLocalizedString(@"Search", @"站名搜索"), NSLocalizedString(@"Nearby", @"附近站点"), NSLocalizedString(@"News", @"出行提示"),
+    __menuTitles = @[NSLocalizedString(@"History", @"查询历史"), NSLocalizedString(@"Favorites", @"收藏夹"), NSLocalizedString(@"Buses", @"公交路线"), NSLocalizedString(@"Search", @"站名搜索"), NSLocalizedString(@"Nearby", @"附近站点"), NSLocalizedString(@"News", @"出行提示"),
         NSLocalizedString(@"Settings", @"设置")];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([[AppDelegate shared] deviceSystemMajorVersion] > 6) {

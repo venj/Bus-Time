@@ -130,7 +130,7 @@
         title = [NSString stringWithFormat:NSLocalizedString(@"Service hours for %@", @"公交%@运营时间"), [infoDict objectForKey:@"line_name"]];
         message = [infoDict objectForKey:@"line_info"];
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
     [alert show];
 }
 

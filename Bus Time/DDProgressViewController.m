@@ -29,8 +29,13 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+//TODO: Fix screen rotation issue.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    }
+    return YES;
 }
 
 - (void)setProgress:(CGFloat)progress {
@@ -68,6 +73,7 @@
 }
 
 - (void)showProgressView {
+    CGSize windowSize = self.view.frame.size;
     if (self.cancelButton == nil) {
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.cancelButton.frame = CGRectMake(120., 242., 80., 32.);
@@ -76,10 +82,11 @@
         [self.cancelButton setTitleColor:[UIColor colorWithRed:0.06f green:0.52f blue:0.98f alpha:1.00f] forState:UIControlStateNormal];
         [self.cancelButton setTitleColor:[UIColor colorWithRed:0.11f green:0.38f blue:0.94f alpha:1.0f] forState:UIControlStateHighlighted];
         [self.view addSubview:self.cancelButton];
+        self.cancelButton.center = CGPointMake(windowSize.width / 2.0, windowSize.height / 2.0);
     }
     
     if (self.progressView == nil) {
-        self.progressView = [[DDProgressView alloc] initWithFrame:CGRectMake(20.0f, 202.0f, self.view.frame.size.width-40.0f, 0.0f)];
+        self.progressView = [[DDProgressView alloc] initWithFrame:CGRectMake(20.0f, windowSize.height / 2.0 - 48.0f, self.view.frame.size.width-40.0f, 0.0f)];
         [self.progressView setOuterColor:[UIColor lightGrayColor]];
         [self.progressView setInnerColor:[UIColor whiteColor]];
         [self.view addSubview:self.progressView];

@@ -37,6 +37,7 @@
 + (AppDelegate *)shared;
 - (NSArray *)menuViewControllers;
 
+- (void)loadUI;
 - (void)showLeftMenu;
 - (void)showBusList;
 - (void)hideMenu;

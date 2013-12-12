@@ -240,8 +240,8 @@
 	if (result == zkSucceeded && rfFlag)
 		[self.fileManager zk_combineAppleDoubleInDirectory:expansionDirectory];
 #endif
-	[self cleanUpExpansionDirectory:expansionDirectory];
-
+	//[self cleanUpExpansionDirectory:expansionDirectory];
+    [self.fileManager removeItemAtPath:self.archivePath error:nil];
 	return result;
 }
 
