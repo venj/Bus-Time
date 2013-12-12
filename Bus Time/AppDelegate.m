@@ -309,7 +309,12 @@
     __weak AppDelegate *weakSelf = self;
     //网络请求成功
     [versionRequest setCompletionBlock:^{
-        NSString *versionString = [request_b responseString];
+        NSString *versionString = [[request_b responseString] strip];
+        NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"\\d+\\.\\d+(\\.\\d+)?" options:NSRegularExpressionCaseInsensitive error:nil];
+        NSArray *matches = [regex matchesInString:versionString options:NSRegularExpressionCaseInsensitive range:NSMakeRange(0, versionString.length)];
+        if ([matches count] < 1) {
+            return;
+        }
         if ([self isVersion:versionString newerThanOtherVersionNumber:[self currentVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyVersion] isEqualToString:versionString]) {
             [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"App Update", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == [alertView cancelButtonIndex]) {
@@ -326,6 +331,7 @@
             }];
         }
     }];
+    //TODO: Add already latest app version alert if issued from settings.
     [versionRequest startAsynchronous];
 }
 
@@ -359,6 +365,7 @@
 #pragma mark - Check DB Version 
 
 // Check and download
+//TODO: Merge with same method in settings???
 - (void)checkDBVersion {
     ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@db/version.txt", SERVER_ADDRESS]]];
     __weak ASIHTTPRequest *request_b = versionRequest;
@@ -366,6 +373,11 @@
     //网络请求成功
     [versionRequest setCompletionBlock:^{
         NSString *versionString = [(NSString *)[request_b responseString] strip];
+        NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"\\d{4}-\\d{1,2}-\\d{1,2}" options:NSRegularExpressionCaseInsensitive error:nil];
+        NSArray *matches = [regex matchesInString:versionString options:NSRegularExpressionCaseInsensitive range:NSMakeRange(0, versionString.length)];
+        if ([matches count] < 1) {
+            return;
+        }
         if (![versionString isEqualToString:[BusDataSource busDataBaseVersion]]) {
             [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == [alertView cancelButtonIndex]) {

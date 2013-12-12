@@ -173,6 +173,11 @@
     //网络请求成功
     [self.versionRequest setCompletionBlock:^{
         NSString *versionString = [(NSString *)[request_b responseString] strip];
+        NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"\\d{4}-\\d{1,2}-\\d{1,2}" options:NSRegularExpressionCaseInsensitive error:nil];
+        NSArray *matches = [regex matchesInString:versionString options:NSRegularExpressionCaseInsensitive range:NSMakeRange(0, versionString.length)];
+        if ([matches count] < 1) {
+            return;
+        }
         if (![versionString isEqualToString:[BusDataSource busDataBaseVersion]]) {
             [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == [alertView cancelButtonIndex]) {
