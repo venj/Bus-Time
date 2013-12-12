@@ -21,6 +21,7 @@
 #import "BusDataSource.h"
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 #import "VCNavigationBar.h"
+#import <FlurrySDK/Flurry.h>
 
 #define kBTIsDeviceRegistered @"BTIsDeviceRegistered"
 // 版本升级
@@ -42,6 +43,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [Flurry setCrashReportingEnabled:NO];
+    [Flurry startSession:@"79N9NDKJSP5TPHHRJ4WW"];
+    //your code
     // Register push notification
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![[defaults valueForKey:kBTIsDeviceRegistered] boolValue]) {
