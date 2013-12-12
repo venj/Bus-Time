@@ -52,6 +52,7 @@
 	application.applicationIconBadgeNumber = 0;
     
     [self checkAppVersion];
+    [self checkDBVersion];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self loadRevealVC];
@@ -299,7 +300,7 @@
 # pragma mark - Check App Version
 
 - (void)checkAppVersion {
-    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version_app.txt", SERVER_ADDRESS]]];
+    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version.txt", SERVER_ADDRESS]]];
     ASIHTTPRequest *request_b = versionRequest;
     __weak AppDelegate *weakSelf = self;
     //网络请求成功
@@ -349,6 +350,37 @@
             return NO;
     }
     return NO;
+}
+
+#pragma mark - Check DB Version 
+
+// Check and download
+- (void)checkDBVersion {
+    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@db/version.txt", SERVER_ADDRESS]]];
+    __weak ASIHTTPRequest *request_b = versionRequest;
+    __weak AppDelegate *weakSelf = self;
+    //网络请求成功
+    [versionRequest setCompletionBlock:^{
+        NSString *versionString = [(NSString *)[request_b responseString] strip];
+        NSLog(@"%@", versionString);
+        if (![versionString isEqualToString:[BusDataSource busDataBaseVersion]]) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == [alertView cancelButtonIndex]) {
+                    return;
+                }
+                else if (buttonIndex == [alertView firstOtherButtonIndex]) {
+                    [weakSelf popViewControllerAtIndex:6];
+                    [self.settingsViewController downloadDatabaseFile];
+                }
+            }];
+        }
+        else {
+            UIAlertView *alert = [UIAlertView alertViewWithTitle:NSLocalizedString(@"No update", @"暂无更新") message:NSLocalizedString(@"You are already using the latest bus database.", @"您正在使用最新版的公交数据库。")];
+            [alert setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:nil];
+            [alert show];
+        }
+    }];
+    [versionRequest startAsynchronous];
 }
 
 @end

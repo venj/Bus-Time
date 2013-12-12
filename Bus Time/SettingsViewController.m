@@ -12,11 +12,13 @@
 #import "BusDataSource.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import "DDProgressViewController.h"
 
-#define DoNotNotifyDBVersion @"kDoNotNotifyDBVersion"
-
-@interface SettingsViewController ()
-
+@interface SettingsViewController () <DDProgressViewDelegate>
+@property (nonatomic, assign) long long incrementalSize;
+@property (nonatomic, strong) ASIHTTPRequest *versionRequest;
+@property (nonatomic, strong) ASIHTTPRequest *dbRequest;
+@property (nonatomic, strong) DDProgressViewController *progressControl;
 @end
 
 @implementation SettingsViewController
@@ -41,6 +43,9 @@
             [[AppDelegate shared] showLeftMenu];
         }];
     }
+    
+    self.progressControl = [[DDProgressViewController alloc] init];
+    self.progressControl.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -158,49 +163,87 @@
 
 // Check and download
 - (void)checkDBVersion {
-    ASIHTTPRequest *versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@version_db.txt", SERVER_ADDRESS]]];
-    ASIHTTPRequest *request_b = versionRequest;
-    //__weak BusDataSource *weakSelf = self;
+    if (self.versionRequest && ![self.versionRequest isFinished]) {
+        return;
+    }
+    self.versionRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@db/version.txt", SERVER_ADDRESS]]];
+    __weak ASIHTTPRequest *request_b = self.versionRequest;
+    __weak SettingsViewController *weakSelf = self;
     //网络请求成功
-    [versionRequest setCompletionBlock:^{
-        NSString *versionString = [request_b responseString];
-        if (![[versionString strip] isEqualToString:[BusDataSource busDataBaseVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyDBVersion] isEqualToString:versionString]) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:NSLocalizedString(@"New bus database found, do you want to update?", @"公交车数据库已经更新。是否开始下载？") cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [self.versionRequest setCompletionBlock:^{
+        NSString *versionString = [(NSString *)[request_b responseString] strip];
+        NSLog(@"%@", versionString);
+        if (![versionString isEqualToString:[BusDataSource busDataBaseVersion]]) {
+            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == [alertView cancelButtonIndex]) {
                     return;
                 }
                 else if (buttonIndex == [alertView firstOtherButtonIndex]) {
-                    //升级
-                    [self downloadDatabaseFile];
-                }
-                else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
-                    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:DoNotNotifyDBVersion]; //不再提示
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [weakSelf downloadDatabaseFile];
                 }
             }];
         }
         else {
-            // Already the latest version of db.
+            UIAlertView *alert = [UIAlertView alertViewWithTitle:@"No update" message:@"You are already using the latest bus database."];
+            [alert setCancelButtonWithTitle:@"OK" handler:nil];
+            [alert show];
         }
     }];
-    [versionRequest startAsynchronous];
+    [self.versionRequest startAsynchronous];
 }
 
 // Download
 - (void)downloadDatabaseFile {
-    //TODO: Download file.
-    [self replaceDatabaseFile];
+    //TODO: Download ZIP file and unpack.
+    if (self.versionRequest && ![self.versionRequest isFinished]) {
+        return;
+    }
+    self.dbRequest = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@db/wuxitraffic.db", SERVER_ADDRESS]]];
+    __weak SettingsViewController *weakSelf = self;
+    //网络请求成功
+    self.incrementalSize = 0;
+    [self.dbRequest setDownloadDestinationPath:[self dbCachePath]];
+    [self.dbRequest setBytesReceivedBlock:^(unsigned long long size, unsigned long long total) {
+        [weakSelf.progressControl show];
+        weakSelf.incrementalSize += size;
+        weakSelf.progressControl.progress = weakSelf.incrementalSize * 1.0 / total;
+    }];
+    [self.dbRequest setCompletionBlock:^{
+        weakSelf.incrementalSize = 0;
+        [weakSelf replaceDatabaseFile]; // Replace Database File when finish.
+        [weakSelf.progressControl finished];
+        [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Update Finished", @"更新完成") message:NSLocalizedString(@"Bus databased update finished.", @"公交车数据库更新完成。") cancelButtonTitle:NSLocalizedString(@"OK", @"完成") otherButtonTitles:@[] handler:nil];
+    }];
+    [self.dbRequest startAsynchronous];
 }
 
 - (void)replaceDatabaseFile {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cacheDirectory = paths[0];
-    NSString *downloadedDatabaseFile = [cacheDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSString *downloadedDatabaseFile = [self dbCachePath];
     NSFileManager *fm = [NSFileManager defaultManager];
     if ([fm fileExistsAtPath:downloadedDatabaseFile isDirectory:NO]) {
         [BusDataSource updateDatabaseFileWithFileAtPath:downloadedDatabaseFile];
         [self.tableView reloadData];
     }
+}
+
+- (NSString *)dbCachePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cacheDirectory = paths[0];
+    NSString *downloadedDatabaseFile = [cacheDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
+    return downloadedDatabaseFile;
+}
+
+#pragma mark - DDProgressView Delegate
+- (void)progressViewDidCancel {
+    [self.dbRequest cancel];
+    self.dbRequest = nil;
+}
+
+- (void)progressViewDidFinished {
+    [self.dbRequest cancel];
+    [self.dbRequest clearDelegatesAndCancel];
+    self.dbRequest = nil;
+    [self.tableView reloadData];
 }
 
 @end

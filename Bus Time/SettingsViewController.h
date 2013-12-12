@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UITableViewController
-
+- (void)downloadDatabaseFile;
 @end

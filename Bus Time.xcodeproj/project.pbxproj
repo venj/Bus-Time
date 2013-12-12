@@ -64,6 +64,23 @@
 		256D409C168AA73200241770 /* StationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 256D4099168AA73200241770 /* StationMapViewController.m */; };
 		256D409D168AA73200241770 /* StationMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 256D409A168AA73200241770 /* StationMapViewController.xib */; };
 		25875B9A17E0A1EA0067C5E7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25875B9917E0A1EA0067C5E7 /* Images.xcassets */; };
+		2592C548185966C5003E074E /* DDProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C547185966C5003E074E /* DDProgressViewController.m */; };
+		2592C59E185978BE003E074E /* NSData+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C57F185978BE003E074E /* NSData+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C59F185978BE003E074E /* NSDate+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C581185978BE003E074E /* NSDate+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A0185978BE003E074E /* NSDictionary+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C583185978BE003E074E /* NSDictionary+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A1185978BE003E074E /* NSFileHandle+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C585185978BE003E074E /* NSFileHandle+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A2185978BE003E074E /* NSFileManager+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C587185978BE003E074E /* NSFileManager+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A3185978BE003E074E /* NSString+ZKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C589185978BE003E074E /* NSString+ZKAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A4185978BE003E074E /* ZKArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C58B185978BE003E074E /* ZKArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A5185978BE003E074E /* ZKCDHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C58D185978BE003E074E /* ZKCDHeader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A6185978BE003E074E /* ZKCDTrailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C58F185978BE003E074E /* ZKCDTrailer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A7185978BE003E074E /* ZKCDTrailer64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C591185978BE003E074E /* ZKCDTrailer64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A8185978BE003E074E /* ZKCDTrailer64Locator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C593185978BE003E074E /* ZKCDTrailer64Locator.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5A9185978BE003E074E /* ZKDataArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C595185978BE003E074E /* ZKDataArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5AA185978BE003E074E /* ZKDefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C597185978BE003E074E /* ZKDefs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5AB185978BE003E074E /* ZKFileArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C599185978BE003E074E /* ZKFileArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5AC185978BE003E074E /* ZKLFHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C59B185978BE003E074E /* ZKLFHeader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2592C5AD185978BE003E074E /* ZKLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2592C59D185978BE003E074E /* ZKLog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		259A21C31682007700B337E4 /* menu_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C11682007700B337E4 /* menu_cell_bg.png */; };
 		259A21C41682007700B337E4 /* menu_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 259A21C21682007700B337E4 /* menu_cell_bg@2x.png */; };
 		259A21C8168203B000B337E4 /* LeftMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 259A21C7168203B000B337E4 /* LeftMenuCell.m */; };
@@ -203,6 +220,40 @@
 		256D4099168AA73200241770 /* StationMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationMapViewController.m; sourceTree = "<group>"; };
 		256D409A168AA73200241770 /* StationMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationMapViewController.xib; sourceTree = "<group>"; };
 		25875B9917E0A1EA0067C5E7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		2592C546185966C5003E074E /* DDProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDProgressViewController.h; sourceTree = "<group>"; };
+		2592C547185966C5003E074E /* DDProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDProgressViewController.m; sourceTree = "<group>"; };
+		2592C57E185978BE003E074E /* NSData+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+ZKAdditions.h"; path = "ZipKit/NSData+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C57F185978BE003E074E /* NSData+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+ZKAdditions.m"; path = "ZipKit/NSData+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C580185978BE003E074E /* NSDate+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+ZKAdditions.h"; path = "ZipKit/NSDate+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C581185978BE003E074E /* NSDate+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+ZKAdditions.m"; path = "ZipKit/NSDate+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C582185978BE003E074E /* NSDictionary+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+ZKAdditions.h"; path = "ZipKit/NSDictionary+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C583185978BE003E074E /* NSDictionary+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+ZKAdditions.m"; path = "ZipKit/NSDictionary+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C584185978BE003E074E /* NSFileHandle+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileHandle+ZKAdditions.h"; path = "ZipKit/NSFileHandle+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C585185978BE003E074E /* NSFileHandle+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileHandle+ZKAdditions.m"; path = "ZipKit/NSFileHandle+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C586185978BE003E074E /* NSFileManager+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+ZKAdditions.h"; path = "ZipKit/NSFileManager+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C587185978BE003E074E /* NSFileManager+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+ZKAdditions.m"; path = "ZipKit/NSFileManager+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C588185978BE003E074E /* NSString+ZKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+ZKAdditions.h"; path = "ZipKit/NSString+ZKAdditions.h"; sourceTree = "<group>"; };
+		2592C589185978BE003E074E /* NSString+ZKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+ZKAdditions.m"; path = "ZipKit/NSString+ZKAdditions.m"; sourceTree = "<group>"; };
+		2592C58A185978BE003E074E /* ZKArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKArchive.h; path = ZipKit/ZKArchive.h; sourceTree = "<group>"; };
+		2592C58B185978BE003E074E /* ZKArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKArchive.m; path = ZipKit/ZKArchive.m; sourceTree = "<group>"; };
+		2592C58C185978BE003E074E /* ZKCDHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKCDHeader.h; path = ZipKit/ZKCDHeader.h; sourceTree = "<group>"; };
+		2592C58D185978BE003E074E /* ZKCDHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKCDHeader.m; path = ZipKit/ZKCDHeader.m; sourceTree = "<group>"; };
+		2592C58E185978BE003E074E /* ZKCDTrailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKCDTrailer.h; path = ZipKit/ZKCDTrailer.h; sourceTree = "<group>"; };
+		2592C58F185978BE003E074E /* ZKCDTrailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKCDTrailer.m; path = ZipKit/ZKCDTrailer.m; sourceTree = "<group>"; };
+		2592C590185978BE003E074E /* ZKCDTrailer64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKCDTrailer64.h; path = ZipKit/ZKCDTrailer64.h; sourceTree = "<group>"; };
+		2592C591185978BE003E074E /* ZKCDTrailer64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKCDTrailer64.m; path = ZipKit/ZKCDTrailer64.m; sourceTree = "<group>"; };
+		2592C592185978BE003E074E /* ZKCDTrailer64Locator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKCDTrailer64Locator.h; path = ZipKit/ZKCDTrailer64Locator.h; sourceTree = "<group>"; };
+		2592C593185978BE003E074E /* ZKCDTrailer64Locator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKCDTrailer64Locator.m; path = ZipKit/ZKCDTrailer64Locator.m; sourceTree = "<group>"; };
+		2592C594185978BE003E074E /* ZKDataArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKDataArchive.h; path = ZipKit/ZKDataArchive.h; sourceTree = "<group>"; };
+		2592C595185978BE003E074E /* ZKDataArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKDataArchive.m; path = ZipKit/ZKDataArchive.m; sourceTree = "<group>"; };
+		2592C596185978BE003E074E /* ZKDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKDefs.h; path = ZipKit/ZKDefs.h; sourceTree = "<group>"; };
+		2592C597185978BE003E074E /* ZKDefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKDefs.m; path = ZipKit/ZKDefs.m; sourceTree = "<group>"; };
+		2592C598185978BE003E074E /* ZKFileArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKFileArchive.h; path = ZipKit/ZKFileArchive.h; sourceTree = "<group>"; };
+		2592C599185978BE003E074E /* ZKFileArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKFileArchive.m; path = ZipKit/ZKFileArchive.m; sourceTree = "<group>"; };
+		2592C59A185978BE003E074E /* ZKLFHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKLFHeader.h; path = ZipKit/ZKLFHeader.h; sourceTree = "<group>"; };
+		2592C59B185978BE003E074E /* ZKLFHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKLFHeader.m; path = ZipKit/ZKLFHeader.m; sourceTree = "<group>"; };
+		2592C59C185978BE003E074E /* ZKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZKLog.h; path = ZipKit/ZKLog.h; sourceTree = "<group>"; };
+		2592C59D185978BE003E074E /* ZKLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZKLog.m; path = ZipKit/ZKLog.m; sourceTree = "<group>"; };
 		259A21C11682007700B337E4 /* menu_cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_cell_bg.png; sourceTree = "<group>"; };
 		259A21C21682007700B337E4 /* menu_cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_cell_bg@2x.png"; sourceTree = "<group>"; };
 		259A21C6168203B000B337E4 /* LeftMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuCell.h; sourceTree = "<group>"; };
@@ -439,6 +490,7 @@
 		251785E5168191830007589B /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				2592C57D1859783A003E074E /* ZipKit */,
 				2536A3FA17DDBF0B00C20EEA /* Mars Coordinate */,
 				253DBD9D17959B0D00132F3F /* CharToPinyin */,
 			);
@@ -534,6 +586,7 @@
 		2517C45B16829BAE0094ACE3 /* Library Enhancements */ = {
 			isa = PBXGroup;
 			children = (
+				2592C549185966C9003E074E /* DDProgressViewController */,
 				25BE49251795287A00AC8FBE /* Handy Foundation */,
 				2517C45A16829B950094ACE3 /* ODRefreshControl (Addon) */,
 			);
@@ -567,6 +620,54 @@
 				253DBD9B17959B0900132F3F /* CharToPinyin.m */,
 			);
 			name = CharToPinyin;
+			sourceTree = "<group>";
+		};
+		2592C549185966C9003E074E /* DDProgressViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2592C546185966C5003E074E /* DDProgressViewController.h */,
+				2592C547185966C5003E074E /* DDProgressViewController.m */,
+			);
+			name = DDProgressViewController;
+			sourceTree = "<group>";
+		};
+		2592C57D1859783A003E074E /* ZipKit */ = {
+			isa = PBXGroup;
+			children = (
+				2592C57E185978BE003E074E /* NSData+ZKAdditions.h */,
+				2592C57F185978BE003E074E /* NSData+ZKAdditions.m */,
+				2592C580185978BE003E074E /* NSDate+ZKAdditions.h */,
+				2592C581185978BE003E074E /* NSDate+ZKAdditions.m */,
+				2592C582185978BE003E074E /* NSDictionary+ZKAdditions.h */,
+				2592C583185978BE003E074E /* NSDictionary+ZKAdditions.m */,
+				2592C584185978BE003E074E /* NSFileHandle+ZKAdditions.h */,
+				2592C585185978BE003E074E /* NSFileHandle+ZKAdditions.m */,
+				2592C586185978BE003E074E /* NSFileManager+ZKAdditions.h */,
+				2592C587185978BE003E074E /* NSFileManager+ZKAdditions.m */,
+				2592C588185978BE003E074E /* NSString+ZKAdditions.h */,
+				2592C589185978BE003E074E /* NSString+ZKAdditions.m */,
+				2592C58A185978BE003E074E /* ZKArchive.h */,
+				2592C58B185978BE003E074E /* ZKArchive.m */,
+				2592C58C185978BE003E074E /* ZKCDHeader.h */,
+				2592C58D185978BE003E074E /* ZKCDHeader.m */,
+				2592C58E185978BE003E074E /* ZKCDTrailer.h */,
+				2592C58F185978BE003E074E /* ZKCDTrailer.m */,
+				2592C590185978BE003E074E /* ZKCDTrailer64.h */,
+				2592C591185978BE003E074E /* ZKCDTrailer64.m */,
+				2592C592185978BE003E074E /* ZKCDTrailer64Locator.h */,
+				2592C593185978BE003E074E /* ZKCDTrailer64Locator.m */,
+				2592C594185978BE003E074E /* ZKDataArchive.h */,
+				2592C595185978BE003E074E /* ZKDataArchive.m */,
+				2592C596185978BE003E074E /* ZKDefs.h */,
+				2592C597185978BE003E074E /* ZKDefs.m */,
+				2592C598185978BE003E074E /* ZKFileArchive.h */,
+				2592C599185978BE003E074E /* ZKFileArchive.m */,
+				2592C59A185978BE003E074E /* ZKLFHeader.h */,
+				2592C59B185978BE003E074E /* ZKLFHeader.m */,
+				2592C59C185978BE003E074E /* ZKLog.h */,
+				2592C59D185978BE003E074E /* ZKLog.m */,
+			);
+			name = ZipKit;
 			sourceTree = "<group>";
 		};
 		25BE49251795287A00AC8FBE /* Handy Foundation */ = {
@@ -759,37 +860,54 @@
 				2517851A16818FEA0007589B /* AppDelegate.m in Sources */,
 				25BE49471795287A00AC8FBE /* UIElementGeometry.m in Sources */,
 				251785A1168191510007589B /* BusDataSource.m in Sources */,
+				2592C5A7185978BE003E074E /* ZKCDTrailer64.m in Sources */,
 				251785A3168191510007589B /* BusInfoCell.m in Sources */,
 				25BE493D1795287A00AC8FBE /* NSDictionary+HFExtension.m in Sources */,
 				251785A5168191510007589B /* BusListViewController.m in Sources */,
 				251785A8168191510007589B /* BusRoute.m in Sources */,
 				25BE493F1795287A00AC8FBE /* NSFileManager+HFExtension.m in Sources */,
+				2592C59E185978BE003E074E /* NSData+ZKAdditions.m in Sources */,
 				251785AA168191510007589B /* BusStation.m in Sources */,
 				251785DB168191510007589B /* QueryResultViewController.m in Sources */,
 				251785DE168191510007589B /* SettingsViewController.m in Sources */,
+				2592C5A5185978BE003E074E /* ZKCDHeader.m in Sources */,
 				254BE06B17964DD70029CA66 /* QueryItem.m in Sources */,
 				251785E0168191510007589B /* StationListViewController.m in Sources */,
 				2520EAE81681B0180034BA32 /* LeftMenuViewController.m in Sources */,
+				2592C5AA185978BE003E074E /* ZKDefs.m in Sources */,
 				253DBD9C17959B0900132F3F /* CharToPinyin.m in Sources */,
+				2592C5A4185978BE003E074E /* ZKArchive.m in Sources */,
+				2592C5AD185978BE003E074E /* ZKLog.m in Sources */,
+				2592C5A2185978BE003E074E /* NSFileManager+ZKAdditions.m in Sources */,
 				25BE49411795287A00AC8FBE /* NSString+HFExtension.m in Sources */,
+				2592C5AC185978BE003E074E /* ZKLFHeader.m in Sources */,
 				25BE49451795287A00AC8FBE /* UIColor+HFExtension.m in Sources */,
+				2592C5A0185978BE003E074E /* NSDictionary+ZKAdditions.m in Sources */,
 				259A21C8168203B000B337E4 /* LeftMenuCell.m in Sources */,
 				2517C45816829B610094ACE3 /* ODRefreshControl+Addon.m in Sources */,
 				25178C1F16842F8000B2C97D /* FavoritesViewController.m in Sources */,
 				2536A3FD17DDBFCE00C20EEA /* MarsHelper.m in Sources */,
 				25178C2416842FD300B2C97D /* UserDataSource.m in Sources */,
 				25178C281684310800B2C97D /* UserItem.m in Sources */,
+				2592C5A8185978BE003E074E /* ZKCDTrailer64Locator.m in Sources */,
 				256D4092168A928D00241770 /* NearbyStationsViewController.m in Sources */,
 				25BE493B1795287A00AC8FBE /* NSArray+HFExtension.m in Sources */,
+				2592C5A9185978BE003E074E /* ZKDataArchive.m in Sources */,
 				256D409C168AA73200241770 /* StationMapViewController.m in Sources */,
+				2592C5AB185978BE003E074E /* ZKFileArchive.m in Sources */,
+				2592C5A3185978BE003E074E /* NSString+ZKAdditions.m in Sources */,
+				2592C5A6185978BE003E074E /* ZKCDTrailer.m in Sources */,
 				25C3F9351696768E0047FED7 /* Favorite.m in Sources */,
 				25C3F9391696769B0047FED7 /* History.m in Sources */,
+				2592C5A1185978BE003E074E /* NSFileHandle+ZKAdditions.m in Sources */,
+				2592C59F185978BE003E074E /* NSDate+ZKAdditions.m in Sources */,
 				25307DB91696A38D00A40BCA /* HistoryViewController.m in Sources */,
 				25307DC71696C98D00A40BCA /* InfoPageViewController.m in Sources */,
 				25FF8D021697F2BB00B45D4A /* NearbyStation.m in Sources */,
 				25A34EF9169972CD00C421B7 /* NewsListViewController.m in Sources */,
 				25D1B67F169C120B00F11E0C /* StationSearchViewController.m in Sources */,
 				25B2BF3316B0D77B00461ACB /* DBMigrator.m in Sources */,
+				2592C548185966C5003E074E /* DDProgressViewController.m in Sources */,
 				255DF3AB171EAD1E00598905 /* VCNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

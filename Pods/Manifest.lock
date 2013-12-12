@@ -12,11 +12,13 @@ PODS:
     - Reachability
   - BlocksKit (1.8.2):
     - libffi
+  - DDProgressView (0.1)
   - FMDB (2.1):
     - FMDB/standard
   - FMDB/common (2.1)
   - FMDB/standard (2.1):
     - FMDB/common
+  - iOS7Colors (2.1.0)
   - libffi (3.0.13)
   - MBProgressHUD (0.7)
   - ODRefreshControl (1.1.0)
@@ -27,21 +29,25 @@ PODS:
 DEPENDENCIES:
   - ASIHTTPRequest (~> 1.8.1)
   - BlocksKit (~> 1.8.2)
+  - DDProgressView (~> 0.1)
   - FMDB (~> 2.1)
+  - iOS7Colors (~> 2.1.0)
   - MBProgressHUD (~> 0.7)
   - ODRefreshControl (~> 1.1.0)
   - PPRevealSideViewController (~> 1.0.1)
   - XMLReader (~> 0.0.2)
 
 SPEC CHECKSUMS:
-  ASIHTTPRequest: a411b8d0f006ed8fc24248be6a0c4ad2abc9b101
+  ASIHTTPRequest: 162783e0cd71bdd3ff1ceed0cd5fa9505e0116a8
   BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
-  FMDB: 2769004a271eae0bbd8bd4f45a3f2acfd0d3df0e
+  DDProgressView: 3f6651900c7357e5d240a18ceece91a370cc96f6
+  FMDB: 3fd5aaf632ca4ed39e3f101e0398504e6d5b0918
+  iOS7Colors: bde8733c6cb28db1065875dcff38667090f58779
   libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
   MBProgressHUD: 1fd8591a2216d5dec6de24e09187bb03bcbe9946
   ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
   PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
-  Reachability: 2be6bc2fd2bd31d97f5db33e75e4b29c79e95883
+  Reachability: be4883bb93f31e38266ae3365e5600a317aae735
   XMLReader: d8a522b0362140b328bcaec7f289ff4ffffebf29
 
-COCOAPODS: 0.23.0
+COCOAPODS: 0.28.0
