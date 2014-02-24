@@ -320,19 +320,16 @@
             return;
         }
         if ([self isVersion:versionString newerThanOtherVersionNumber:[self currentVersion]] && ![[[NSUserDefaults standardUserDefaults] objectForKey:DoNotNotifyVersion] isEqualToString:versionString]) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"App Update", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级"), NSLocalizedString(@"Never", @"不再提示")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex == [alertView cancelButtonIndex]) {
-                    return;
-                }
-                else if (buttonIndex == [alertView firstOtherButtonIndex]) {
-                    //升级
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/app/wuxi-bus/id588921563?mt=8"]];
-                }
-                else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
-                    [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:DoNotNotifyVersion]; //不再提示
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
+            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"App Update", @"发现新版本") message:[NSString stringWithFormat:NSLocalizedString(@"You are using \"Wuxi Bus v%@\".\n\"Wuxi Bus v%@\" is already available.\nDo you want to update?", @"您正在使用“BusTime v%@”。\n“BusTime v%@”已经发布。\n是否升级？"), [weakSelf currentVersion], versionString]];
+            [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"Later", @"以后再说") handler:NULL];
+            [alert bk_addButtonWithTitle:NSLocalizedString(@"Update Now", @"立刻升级") handler:^{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/app/wuxi-bus/id588921563?mt=8"]];
             }];
+            [alert bk_addButtonWithTitle:NSLocalizedString(@"Never", @"不再提示") handler:^{
+                [[NSUserDefaults standardUserDefaults] setObject:versionString forKey:DoNotNotifyVersion]; //不再提示
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }];
+            [alert show];
         }
     }];
     //TODO: Add already latest app version alert if issued from settings.
@@ -383,21 +380,18 @@
             return;
         }
         if (![versionString isEqualToString:[BusDataSource busDataBaseVersion]]) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString] cancelButtonTitle:NSLocalizedString(@"Later", @"以后再说") otherButtonTitles:@[NSLocalizedString(@"Update Now", @"立刻升级")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex == [alertView cancelButtonIndex]) {
-                    return;
+            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Database Update", @"数据库更新") message:[NSString stringWithFormat:NSLocalizedString(@"New bus database(%@) found, do you want to update?", @"公交车数据库(%@)已经发布。是否开始下载？"), versionString]];
+            [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"Later", @"以后再说") handler:NULL];
+            [alert bk_addButtonWithTitle:NSLocalizedString(@"Update Now", @"立刻升级") handler:^{
+                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                    [weakSelf popViewControllerAtIndex:6];
                 }
-                else if (buttonIndex == [alertView firstOtherButtonIndex]) {
-                    
-                    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                        [weakSelf popViewControllerAtIndex:6];
-                    }
-                    else {
-                        [weakSelf.tabBarController setSelectedIndex:6];
-                    }
-                    [weakSelf.settingsViewController downloadDatabaseFile];
+                else {
+                    [weakSelf.tabBarController setSelectedIndex:6];
                 }
+                [weakSelf.settingsViewController downloadDatabaseFile];
             }];
+            [alert show];
         }
     }];
     [versionRequest startAsynchronous];

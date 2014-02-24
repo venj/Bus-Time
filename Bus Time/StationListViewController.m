@@ -50,9 +50,9 @@
     
     self.stations = [[BusDataSource shared] stationsForBusRoute:self.busRoute];
     StationListViewController *blockSelf = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作")];
-        [sheet addButtonWithTitle:NSLocalizedString(@"All stops", @"所有公交站") handler:^{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        UIActionSheet *sheet = [[UIActionSheet alloc] bk_initWithTitle:NSLocalizedString(@"Please choose your action", @"选择您要执行的操作")];
+        [sheet bk_addButtonWithTitle:NSLocalizedString(@"All stops", @"所有公交站") handler:^{
             StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
             stationVC.stations = blockSelf.stations;
             stationVC.title = self.title;
@@ -66,7 +66,7 @@
             }
             [self.navigationController presentModalViewController:nav animated:YES];
         }];
-        [sheet addButtonWithTitle:NSLocalizedString(@"Buses on the way", @"在途的公交车") handler:^{
+        [sheet bk_addButtonWithTitle:NSLocalizedString(@"Buses on the way", @"在途的公交车") handler:^{
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
             BusStation *station = [self.stations lastObject];
             ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:@"http://218.90.160.85:10086/BusTravelGuideWebService/bustravelguide.asmx"]];
@@ -101,7 +101,8 @@
                 NSDictionary *result = [XMLReader dictionaryForXMLString:responseString error:&error];
                 NSString *infoString = (NSString *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.fdisMsg.text"];
                 if (infoString != nil) {
-                    [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
+                    UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString];
+                    [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:NULL];
                 }
                 else {
                     id infoArray = [result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
@@ -118,13 +119,14 @@
                         [queryItems addObject:item];
                     }
                     if ([queryItems count] == 0) {
-                        [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus route may changed temporarily, please check \"News\" section.", @"公交线路可能临时调整，请查看“出行提示”的公交线路调整信息。") cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:@[NSLocalizedString(@"View", @"查看")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                            if (buttonIndex != [alertView cancelButtonIndex]) {
-                                AppDelegate *appDelegate = [AppDelegate shared];
-                                [appDelegate.revealController pushViewController:appDelegate.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:NO];
-                                [appDelegate.revealController popViewControllerWithNewCenterController:appDelegate.newsNavViewController animated:YES];
-                            }
+                        UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"Bus route may changed temporarily, please check \"News\" section.", @"公交线路可能临时调整，请查看“出行提示”的公交线路调整信息。")];
+                        [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:NULL];
+                        [alert bk_addButtonWithTitle:NSLocalizedString(@"View", @"查看") handler:^{
+                            AppDelegate *appDelegate = [AppDelegate shared];
+                            [appDelegate.revealController pushViewController:appDelegate.leftMenuViewController onDirection:PPRevealSideDirectionLeft animated:NO];
+                            [appDelegate.revealController popViewControllerWithNewCenterController:appDelegate.newsNavViewController animated:YES];
                         }];
+                        [alert show];
                         return;
                     }
                     StationMapViewController *stationVC = [[StationMapViewController alloc] initWithNibName:@"StationMapViewController" bundle:nil];
@@ -149,7 +151,7 @@
             }];
             [request startAsynchronous];
         }];
-        [sheet setCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"取消") handler:NULL];
+        [sheet bk_setCancelButtonWithTitle:NSLocalizedString(@"Cancel", @"取消") handler:NULL];
         [sheet showInView:self.view];
     }];
 }

@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
             [[AppDelegate shared] showLeftMenu];
         }];
     }
@@ -83,7 +83,9 @@
             }
         }
         if (shouldShowAlert) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:msg cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
+            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Info", @"提示") message:msg];
+            [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:NULL];
+            [alert show];
             return;
         }
         else {
@@ -91,7 +93,7 @@
         }
     }
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"map_icon"] style:UIBarButtonItemStylePlain handler:^(id sender) {
         if ([self.nearbyStations count] == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil];
             [alert show];
@@ -109,14 +111,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimeInterval time) {
-                [self.manager startUpdatingLocation];
+        [NSTimer bk_scheduledTimerWithTimeInterval:1 block:^(NSTimer *time) {
+            [self.manager startUpdatingLocation];
         } repeats:NO];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimeInterval time) {
+    [NSTimer bk_scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer) {
         [self.manager stopUpdatingLocation];
     } repeats:NO];
     [super viewWillDisappear:animated];
@@ -258,7 +260,9 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             if ([self.nearbyStations count] == 0) {
-                [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。") cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:NULL];
+                UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Info", @"提示") message:NSLocalizedString(@"No bus stops nearby.", @"附近没有任何公交车站。")];
+                [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:NULL];
+                [alert show];
             }
         });
     });

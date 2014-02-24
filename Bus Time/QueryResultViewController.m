@@ -56,7 +56,7 @@
         [self.refControl beginRefreshing];
         [self loadResult];
     }
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAction handler:^(id sender) {
         if (self.station == nil && self.userItem == nil) {
             return;
         }
@@ -102,12 +102,20 @@
     if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
         return 1;
     }
-    return [self.resultArray count];
+    else {
+        if ([self.resultArray count] == 0) { // nil or empty array
+            return 1;
+        }
+        return [self.resultArray count];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+    if ([self.resultArray count] == 0) { // nil or empty array
+        return 0;
+    }
     return 1;
 }
 
@@ -139,7 +147,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDictionary *resultDict;
-    if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
+    if ([self.resultArray count] == 0) { // nil or empty array
+        return nil;
+    }
+    else if ([self.resultArray isKindOfClass:[NSDictionary class]]) {
         resultDict = self.resultArray;
     }
     else {
@@ -149,7 +160,10 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == [tableView numberOfSections] - 1) {
+    if (self.resultArray && [self.resultArray count] == 0) {
+        return NSLocalizedString(@"Looks like nothing returned from the server.\nThere are 3 possible causes:\n\n1. The server is busy. Especially in rush hour. You can retry several times( or try later), and you may get the result.\n2. The server down and returned gabage data.\n3. History or Favorited station info is outdated. Please delete it and reselect it from Bus stop list.\n\nIf this occured for days, please report this problem at http://sukiapps.com", @"糟糕，服务器没有返回任何数据！\n出现这种情况有3种可能：\n\n1. 服务器现在很繁忙，如在上下班高峰。你多刷新几次也许就成功了，也可以过一会儿再刷新。\n2. 服务器内部错误，返回的是无法解析的错误数据。\n3. 历史查询或收藏项目因为数据库升级而无效了。请删除项目，然后从公交车站列表里重新选择车站查询。\n\n如果持续多日出现无法刷新，请向http://sukiapps.com汇报。");
+    }
+    else if (section == [tableView numberOfSections] - 1) {
         return NSLocalizedString(@"Shake your device or pull down to refresh.", @"下拉页面或摇动设备刷新班车状态。");
     }
     return nil;
@@ -227,9 +241,17 @@
 #endif
         NSError *error;
         NSDictionary *result = [XMLReader dictionaryForXMLString:responseString error:&error];
+        if (error) {
+            // Parse Error. Maybe server busy?
+            blockSelf.resultArray = @[];
+            [blockSelf.tableView reloadData];
+            [blockSelf.refControl endRefreshing];
+            return;
+        }
         NSString *infoString = (NSString *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.fdisMsg.text"];
         if (infoString != nil) {
-            [UIAlertView showAlertViewWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString cancelButtonTitle:NSLocalizedString(@"OK", @"确定") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Info", @"提示") message:infoString];
+            [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"OK", @"确定") handler:^{
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                     if ([infoString rangeOfString:@"结束营运"].location != NSNotFound) {
                         [blockSelf.navigationController popViewControllerAnimated:YES];
@@ -240,13 +262,23 @@
                     [blockSelf.tableView reloadData];
                 }
             }];
+            [alert show];
             [blockSelf.refControl endRefreshing];
         }
         else {
-            NSArray *infoArray = (NSArray *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet.Table1"];
-            blockSelf.resultArray = infoArray;
-            [blockSelf.tableView reloadData];
-            [blockSelf.refControl endRefreshing];
+            NSDictionary *dataSet = (NSDictionary *)[result valueForKeyPath:@"soap:Envelope.soap:Body.getBusALStationInfoCommonResponse.getBusALStationInfoCommonResult.diffgr:diffgram.NewDataSet"];
+            if (dataSet == nil) { // Server Busy(?) or invalid bus line, station id, etc.
+                blockSelf.resultArray = @[];
+                [blockSelf.tableView reloadData];
+                [blockSelf.refControl endRefreshing];
+                return;
+            }
+            else {
+                NSArray *infoArray = (NSArray *)[dataSet objectForKey:@"Table1"];
+                blockSelf.resultArray = infoArray;
+                [blockSelf.tableView reloadData];
+                [blockSelf.refControl endRefreshing];
+            }
         }
     }];
     //网络请求失败
