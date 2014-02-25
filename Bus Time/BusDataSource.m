@@ -81,9 +81,13 @@ static BusDataSource *__shared = nil;
     NSArray *userVersionParts = [[userVersion componentsSeparatedByString:@" "].firstObject componentsSeparatedByString:@"-"];
     
     for (NSInteger index = 0; index < [userVersionParts count]; index++) {
-        if ([userVersionParts[index] integerValue] < [bundleVersionParts[index] integerValue]) {
-            result = YES;
-            break;
+        NSInteger bundleVersionPart = [bundleVersionParts[index] integerValue];
+        NSInteger userVersionPart = [userVersionParts[index] integerValue];
+        if (bundleVersionPart == userVersionPart) {
+            continue;
+        }
+        else {
+            return bundleVersionPart < userVersionPart;
         }
     }
     
