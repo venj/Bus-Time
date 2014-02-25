@@ -17,63 +17,84 @@ static BusDataSource *__shared = nil;
 
 #pragma mark - Class Helper Methods
 + (NSString *)busDataBaseVersion {
-    NSString *newDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    return [self busDataBaseVersionForFile:newDBPath];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *userDBPath = [docDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
+    return [self busDataBaseVersionForFile:userDBPath];
 }
 
 + (NSString *)busDataBaseVersionForFile:(NSString *)dbPath {
-    NSString *newUpdateDate;
-    FMDatabase *newDB = [FMDatabase databaseWithPath:dbPath];
-    if (![newDB open]) {
+    NSString *dbUpdateDate;
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if (![db open]) {
         return NO;
     }
-    FMResultSet *t = [newDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    FMResultSet *t = [db executeQuery:@"SELECT * FROM db_config LIMIT 1"];
     if ([t next]) {
-        newUpdateDate = [t stringForColumn:@"value"];
+        dbUpdateDate = [t stringForColumn:@"value"];
     }
-    [newDB close];
-    return [[newUpdateDate componentsSeparatedByString:@" "] objectAtIndex:0];
+    [db close];
+    return [[dbUpdateDate componentsSeparatedByString:@" "] objectAtIndex:0];
 }
 
 + (BOOL)busDataBaseNeedsUpdate {
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *oldDBPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
-    BOOL dbExists = [manager fileExistsAtPath:oldDBPath];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *userDBPath = [docDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
+    BOOL dbExists = [manager fileExistsAtPath:userDBPath];
     if (!dbExists) {
         return YES;
     }
     
-    FMDatabase *oldDB = [FMDatabase databaseWithPath:oldDBPath];
-    if (![oldDB open]) {
+    FMDatabase *userDB = [FMDatabase databaseWithPath:userDBPath];
+    if (![userDB open]) {
         return NO;
     }
-    FMResultSet *s = [oldDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
-    NSString *oldUpdateDate, *newUpdateDate;
+    FMResultSet *s = [userDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    NSString *userUpdateDate, *bundleUpdateDate;
     if ([s next]) {
-        oldUpdateDate = [s stringForColumn:@"value"];
+        userUpdateDate = [s stringForColumn:@"value"];
     }
-    [oldDB close];
+    [userDB close];
     
-    NSString *newDBPath = [[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"];
-    FMDatabase *newDB = [FMDatabase databaseWithPath:newDBPath];
-    if (![newDB open]) {
+    NSString *bundleDBPath = [[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"];
+    FMDatabase *bundleDB = [FMDatabase databaseWithPath:bundleDBPath];
+    if (![bundleDB open]) {
         return NO;
     }
-    FMResultSet *t = [newDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
+    FMResultSet *t = [bundleDB executeQuery:@"SELECT * FROM db_config LIMIT 1"];
     if ([t next]) {
-        newUpdateDate = [t stringForColumn:@"value"];
+        bundleUpdateDate = [t stringForColumn:@"value"];
     }
-    [newDB close];
+    [bundleDB close];
     
-    if ([oldUpdateDate isEqualToString:newUpdateDate]) {
+    if ([self isVersion:bundleUpdateDate olderThanVersion:userUpdateDate]) {
         return NO;
     }
     return YES;
 }
 
++ (BOOL)isVersion:(NSString *)bundleVersion olderThanVersion:(NSString *)userVersion {
+    BOOL result = NO;
+    NSArray *bundleVersionParts = [[bundleVersion componentsSeparatedByString:@" "].firstObject componentsSeparatedByString:@"-"];
+    NSArray *userVersionParts = [[userVersion componentsSeparatedByString:@" "].firstObject componentsSeparatedByString:@"-"];
+    
+    for (NSInteger index = 0; index < [userVersionParts count]; index++) {
+        if ([userVersionParts[index] integerValue] < [bundleVersionParts[index] integerValue]) {
+            result = YES;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 + (void)updateBusDataBase {
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *dbPath = [docDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
     if ([self busDataBaseNeedsUpdate]) {
         [manager removeItemAtPath:dbPath error:nil];
         [manager copyItemAtPath:[[NSBundle mainBundle] pathForResource:@"wuxitraffic" ofType:@"db"] toPath:dbPath error:nil];
@@ -286,7 +307,9 @@ static BusDataSource *__shared = nil;
 #pragma mark - Helper methods
 
 - (FMDatabase *)busDatabase {
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *dbPath = [docDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return nil;
@@ -295,7 +318,9 @@ static BusDataSource *__shared = nil;
 }
 
 - (FMDatabase *)userDatabase {
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"userdata.db"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *dbPath = [docDirectory stringByAppendingPathComponent:@"userdata.db"];
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return nil;
@@ -333,7 +358,9 @@ static BusDataSource *__shared = nil;
 }
 
 + (BOOL)updateDatabaseFileWithFileAtPath:(NSString *)updatedDatabaseFilePath {
-    NSString *currentDatabaseFile = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"wuxitraffic.db"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *currentDatabaseFile = [docDirectory stringByAppendingPathComponent:@"wuxitraffic.db"];
     NSFileManager *fm = [NSFileManager defaultManager];
     NSError *error;
     if ([fm removeItemAtPath:currentDatabaseFile error:nil]) {

@@ -346,7 +346,9 @@ static UserDataSource *__shared = nil;
 #pragma mark - Helper Method
 
 - (FMDatabase *)userDatabase {
-    NSString *dbPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"userdata.db"];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDirectory = paths[0];
+    NSString *dbPath = [docDirectory stringByAppendingPathComponent:@"userdata.db"];
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return nil;
