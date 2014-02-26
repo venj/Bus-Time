@@ -43,7 +43,7 @@
             [[AppDelegate shared] showLeftMenu];
         }];
     }
-    self.title = NSLocalizedString(@"Nearby", @"附近站点");
+    self.navigationItem.title = NSLocalizedString(@"Nearby", @"附近站点");
     self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Bus Name, Pinyin Abbrivation", @"路线名或首字母缩写");
     self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;

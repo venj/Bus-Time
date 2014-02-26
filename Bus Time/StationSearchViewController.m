@@ -33,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"Search", @"站名搜索");
+    self.navigationItem.title = NSLocalizedString(@"Search", @"站名搜索");
     self.searchDisplayController.searchBar.placeholder = NSLocalizedString(@"Please enter bus stop name", @"请输入站名");
     self.searchDisplayController.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
     self.searchDisplayController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;

@@ -57,7 +57,7 @@
 {
     [super viewDidLoad];
     // Empty View
-    self.title = NSLocalizedString(@"History", @"查询历史");
+    self.navigationItem.title = NSLocalizedString(@"History", @"查询历史");
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"menu_icon"] style:UIBarButtonItemStyleBordered handler:^(id sender) {
             [[AppDelegate shared] showLeftMenu];

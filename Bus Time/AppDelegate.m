@@ -211,19 +211,19 @@
     [self.settingsNavController addChildViewController:self.settingsViewController];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        self.busListNavController.title = NSLocalizedString(@"Buses", @"公交路线");
+        self.busListNavController.tabBarItem.title = NSLocalizedString(@"Buses_tab", @"公交");
         self.busListNavController.tabBarItem.image = [UIImage imageNamed:@"tab_bus"];
-        self.favoritesNavController.title = NSLocalizedString(@"Favorites", @"收藏夹");
+        self.favoritesNavController.tabBarItem.title = NSLocalizedString(@"Favorites_tab", @"收藏");
         self.favoritesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_star"];
-        self.historiesNavController.title = NSLocalizedString(@"History", @"查询历史");
+        self.historiesNavController.tabBarItem.title = NSLocalizedString(@"History_tab", @"历史");
         self.historiesNavController.tabBarItem.image = [UIImage imageNamed:@"tab_history"];
-        self.stationSearchController.title = NSLocalizedString(@"Search", @"站名搜索");
+        self.stationSearchNavController.tabBarItem.title = NSLocalizedString(@"Search_tab", @"搜索");
         self.stationSearchNavController.tabBarItem.image = [UIImage imageNamed:@"tab_search"];
-        self.nearbyStationsNavController.title = NSLocalizedString(@"Nearby", @"附近站点");
+        self.nearbyStationsNavController.tabBarItem.title = NSLocalizedString(@"Nearby_tab", @"附近");
         self.nearbyStationsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_position"];
-        self.newsNavViewController.title = NSLocalizedString(@"News", @"出行提示");
+        self.newsNavViewController.tabBarItem.title = NSLocalizedString(@"News_tab", @"提示");
         self.newsNavViewController.tabBarItem.image = [UIImage imageNamed:@"tab_info"];
-        self.settingsNavController.title = NSLocalizedString(@"Settings", @"设置");
+        self.settingsNavController.tabBarItem.title = NSLocalizedString(@"Settings", @"设置");
         self.settingsNavController.tabBarItem.image = [UIImage imageNamed:@"tab_gear"];
     }
     
