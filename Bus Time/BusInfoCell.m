@@ -29,7 +29,7 @@
         self.textLabel.frame = newTextLabelFrame;
         CGRect newDetailedTextLabelFrame = CGRectMake(textLabelFrame.origin.x, textLabelFrame.origin.y + textLabelFrame.size.height / 2, contentViewFrame.size.width - 40, detailedTextLabelFrame.size.height);
         self.detailTextLabel.frame = newDetailedTextLabelFrame;
-        self.detailTextLabel.textAlignment = UITextAlignmentLeft;
+        self.detailTextLabel.textAlignment = NSTextAlignmentLeft;
         CGRect newContentViewFrame = CGRectMake(contentViewFrame.origin.x, contentViewFrame.origin.y, contentViewFrame.size.width, contentViewFrame.size.height + detailedTextLabelFrame.size.height);
         self.contentView.frame = newContentViewFrame;
     }

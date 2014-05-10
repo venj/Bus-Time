@@ -348,7 +348,7 @@
             nav.modalPresentationStyle = UIModalPresentationPageSheet;
             nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         }
-        [self.navigationController presentModalViewController:nav animated:YES];
+        [self.navigationController presentViewController:nav animated:YES completion:NULL];
     }
 }
 

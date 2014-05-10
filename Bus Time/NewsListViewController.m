@@ -144,7 +144,7 @@
     else {
         UINavigationController *webNav = [[UINavigationController alloc] initWithRootViewController:webVC];
         webNav.modalPresentationStyle = UIModalPresentationPageSheet;
-        [self presentModalViewController:webNav animated:YES];
+        [self presentViewController:webNav animated:YES completion:NULL];
     }
 }
 

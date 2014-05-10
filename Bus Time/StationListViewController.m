@@ -64,7 +64,7 @@
                 nav.modalPresentationStyle = UIModalPresentationPageSheet;
                 nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             }
-            [self.navigationController presentModalViewController:nav animated:YES];
+            [self.navigationController presentViewController:nav animated:YES completion:NULL];
         }];
         [sheet bk_addButtonWithTitle:NSLocalizedString(@"Buses on the way", @"在途的公交车") handler:^{
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view.window animated:YES];
@@ -140,7 +140,7 @@
                         nav.modalPresentationStyle = UIModalPresentationPageSheet;
                         nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
                     }
-                    [self.navigationController presentModalViewController:nav animated:YES];
+                    [self.navigationController presentViewController:nav animated:YES completion:NULL];
                 }
             }];
             //网络请求失败

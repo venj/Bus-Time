@@ -104,7 +104,7 @@
         stationVC.title = self.title;
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:stationVC];
         nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-        [self.navigationController presentModalViewController:nav animated:YES];
+        [self.navigationController presentViewController:nav animated:YES completion:NULL];
     }];
 }
 

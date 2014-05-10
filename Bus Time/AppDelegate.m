@@ -26,7 +26,8 @@
 #define kBTIsDeviceRegistered @"BTIsDeviceRegistered"
 // 版本升级
 #define DoNotNotifyVersion @"kDoNotNotifyVersion"
-
+// GuideToNewApp
+#define DoNotGuideToNewApp @"kDoNotGuideToNewApp"
 
 @interface AppDelegate () <UISplitViewControllerDelegate, PPRevealSideViewControllerDelegate, UITabBarControllerDelegate>
 @property (nonatomic, strong) UISplitViewController *splitViewController;
@@ -58,6 +59,7 @@
     [self checkAppVersion];
     [self checkDBVersion];
     [self loadUI];
+    [self showGuideAlert];
     // Override point for customization after application launch.
     [self.window makeKeyAndVisible];
     return YES;
@@ -334,6 +336,27 @@
     }];
     //TODO: Add already latest app version alert if issued from settings.
     [versionRequest startAsynchronous];
+}
+
+- (void)showGuideAlert {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:DoNotGuideToNewApp]) {
+        UIAlertView *alert = [[UIAlertView alloc] bk_initWithTitle:NSLocalizedString(@"Note", @"注意") message:NSLocalizedString(@"This unofficial Wuxi Bus app will be phase out, you can still use it, but it will be more unreliable. Please switch to an official app.", @"正如你所知，这个非官方的无锡公交查询程序将退休了。虽然你可以继续使用，但是它将变得不那么可靠了。你可以下载官方的公交查询程序。")];
+        [alert bk_addButtonWithTitle:NSLocalizedString(@"More Info About Deprecation", @"了解退休原因") handler:^{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://sukiapps.com/bustime/faq.html#deprecation"]];
+        }];
+        [alert bk_addButtonWithTitle:NSLocalizedString(@"Get \"WuxiBus Portable\"", @"下载“掌上公交(无锡公交出品)”") handler:^{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/app/wu-xi-zhang-shang-gong-jiao/id741884913?mt=8"]];
+        }];
+        [alert bk_addButtonWithTitle:NSLocalizedString(@"Get \"Wireless Wuxi Bus\"", @"下载“智慧无锡公交(无锡广电出品)”") handler:^{
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/app/zhi-hui-wu-xi-gong-jiao/id578525485?mt=8"]];
+        }];
+        [alert bk_addButtonWithTitle:NSLocalizedString(@"Never", @"不再提示") handler:^{
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DoNotGuideToNewApp]; //不再提示
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }];
+        [alert bk_setCancelButtonWithTitle:NSLocalizedString(@"Later", @"以后再说") handler:NULL];
+        [alert show];
+    }
 }
 
 - (NSString *)currentVersion {

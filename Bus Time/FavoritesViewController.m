@@ -181,7 +181,7 @@
         starImageView.frame = CGRectMake((width - 100.) / 2., 0, 100., 100.);
         [aView addSubview:starImageView];
         UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake((width - 200.)/2., 100., 200., 20.)];
-        infoLabel.textAlignment = UITextAlignmentCenter;
+        infoLabel.textAlignment = NSTextAlignmentCenter;
         infoLabel.backgroundColor = [UIColor clearColor];
         infoLabel.text = NSLocalizedString(@"No Favorites", @"您还没有收藏任何站点");
         infoLabel.font = [UIFont boldSystemFontOfSize:16];

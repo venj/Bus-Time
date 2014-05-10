@@ -1,8 +1,8 @@
-platform :ios, '5.1'
+platform :ios, '6.0'
 
 inhibit_all_warnings!
 
-pod 'BlocksKit', '~> 2.0.0'
+pod 'BlocksKit', '~> 2.2.2'
 pod 'ASIHTTPRequest', '~> 1.8.1'
 pod 'FMDB', '~> 2.2'
 pod 'ODRefreshControl', '~> 1.1.0'
@@ -11,4 +11,4 @@ pod 'XMLReader', '~> 0.0.2'
 pod 'MBProgressHUD', '~> 0.8'
 pod 'DDProgressView', '~> 0.1'
 pod 'iOS7Colors', '~> 2.1.0'
-pod 'FlurrySDK', '~> 4.3.2'
+pod 'FlurrySDK', '~> 4.4.0'

@@ -1,40 +1,42 @@
 PODS:
-  - ASIHTTPRequest (1.8.1):
+  - ASIHTTPRequest (1.8.2):
     - ASIHTTPRequest/ASIWebPageRequest
     - ASIHTTPRequest/CloudFiles
     - ASIHTTPRequest/Core
     - ASIHTTPRequest/S3
-  - ASIHTTPRequest/ASIWebPageRequest (1.8.1):
+  - ASIHTTPRequest/ASIWebPageRequest (1.8.2):
     - ASIHTTPRequest/Core
-  - ASIHTTPRequest/CloudFiles (1.8.1):
+  - ASIHTTPRequest/CloudFiles (1.8.2):
     - ASIHTTPRequest/Core
-  - ASIHTTPRequest/Core (1.8.1):
+  - ASIHTTPRequest/Core (1.8.2):
     - Reachability
-  - ASIHTTPRequest/S3 (1.8.1):
+  - ASIHTTPRequest/S3 (1.8.2):
     - ASIHTTPRequest/Core
-  - BlocksKit (2.0.0):
+  - BlocksKit (2.2.2):
     - BlocksKit/All
-  - BlocksKit/All (2.0.0):
+  - BlocksKit/All (2.2.2):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
     - BlocksKit/MessageUI
     - BlocksKit/UIKit
-  - BlocksKit/Core (2.0.0)
-  - BlocksKit/DynamicDelegate (2.0.0):
-    - libffi
-  - BlocksKit/MessageUI (2.0.0):
+  - BlocksKit/Core (2.2.2)
+  - BlocksKit/DynamicDelegate (2.2.2)
+  - BlocksKit/MessageUI (2.2.2):
+    - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - BlocksKit/UIKit (2.0.0):
+  - BlocksKit/UIKit (2.2.2):
+    - BlocksKit/Core
     - BlocksKit/DynamicDelegate
   - DDProgressView (0.1)
-  - FlurrySDK (4.3.2)
-  - FMDB (2.2):
+  - FlurrySDK (4.4.0):
+    - FlurrySDK/FlurrySDK
+  - FlurrySDK/FlurrySDK (4.4.0)
+  - FMDB (2.3):
     - FMDB/standard
-  - FMDB/common (2.2)
-  - FMDB/standard (2.2):
+  - FMDB/common (2.3)
+  - FMDB/standard (2.3):
     - FMDB/common
   - iOS7Colors (2.1.0)
-  - libffi (3.0.13)
   - MBProgressHUD (0.8)
   - ODRefreshControl (1.1.0)
   - PPRevealSideViewController (1.0.1)
@@ -43,9 +45,9 @@ PODS:
 
 DEPENDENCIES:
   - ASIHTTPRequest (~> 1.8.1)
-  - BlocksKit (~> 2.0.0)
+  - BlocksKit (~> 2.2.2)
   - DDProgressView (~> 0.1)
-  - FlurrySDK (~> 4.3.2)
+  - FlurrySDK (~> 4.4.0)
   - FMDB (~> 2.2)
   - iOS7Colors (~> 2.1.0)
   - MBProgressHUD (~> 0.8)
@@ -54,17 +56,16 @@ DEPENDENCIES:
   - XMLReader (~> 0.0.2)
 
 SPEC CHECKSUMS:
-  ASIHTTPRequest: 34f0d02cc3e31e87591c8d9bda78697a29b92035
-  BlocksKit: b29ee3f28ba06a09f5c64987314ce5b75b2c3962
+  ASIHTTPRequest: 0b05282cf3c422c3474eff98c5bb8c1192b91b86
+  BlocksKit: 125e4e69a62e3b85bacc5175737dae000b00b9fb
   DDProgressView: 3f6651900c7357e5d240a18ceece91a370cc96f6
-  FlurrySDK: 508afbd655fe2ff935d3e9543cb1c8aa432794de
-  FMDB: 97472cfacf0d9e445e915704fb43b4b142799c36
-  iOS7Colors: bde8733c6cb28db1065875dcff38667090f58779
-  libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
+  FlurrySDK: 2cd8f2ce2383ca152c5d96fa34cb9ef29706feda
+  FMDB: 8b6b69b1164e3007d7f4b3b3719e667602ec247e
+  iOS7Colors: 7f1baa6d5a44f3bd9030d81e2d3072d4d57667b7
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
   PPRevealSideViewController: b687e80c29a301b8f5a5b573c022c7da0b6af11e
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
-  XMLReader: d8a522b0362140b328bcaec7f289ff4ffffebf29
+  XMLReader: 8ad7c573001e3d826d26a8c01144d37c707d20fa
 
-COCOAPODS: 0.29.0
+COCOAPODS: 0.32.1
